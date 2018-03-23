@@ -4,25 +4,29 @@ using System.Collections.Generic;
 public class DrawPile
 {
     public List<Card> cards;
+	FightScene fightScene;
 
-    public DrawPile(Deck deck)
+    public DrawPile(FightScene fightScene)
     {
-		cards = deck.cards;
+		this.fightScene = fightScene;
+		cards = fightScene.GameStates.Deck.cards;
     }
 
     public Card Draw()
     {
-        var cnt = cards.Count;
-        Debug.Log("card left in draw pile: " + cnt);
-        if(cnt > 0)
-        {
-            var card = cards[cnt-1];
-            cards.RemoveAt(cnt-1);
-            return card;
-        }
-
-        return null;
+		if (cards.Count == 0) {
+			this.cards = fightScene.DiscardPile.Get ();
+		}
+		Debug.Log (this.cards.Count);
+		var cnt = cards.Count;
+        var card = cards[cnt-1];
+        cards.RemoveAt(cnt-1);
+        return card;
     }
+}
+
+public class DrawPileRenderer : MonoBehaviour
+{
 }
 
 public class Deck

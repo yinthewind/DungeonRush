@@ -12,9 +12,10 @@ public class DefendCard : Card
 	public override void Play()
 	{
 		if (this.FightScene.Player.Energy.Val >= 1) {
-			base.Play ();
+			
 			this.FightScene.Player.Energy.Val -= 1;
 			this.FightScene.Player.Shield.Val += 6;
+			base.Play ();
 		}
 	}
 }

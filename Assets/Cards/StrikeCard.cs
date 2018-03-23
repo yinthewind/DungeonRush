@@ -21,9 +21,10 @@ public class StrikeCard : Card
 	public override void Play()
 	{
 		if (this.FightScene.Player.Energy.Val >= 1) {
-			base.Play ();
+			
 			this.FightScene.Player.Energy.Val -= 1;
 			this.FightScene.Monster.HitPoint.Val -= GetCalculatedDamage(this.FightScene);
+			base.Play ();
 		}
 	}
 }

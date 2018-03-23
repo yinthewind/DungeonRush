@@ -13,6 +13,8 @@ public class FightScene : MonoBehaviour
     public Hand Hand;
     public FightReport FightReport;
     public TopMenuBar TopMenuBar;
+	public DiscardPile DiscardPile = new DiscardPile ();
+	public DrawPile DrawPile;
 
     Button endTurnButton;
 
@@ -48,6 +50,7 @@ public class FightScene : MonoBehaviour
 
     private void startFight()
     {
+		this.DrawPile = new DrawPile(this);
         this.Player = newPlayer();
         this.Player.HitPoint.OnChange += (oldVal, newVal) =>
         {

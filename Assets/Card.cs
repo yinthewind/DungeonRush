@@ -22,11 +22,25 @@ public class Card
     public virtual void Play()
     {
         GameObject.Destroy (Object);
+		this.FightScene.DiscardPile.Add (this);
     }
 
+	/// <summary>
+	/// This card is actively discarded by player
+	/// discarded because of other cards or artifacts
+	/// </summary>
 	public virtual void Discard()
 	{
 		GameObject.Destroy (Object);
+	}
+
+	/// <summary>
+	/// This card is not played by player, but discarded at the ending of a turn
+	/// </summary>
+	public virtual void PassiveDiscard()
+	{
+		GameObject.Destroy (Object);
+		this.FightScene.DiscardPile.Add (this);
 	}
 
 	public virtual void Exile()

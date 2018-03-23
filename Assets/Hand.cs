@@ -10,7 +10,6 @@ public class Hand {
 
     public FightScene FightScene;
 
-    DrawPile drawPile;
     int cardLimit = 10;
     int drawPerTurn = 7;
 
@@ -19,7 +18,6 @@ public class Hand {
     public Hand(FightScene fightScene)
     {
         this.FightScene = fightScene;
-        this.drawPile = new DrawPile(FightScene.GameStates.Deck);
 
         handObject = GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Hand");
         handObject.AddComponent<HandRenderer>();
@@ -30,13 +28,9 @@ public class Hand {
         cards = new List<Card>();
         for (int i = 0; i < drawPerTurn; i++)
         {
-            var newCard = drawPile.Draw();
+			var newCard = this.FightScene.DrawPile.Draw();
             cards.Add(newCard);
 
-            if (drawPile.cards.Count == 0)
-            {
-                break;
-            }
             newCard.Render();
             newCard.FightScene = this.FightScene;
 
@@ -57,7 +51,9 @@ public class Hand {
     {
         foreach(var card in cards)
         {
-            GameObject.Destroy(card.Object);
+			if (card != null) {
+				card.PassiveDiscard ();
+			}
         }
     }
 }

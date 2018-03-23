@@ -13,7 +13,7 @@ public class Player
 
 	public CharacterStates States;
 
-    public int EnergyPerTurn = 2;
+    public int EnergyPerTurn = 3;
 
     public Player()
     {
