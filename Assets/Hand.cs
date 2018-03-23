@@ -29,6 +29,9 @@ public class Hand {
         for (int i = 0; i < drawPerTurn; i++)
         {
 			var newCard = this.FightScene.DrawPile.Draw();
+			if (newCard == null) {
+				break;
+			}
             cards.Add(newCard);
 
             newCard.Render();

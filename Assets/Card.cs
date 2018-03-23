@@ -10,13 +10,16 @@ public class Card
     public delegate void OnClickEventHandler();
     public OnClickEventHandler OnClick;
 
+	public Card() 
+	{
+		OnClick += Play;
+	}
+
     public virtual void Render()
     {
         this.Object = new GameObject("CardInHand");
         this.Renderer = this.Object.AddComponent<CardRenderer>();
         this.Renderer.Card = this;
-
-		OnClick += Play;
     }
 
     public virtual void Play()

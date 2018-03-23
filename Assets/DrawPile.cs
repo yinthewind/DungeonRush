@@ -9,13 +9,16 @@ public class DrawPile
     public DrawPile(FightScene fightScene)
     {
 		this.fightScene = fightScene;
-		cards = fightScene.GameStates.Deck.cards;
+		cards = new List<Card> (fightScene.GameStates.Deck.Get());
     }
 
     public Card Draw()
     {
 		if (cards.Count == 0) {
 			this.cards = fightScene.DiscardPile.Get ();
+		}
+		if (cards.Count == 0) {
+			return null;
 		}
 		Debug.Log (this.cards.Count);
 		var cnt = cards.Count;
@@ -31,7 +34,7 @@ public class DrawPileRenderer : MonoBehaviour
 
 public class Deck
 {
-	public List<Card> cards;
+	List<Card> cards;
 
 	/// <summary>
 	/// Create an initial deck with preset cards
@@ -50,5 +53,10 @@ public class Deck
 			deck.Add (new DefendCard ());
 		}
 		return deck;
+	}
+
+	public List<Card> Get() 
+	{
+		return new List<Card>(this.cards);
 	}
 }

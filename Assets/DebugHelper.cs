@@ -9,9 +9,13 @@ public static class DebugHelper
 {
     public static void initForFightScene()
     {
-        var gObject = new GameObject("GameStatesPersistor");
-        gObject.tag = "GameStatesPersistor";
-        gObject.AddComponent<GameStatesPersistor>();
+		GameObject gObject = GameObject.FindGameObjectWithTag("GameStatesPersistor");
+		if(gObject == null)
+		{
+			gObject = new GameObject("GameStatesPersistor");
+			gObject.tag = "GameStatesPersistor";
+			gObject.AddComponent<GameStatesPersistor>();
+		}
     }
 }
 #endif
