@@ -61,7 +61,11 @@ public class CharacterStates
 
     public void AddState(CharacterState state)
     {
-        this.States.Add(state.Name, state);
+		if (this.States.ContainsKey (state.Name)) {
+			this.States [state.Name].Duration += state.Duration;
+		} else {
+			this.States.Add (state.Name, state);
+		}
     }
 
 	/// <summary>

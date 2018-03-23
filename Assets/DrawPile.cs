@@ -10,7 +10,18 @@ public class DrawPile
     {
 		this.fightScene = fightScene;
 		cards = new List<Card> (fightScene.GameStates.Deck.Get());
+		this.Shuffle ();
     }
+
+	public void Shuffle()
+	{
+		for (int i = 0; i < cards.Count; i++) {
+			var p = Random.Range (i, cards.Count - 1);
+			var temp = cards [i];
+			cards [i] = cards [p];
+			cards [p] = temp;
+		}
+	}
 
     public Card Draw()
     {
@@ -51,6 +62,9 @@ public class Deck
 		}
 		for (int i = 0; i < 5; i++) {
 			deck.Add (new DefendCard ());
+		}
+		for (int i = 0; i < 2; i++) {
+			deck.Add (new NeutralizeCard ());
 		}
 		return deck;
 	}
