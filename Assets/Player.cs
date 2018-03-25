@@ -25,7 +25,7 @@ public class Player
             }
         };
 
-        this.playerObject = new GameObject();
+		this.playerObject = GameObject.FindGameObjectsWithTag ("Placeholder").Single (o => o.name == "Player");
         this.playerRenderer = playerObject.AddComponent<PlayerRenderer>();
         this.playerRenderer.Register(this);
 
@@ -79,14 +79,12 @@ public class Player
 /// </summary>
 public class PlayerRenderer : MonoBehaviour
 {
-    private GameObject placeholder;
     private Text energyText;
     private Text hitPointText;
 	private Text shieldText;
 
     private void Start()
     {
-        placeholder = GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Player");
     }
 
     public void Register(Player player)

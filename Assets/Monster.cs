@@ -14,8 +14,7 @@ public class Monster
     {
         this.fightScene = fightScene;
 
-        GameObject gObject = new GameObject();
-        gObject.name = "Monster";
+		GameObject gObject = GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Monster");
         gObject.AddComponent<MonsterRenderer>().Register(this);
 
         HitPoint.OnChange += (oldVal, newVal) =>
@@ -51,12 +50,6 @@ public class Monster
 public class MonsterRenderer : MonoBehaviour
 {
     Text enemyHpText;
-    GameObject placeholder;
-
-    private void Start()
-    {
-        placeholder = GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Monster");
-    }
 
     public void Register(Monster monster)
     {
