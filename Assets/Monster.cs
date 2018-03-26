@@ -25,7 +25,7 @@ public class Monster
             }
         };
 
-        HitPoint.Val = 5;
+        HitPoint.Val = 25;
 
 		this.States = new CharacterStates (gObject);
     }

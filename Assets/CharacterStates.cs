@@ -38,7 +38,7 @@ public class WeakState : CharacterState
 		states.DamageModifier *= 0.75f;
 	}
 
-	public override void Render(GameObject container, Vector3 p, Vector3 tSize)
+	public override void Render(GameObject container, Vector3 p, Vector3 targetSize)
 	{
 		this.go = new GameObject (this.Name);
 		this.go.transform.SetParent (container.transform, false);
@@ -49,7 +49,35 @@ public class WeakState : CharacterState
 		spriteRenderer.material.color = Color.green;
 
 		var size = spriteRenderer.bounds.size;
-		this.go.transform.localScale = new Vector3 (tSize.x / size.x, tSize.y / size.y);
+		this.go.transform.localScale = new Vector3 (targetSize.x / size.x, targetSize.y / size.y);
+	}
+}
+
+public class VulnerableState : CharacterState
+{
+	public VulnerableState(int duration)
+	{
+		this.Name = "Vulnerable";
+		this.Comment = "Take 50% more damage from attack or spells";
+		this.Duration = duration;
+	}
+
+	public override void StartTurnEffect(CharacterStates states) {
+		states.DamageTookModifier *= 1.5f;
+	}
+
+	public override void Render (GameObject container, Vector3 p, Vector3 targetSize)
+	{
+		this.go = new GameObject (this.Name);
+		this.go.transform.SetParent (container.transform, false);
+		this.go.transform.position = p;
+
+		var spriteRenderer = this.go.AddComponent<SpriteRenderer> ();
+		spriteRenderer.sprite = Resources.Load<Sprite> ("VulnerableState");
+		spriteRenderer.material.color = Color.red;
+
+		var size = spriteRenderer.bounds.size;
+		this.go.transform.localScale = new Vector3 (targetSize.x / size.x, targetSize.y / size.y);
 	}
 }
 
@@ -148,7 +176,7 @@ public class CharacterStatesRenderer : MonoBehaviour
 		// use auto layout here??
 		foreach (var state in states) {
 			var s = new Vector3 (size.y , size.y);
-			var p = bounds.min + new Vector3(0.5f * size.y, 0.5f * size.y) + new Vector3(size.y * idx, 0);
+			var p = bounds.min + new Vector3(0.5f * size.y, 0.5f * size.y) + new Vector3(size.y * idx++, 0);
 			state.Value.Render (go, p, s);
 		}
 	}

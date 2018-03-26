@@ -57,15 +57,19 @@ public class Deck
 
 	List<Card> getInitialCards() {
 		List<Card> deck = new List<Card> ();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 4; i++) {
 			deck.Add (new StrikeCard ());
 		}
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 4; i++) {
 			deck.Add (new DefendCard ());
 		}
 		for (int i = 0; i < 2; i++) {
 			deck.Add (new NeutralizeCard ());
 		}
+		for (int i = 0; i < 2; i++) {
+			deck.Add (new BreakCard ());
+		}
+
 		return deck;
 	}
 
