@@ -21,8 +21,7 @@ public class CharacterState
 	{
 	}
 
-	public virtual void Render(Vector3 pos) {
-		this.go = new GameObject (this.Name);
+	public virtual void Render(GameObject container, Vector3 p, Vector3 tSize) {
 	}
 }
 
@@ -39,12 +38,18 @@ public class WeakState : CharacterState
 		states.DamageModifier *= 0.75f;
 	}
 
-	public override void Render(Vector3 pos)
+	public override void Render(GameObject container, Vector3 p, Vector3 tSize)
 	{
-		base.Render (pos);
+		this.go = new GameObject (this.Name);
+		this.go.transform.SetParent (container.transform, false);
+		this.go.transform.position = p;
+
 		var spriteRenderer = this.go.AddComponent<SpriteRenderer> ();
 		spriteRenderer.sprite = Resources.Load<Sprite> ("WeakState");
-		this.go.transform.localPosition = pos;
+		spriteRenderer.material.color = Color.green;
+
+		var size = spriteRenderer.bounds.size;
+		this.go.transform.localScale = new Vector3 (tSize.x / size.x, tSize.y / size.y);
 	}
 }
 
@@ -82,6 +87,7 @@ public class CharacterStates
 		} else {
 			this.States.Add (state.Name, state);
 		}
+		renderer.Render (this.States);
     }
 
 	/// <summary>
@@ -135,15 +141,15 @@ public class CharacterStatesRenderer : MonoBehaviour
 	public void Render(Dictionary<string, CharacterState> states)
 	{
 		var idx = 0;
-		var pos = this.gameObject.transform.position;
 		var size = this.gameObject.GetComponent<SpriteRenderer> ().bounds.size;
+		var go = this.gameObject;
+		var bounds = this.gameObject.GetComponent<SpriteRenderer> ().bounds;
 
 		// use auto layout here??
 		foreach (var state in states) {
-			var s = new Vector3 (size.y, size.y);
-			var p = - new Vector3 (size.x / 2, 0, 0) + new Vector3 (size.y * idx, 0, 0);
-			state.Value.Render (p);
+			var s = new Vector3 (size.y , size.y);
+			var p = bounds.min + new Vector3(0.5f * size.y, 0.5f * size.y) + new Vector3(size.y * idx, 0);
+			state.Value.Render (go, p, s);
 		}
 	}
-
 }

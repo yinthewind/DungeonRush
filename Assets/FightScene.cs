@@ -84,7 +84,6 @@ public class FightScene : MonoBehaviour
 
     private void endTurn()
     {
-        // enemy actions
         this.Player.EndTurn();
         this.Hand.EndTurn();
 
