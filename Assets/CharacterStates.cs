@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class CharacterState
 {
 	public string Name;
+	public string SpriteName;
 	public string Comment;
 	public int Duration;
+
+	public bool ShouldDestroy = false;
+
+	public SpriteRenderer SpriteRenderer;
 
 	protected GameObject go;
 
@@ -21,7 +27,26 @@ public class CharacterState
 	{
 	}
 
-	public virtual void Render(GameObject container, Vector3 p, Vector3 tSize) {
+	public virtual void Destroy()
+	{
+		if (this.go == null) {
+			return;
+		}
+		Debug.Log ("Should destroy");
+		GameObject.Destroy (this.go);
+	}
+
+	public virtual void Render(GameObject container, Vector3 p, Vector3 targetSize) {
+
+		this.go = new GameObject (this.Name);
+		this.go.transform.SetParent (container.transform, false);
+		this.go.transform.position = p;
+
+		this.SpriteRenderer = this.go.AddComponent<SpriteRenderer> ();
+		this.SpriteRenderer.sprite = Resources.Load<Sprite> (this.SpriteName);
+
+		var size = this.SpriteRenderer.bounds.size;
+		this.go.transform.localScale = new Vector3 (targetSize.x / size.x, targetSize.y / size.y);
 	}
 }
 
@@ -30,6 +55,7 @@ public class WeakState : CharacterState
 	public WeakState(int duration)
 	{
 		this.Name = "Weak";
+		this.SpriteName = "WeakState";
 		this.Comment = "Dealing 25% less damage";
 		this.Duration = duration;
 	}
@@ -40,16 +66,9 @@ public class WeakState : CharacterState
 
 	public override void Render(GameObject container, Vector3 p, Vector3 targetSize)
 	{
-		this.go = new GameObject (this.Name);
-		this.go.transform.SetParent (container.transform, false);
-		this.go.transform.position = p;
+		base.Render (container, p, targetSize);
 
-		var spriteRenderer = this.go.AddComponent<SpriteRenderer> ();
-		spriteRenderer.sprite = Resources.Load<Sprite> ("WeakState");
-		spriteRenderer.material.color = Color.green;
-
-		var size = spriteRenderer.bounds.size;
-		this.go.transform.localScale = new Vector3 (targetSize.x / size.x, targetSize.y / size.y);
+		this.SpriteRenderer.material.color = Color.green;
 	}
 }
 
@@ -58,6 +77,7 @@ public class VulnerableState : CharacterState
 	public VulnerableState(int duration)
 	{
 		this.Name = "Vulnerable";
+		this.SpriteName = "VulnerableState";
 		this.Comment = "Take 50% more damage from attack or spells";
 		this.Duration = duration;
 	}
@@ -68,16 +88,9 @@ public class VulnerableState : CharacterState
 
 	public override void Render (GameObject container, Vector3 p, Vector3 targetSize)
 	{
-		this.go = new GameObject (this.Name);
-		this.go.transform.SetParent (container.transform, false);
-		this.go.transform.position = p;
+		base.Render (container, p, targetSize);
 
-		var spriteRenderer = this.go.AddComponent<SpriteRenderer> ();
-		spriteRenderer.sprite = Resources.Load<Sprite> ("VulnerableState");
-		spriteRenderer.material.color = Color.red;
-
-		var size = spriteRenderer.bounds.size;
-		this.go.transform.localScale = new Vector3 (targetSize.x / size.x, targetSize.y / size.y);
+		this.SpriteRenderer.material.color = Color.red;
 	}
 }
 
@@ -106,6 +119,7 @@ public class CharacterStates
 		this.statesObject = new GameObject("charactorStates");
         statesObject.transform.SetParent(character.transform, false);
 		renderer = statesObject.AddComponent<CharacterStatesRenderer>();
+		renderer.Register (this);
 	}
 
     public void AddState(CharacterState state)
@@ -115,7 +129,7 @@ public class CharacterStates
 		} else {
 			this.States.Add (state.Name, state);
 		}
-		renderer.Render (this.States);
+		this.renderer.Dirty = true;
     }
 
 	/// <summary>
@@ -126,12 +140,14 @@ public class CharacterStates
 		foreach (var state in this.States) {
 			state.Value.EndTurnEffect (character);
 		}
+
 		foreach (var pair in this.States) {
 			pair.Value.Duration -= 1;
 			if (pair.Value.Duration <= 0) {
-				this.States.Remove (pair.Value.Name);
+				pair.Value.ShouldDestroy = true;
 			}
 		}
+		this.renderer.Dirty = true;
 	}
 
 	public void StartTurn()
@@ -146,13 +162,16 @@ public class CharacterStates
 		foreach (var state in this.States) {
 			state.Value.StartTurnEffect (this);
 		}
-		renderer.Render (this.States);
 	}
 }
 
 public class CharacterStatesRenderer : MonoBehaviour
 {
 	SpriteRenderer spritRenderer;
+	CharacterStates states;
+
+	// if true, we should clean up and rerender
+	public bool Dirty = true;
 
     private void Awake()
     {
@@ -163,18 +182,45 @@ public class CharacterStatesRenderer : MonoBehaviour
 
 		var pSize = this.transform.parent.GetComponentInParent<SpriteRenderer> ().bounds.size;
 		var pScale = this.transform.parent.GetComponentInParent<SpriteRenderer> ().transform.localScale;
-		this.transform.localPosition = new Vector3 (0, -0.6f * pSize.y / pScale.y );
+		this.transform.localPosition = new Vector3 (0, -0.6f * pSize.y / pScale.y);
     }
 
-	public void Render(Dictionary<string, CharacterState> states)
-	{
+	public void Register(CharacterStates states) {
+		this.states = states;
+	}
+
+	/// <summary>
+	/// Delete all rendered objects, also remove states whose ShouldDestroy are set
+	/// </summary>
+	public void CleanUp() {
+		var namesToDelete = new List<string>();
+		foreach (var state in this.states.States) {
+			if (state.Value.ShouldDestroy) {
+				namesToDelete.Add (state.Value.Name);
+			}
+			state.Value.Destroy ();
+		}
+		foreach (var name in namesToDelete) {
+			this.states.States.Remove (name);
+		}
+	}
+
+	public void Update() {
+		if (!this.Dirty) {
+			return;
+		} else {
+			this.CleanUp ();
+			this.Dirty = false;
+		}
+
 		var idx = 0;
 		var size = this.gameObject.GetComponent<SpriteRenderer> ().bounds.size;
 		var go = this.gameObject;
 		var bounds = this.gameObject.GetComponent<SpriteRenderer> ().bounds;
 
 		// use auto layout here??
-		foreach (var state in states) {
+		foreach (var state in this.states.States) {
+
 			var s = new Vector3 (size.y , size.y);
 			var p = bounds.min + new Vector3(0.5f * size.y, 0.5f * size.y) + new Vector3(size.y * idx++, 0);
 			state.Value.Render (go, p, s);

@@ -87,7 +87,9 @@ public class FightScene : MonoBehaviour
         this.Player.EndTurn();
         this.Hand.EndTurn();
 
+		this.Monster.StartTurn ();
         this.Monster.TakeAction();
+		this.Monster.EndTurn ();
 
         startTurn();
     }
