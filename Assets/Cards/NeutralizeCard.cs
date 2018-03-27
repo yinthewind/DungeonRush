@@ -2,16 +2,15 @@
 
 public class NeutralizeCard : Card
 {
-	public override void Render()
-	{
-		base.Render();
-		this.Object.AddComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("NeutralizeCard");
-		this.Object.AddComponent<BoxCollider2D> ();
+	int baseDamage = 3;
+
+	public NeutralizeCard() {
+		this.SpriteName = "NeutralizeCard";
 	}
 
 	public override void Play()
 	{
-		this.FightScene.Monster.HitPoint.Val -= 3;
+		this.FightScene.Monster.HitPoint.Val -= this.baseDamage;
         this.FightScene.Monster.States.AddState(new WeakState(1));
 		base.Play ();
 	}

@@ -27,6 +27,7 @@ public class DrawPile
     {
 		if (cards.Count == 0) {
 			this.cards = fightScene.DiscardPile.Get ();
+			this.Shuffle ();
 		}
 		if (cards.Count == 0) {
 			return null;

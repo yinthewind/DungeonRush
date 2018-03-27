@@ -4,11 +4,8 @@ public class StrikeCard : Card
 {
 	int baseDamage = 6;
 
-	public override void Render()
-	{
-		base.Render();
-		this.Object.AddComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("StrikeCard");
-		this.Object.AddComponent<BoxCollider2D> ();
+	public StrikeCard() {
+		this.SpriteName = "StrikeCard";
 	}
 
 	public override int GetCalculatedDamage(FightScene fightScene)

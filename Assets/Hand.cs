@@ -54,9 +54,7 @@ public class Hand {
     {
         foreach(var card in cards)
         {
-			if (card != null) {
-				card.PassiveDiscard ();
-			}
+			card.PassiveDiscard ();
         }
     }
 }

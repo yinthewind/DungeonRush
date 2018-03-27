@@ -7,6 +7,8 @@ public class Card
     public CardRenderer Renderer;
     public FightScene FightScene;
 
+	public string SpriteName;
+
     public delegate void OnClickEventHandler();
     public OnClickEventHandler OnClick;
 
@@ -20,6 +22,8 @@ public class Card
         this.Object = new GameObject("CardInHand");
         this.Renderer = this.Object.AddComponent<CardRenderer>();
         this.Renderer.Card = this;
+		this.Object.AddComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>(this.SpriteName);
+		this.Object.AddComponent<BoxCollider2D> ();
     }
 
     public virtual void Play()

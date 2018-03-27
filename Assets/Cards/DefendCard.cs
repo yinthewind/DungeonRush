@@ -2,11 +2,8 @@
 
 public class DefendCard : Card
 {
-	public override void Render()
-	{
-		base.Render();
-		this.Object.AddComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("DefendCard");
-		this.Object.AddComponent<BoxCollider2D> ();
+	public DefendCard() {
+		this.SpriteName = "DefendCard";
 	}
 
 	public override void Play()

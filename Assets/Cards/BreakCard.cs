@@ -2,11 +2,8 @@
 
 public class BreakCard : Card
 {
-	public override void Render()
-	{
-		base.Render();
-		this.Object.AddComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("BreakCard");
-		this.Object.AddComponent<BoxCollider2D> ();
+	public BreakCard() {
+		this.SpriteName = "BreakCard";
 	}
 
 	public override void Play()
