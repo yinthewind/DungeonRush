@@ -12,7 +12,7 @@ public class BreakCard : Card
 
 			this.FightScene.Player.Energy.Val -= 2;
 			this.FightScene.Monster.HitPoint.Val -= 8;
-			this.FightScene.Monster.States.AddState (new VulnerableState (1));
+			this.FightScene.Monster.States.AddState (new VulnerableState (2));
 			base.Play ();
 		}
 	}

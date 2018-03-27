@@ -47,6 +47,18 @@ public class CharacterState
 
 		var size = this.SpriteRenderer.bounds.size;
 		this.go.transform.localScale = new Vector3 (targetSize.x / size.x, targetSize.y / size.y);
+
+		this.go.AddComponent<Canvas> ();
+		var textGo = new GameObject ("text");
+		textGo.transform.SetParent (this.go.transform);
+		textGo.transform.localPosition = new Vector3 (0, 0);
+
+		var textComponent = textGo.AddComponent<Text>();
+		textComponent.text = this.Duration.ToString ();
+		textComponent.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+		textComponent.color = Color.white;
+		textComponent.alignment = TextAnchor.MiddleCenter;
+		textComponent.fontSize = 40;
 	}
 }
 
