@@ -1,1 +1,2 @@
-# DungeonRush
+# DungeonRus
+This is an awesome game.
