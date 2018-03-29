@@ -11,7 +11,7 @@ public class BreakCard : Card
 		if (this.FightScene.Player.Energy.Val >= 2) {
 
 			this.FightScene.Player.Energy.Val -= 2;
-			this.FightScene.Monster.HitPoint.Val -= 8;
+			this.FightScene.Monster.Hitpoint.Val -= 8;
 			this.FightScene.Monster.States.AddState (new VulnerableState (2));
 			base.Play ();
 		}

@@ -3,12 +3,15 @@ using System.Collections;
 
 public class GameStatesPersistor : MonoBehaviour
 {
-    public int HitPoint = 250;
+	public int MaxHitpoint = 250;
+	public int Hitpoint;
     public int Level = 1;
 	public Deck Deck = new Deck();
 
     public void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
+
+		this.Hitpoint = this.MaxHitpoint;
     }
 }

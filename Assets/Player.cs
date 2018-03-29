@@ -6,8 +6,10 @@ public class Player
 {
     GameObject playerObject;
     PlayerRenderer playerRenderer;
+	GameStatesPersistor gameStatesPersistor;
 
-    public MonitoredValue<int> HitPoint = new MonitoredValue<int>();
+	public int MaxHitpoint;
+    public MonitoredValue<int> Hitpoint = new MonitoredValue<int>();
     public MonitoredValue<int> Energy = new MonitoredValue<int>();
 	public MonitoredValue<int> Shield = new MonitoredValue<int>();
 
@@ -17,7 +19,13 @@ public class Player
 
     public Player()
     {
-        this.HitPoint.OnChange += (oldVal, newVal) =>
+		this.gameStatesPersistor = GameObject.FindGameObjectWithTag ("GameStatesPersistor").GetComponent<GameStatesPersistor> ();
+		// init for Fight Scene
+		this.Hitpoint.Val = this.gameStatesPersistor.Hitpoint;
+		this.MaxHitpoint = this.gameStatesPersistor.MaxHitpoint;
+		this.Shield.Val = 0;
+
+        this.Hitpoint.OnChange += (oldVal, newVal) =>
         {
             if (newVal <= 0)
             {
@@ -28,10 +36,6 @@ public class Player
 		this.playerObject = GameObject.FindGameObjectsWithTag ("Placeholder").Single (o => o.name == "Player");
         this.playerRenderer = playerObject.AddComponent<PlayerRenderer>();
         this.playerRenderer.Register(this);
-
-        // init for Fight Scene
-        this.HitPoint.Val = GameObject.FindGameObjectWithTag("GameStatesPersistor").GetComponent<GameStatesPersistor>().HitPoint;
-		this.Shield.Val = 0;
 
 		this.States = new CharacterStates (playerObject);
     }
@@ -51,7 +55,7 @@ public class Player
 			Debug.Assert (this.Shield.Val >= 0);
 			damage -= this.Shield.Val;
 			this.Shield.Val = 0;
-			this.HitPoint.Val -= damage;
+			this.Hitpoint.Val -= damage;
 		}
 	}
 
@@ -68,9 +72,8 @@ public class Player
 
     public void EndFight()
 	{
-		GameObject.FindGameObjectWithTag ("GameStatesPersistor").GetComponent<GameStatesPersistor> ().HitPoint = this.HitPoint.Val;
-		GameObject.FindGameObjectWithTag ("GameStatesPersistor").GetComponent<GameStatesPersistor> ().Level++;
-
+		gameStatesPersistor.Hitpoint = this.Hitpoint.Val;
+		gameStatesPersistor.Level++;
 	}
 }
 
@@ -80,19 +83,11 @@ public class Player
 public class PlayerRenderer : MonoBehaviour
 {
     private Text energyText;
-    private Text hitPointText;
-	private Text shieldText;
-
-    private void Start()
-    {
-    }
 
     public void Register(Player player)
     {
         var canvas = GameObject.FindObjectsOfType<Canvas>().Single(c => c.name == "FightScene");
         energyText = canvas.transform.Find("energy").GetComponent<Text>();
-        hitPointText = canvas.transform.Find("playerHp").GetComponent<Text>();
-		shieldText = canvas.transform.Find ("playerShield").GetComponent<Text> ();
 
 		player.Energy.OnChange += (oldVal, newVal) => {
 			if (newVal < 0) {
@@ -101,15 +96,6 @@ public class PlayerRenderer : MonoBehaviour
 			energyText.text = "Energy: " + newVal;
 		};
 
-		player.HitPoint.OnChange += (oldVal, newVal) => {
-			if (newVal < 0) {
-				newVal = 0;
-			}
-			hitPointText.text = "HP: " + newVal;
-		};
-
-		player.Shield.OnChange += (oldVal, newVal) => {
-			shieldText.text = "Sheild: " + newVal;
-		};
+		this.transform.Find ("VitaBar").GetComponent<VitaBar> ().Register (player.Hitpoint, player.MaxHitpoint, player.Shield);
     }
 }

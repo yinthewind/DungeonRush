@@ -52,7 +52,7 @@ public class FightScene : MonoBehaviour
     {
 		this.DrawPile = new DrawPile(this);
         this.Player = newPlayer();
-        this.Player.HitPoint.OnChange += (oldVal, newVal) =>
+        this.Player.Hitpoint.OnChange += (oldVal, newVal) =>
         {
             if (newVal <= 0)
             {
@@ -60,7 +60,7 @@ public class FightScene : MonoBehaviour
             }
         };
         this.Monster = newMonster();
-        this.Monster.HitPoint.OnChange += (oldVal, newVal) =>
+        this.Monster.Hitpoint.OnChange += (oldVal, newVal) =>
         {
             if (newVal <= 0)
             {

@@ -20,7 +20,7 @@ public class StrikeCard : Card
 		if (this.FightScene.Player.Energy.Val >= 1) {
 			
 			this.FightScene.Player.Energy.Val -= 1;
-			this.FightScene.Monster.HitPoint.Val -= GetCalculatedDamage(this.FightScene);
+			this.FightScene.Monster.Hitpoint.Val -= GetCalculatedDamage(this.FightScene);
 			base.Play ();
 		}
 	}
