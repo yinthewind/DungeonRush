@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 public class DrawPile
 {
-    public List<Card> cards;
+	public List<Card> cards;
 	FightScene fightScene;
 
-    public DrawPile(FightScene fightScene)
-    {
+	public DrawPile(FightScene fightScene)
+	{
 		this.fightScene = fightScene;
 		cards = new List<Card> (fightScene.GameStates.Deck.Get());
 		this.Shuffle ();
-    }
+	}
 
 	public void Shuffle()
 	{
@@ -23,8 +23,8 @@ public class DrawPile
 		}
 	}
 
-    public Card Draw()
-    {
+	public Card Draw()
+	{
 		if (cards.Count == 0) {
 			this.cards = fightScene.DiscardPile.Get ();
 			this.Shuffle ();
@@ -33,10 +33,10 @@ public class DrawPile
 			return null;
 		}
 		var cnt = cards.Count;
-        var card = cards[cnt-1];
-        cards.RemoveAt(cnt-1);
-        return card;
-    }
+		var card = cards[cnt-1];
+		cards.RemoveAt(cnt-1);
+		return card;
+	}
 }
 
 public class DrawPileRenderer : MonoBehaviour

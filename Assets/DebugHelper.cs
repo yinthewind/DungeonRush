@@ -7,8 +7,8 @@ using UnityEditor;
 /// </summary>
 public static class DebugHelper
 {
-    public static void initForFightScene()
-    {
+	public static void initForFightScene()
+	{
 		GameObject gObject = GameObject.FindGameObjectWithTag("GameStatesPersistor");
 		if(gObject == null)
 		{
@@ -16,6 +16,6 @@ public static class DebugHelper
 			gObject.tag = "GameStatesPersistor";
 			gObject.AddComponent<GameStatesPersistor>();
 		}
-    }
+	}
 }
 #endif

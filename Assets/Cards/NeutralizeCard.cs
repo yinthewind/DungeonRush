@@ -11,7 +11,7 @@ public class NeutralizeCard : Card
 	public override void Play()
 	{
 		this.FightScene.Monster.Hitpoint.Val -= this.baseDamage;
-        this.FightScene.Monster.States.AddState(new WeakState(1));
+		this.FightScene.Monster.States.AddState(new WeakState(1));
 		base.Play ();
 	}
 }

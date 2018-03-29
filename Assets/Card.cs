@@ -3,34 +3,34 @@ using System.Collections;
 
 public class Card
 {
-    public GameObject Object;
-    public CardRenderer Renderer;
-    public FightScene FightScene;
+	public GameObject Object;
+	public CardRenderer Renderer;
+	public FightScene FightScene;
 
 	public string SpriteName;
 
-    public delegate void OnClickEventHandler();
-    public OnClickEventHandler OnClick;
+	public delegate void OnClickEventHandler();
+	public OnClickEventHandler OnClick;
 
 	public Card() 
 	{
 		OnClick += Play;
 	}
 
-    public virtual void Render()
-    {
-        this.Object = new GameObject("CardInHand");
-        this.Renderer = this.Object.AddComponent<CardRenderer>();
-        this.Renderer.Card = this;
+	public virtual void Render()
+	{
+		this.Object = new GameObject("CardInHand");
+		this.Renderer = this.Object.AddComponent<CardRenderer>();
+		this.Renderer.Card = this;
 		this.Object.AddComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>(this.SpriteName);
 		this.Object.AddComponent<BoxCollider2D> ();
-    }
+	}
 
-    public virtual void Play()
-    {
-        GameObject.Destroy (Object);
+	public virtual void Play()
+	{
+		GameObject.Destroy (Object);
 		this.FightScene.DiscardPile.Add (this);
-    }
+	}
 
 	/// <summary>
 	/// This card is actively discarded by player
@@ -63,21 +63,21 @@ public class Card
 
 public class CardRenderer : MonoBehaviour
 {
-    protected SpriteRenderer sr;
+	protected SpriteRenderer sr;
 
-    public Card Card;
+	public Card Card;
 
-    protected virtual void OnMouseDown()
-    {
-        if (Card != null && Card.OnClick != null)
-        {
-            Card.OnClick();
-        }
-    }
+	protected virtual void OnMouseDown()
+	{
+		if (Card != null && Card.OnClick != null)
+		{
+			Card.OnClick();
+		}
+	}
 
-    public void SetPosition(Vector3 position, Vector3 scale)
-    {
-        this.gameObject.transform.position = position;
-        this.gameObject.transform.localScale = scale;
-    }
+	public void SetPosition(Vector3 position, Vector3 scale)
+	{
+		this.gameObject.transform.position = position;
+		this.gameObject.transform.localScale = scale;
+	}
 }

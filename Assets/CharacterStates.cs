@@ -129,20 +129,20 @@ public class CharacterStates
 		this.character = character;
 
 		this.statesObject = new GameObject("charactorStates");
-        statesObject.transform.SetParent(character.transform, false);
+		statesObject.transform.SetParent(character.transform, false);
 		renderer = statesObject.AddComponent<CharacterStatesRenderer>();
 		renderer.Register (this);
 	}
 
-    public void AddState(CharacterState state)
-    {
+	public void AddState(CharacterState state)
+	{
 		if (this.States.ContainsKey (state.Name)) {
 			this.States [state.Name].Duration += state.Duration;
 		} else {
 			this.States.Add (state.Name, state);
 		}
 		this.renderer.Dirty = true;
-    }
+	}
 
 	/// <summary>
 	/// Compute states duration, and removed outdated states
@@ -185,8 +185,8 @@ public class CharacterStatesRenderer : MonoBehaviour
 	// if true, we should clean up and rerender
 	public bool Dirty = true;
 
-    private void Awake()
-    {
+	private void Awake()
+	{
 		this.spritRenderer = this.gameObject.AddComponent<SpriteRenderer> ();
 		this.spritRenderer.sprite = Resources.Load<Sprite> ("Square");
 		var size = this.spritRenderer.bounds.size;
@@ -195,7 +195,7 @@ public class CharacterStatesRenderer : MonoBehaviour
 		var pSize = this.transform.parent.GetComponentInParent<SpriteRenderer> ().bounds.size;
 		var pScale = this.transform.parent.GetComponentInParent<SpriteRenderer> ().transform.localScale;
 		this.transform.localPosition = new Vector3 (0, -0.6f * pSize.y / pScale.y);
-    }
+	}
 
 	public void Register(CharacterStates states) {
 		this.states = states;
