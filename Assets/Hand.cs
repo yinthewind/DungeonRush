@@ -12,7 +12,8 @@ public class Hand {
 
     int cardLimit = 10;
     int drawPerTurn = 5;
-
+    int cardPos = 0;
+	
     public List<Card> cards;
 
     public Hand(FightScene fightScene)
@@ -23,15 +24,15 @@ public class Hand {
         handObject.AddComponent<HandRenderer>();
     }
 
-    public void StartTurn()
+
+    public void DrawNewCard(int num)
     {
-        cards = new List<Card>();
-        for (int i = 0; i < drawPerTurn; i++)
+        for (int i = cardPos; i < num + cardPos; i++)
         {
-			var newCard = this.FightScene.DrawPile.Draw();
-			if (newCard == null) {
-				break;
-			}
+            var newCard = this.FightScene.DrawPile.Draw();
+            if (newCard == null) {
+                break;
+            }
             cards.Add(newCard);
 
             newCard.Render();
@@ -48,6 +49,15 @@ public class Hand {
             var scale = new Vector3(hWidth / 64, hHeight / 8, 0);
             newCard.Renderer.SetPosition(pos, scale);
         }
+        cardPos += num;
+    }
+
+
+    public void StartTurn()
+    {
+        cardPos = 0;
+        cards = new List<Card>();
+        DrawNewCard(drawPerTurn);
     }
 
     public void EndTurn()
