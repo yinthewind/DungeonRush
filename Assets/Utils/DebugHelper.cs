@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
 
-#if UNITY_EDITOR
 /// <summary>
 /// Help to create a GameStatesPersistor
 /// </summary>
