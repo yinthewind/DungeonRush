@@ -70,6 +70,15 @@ public class Deck
 			deck.Add (new BreakCard ());
 		}
 
+		for (int i = 0; i < 2; i++) {
+			deck.Add (new BackflipCard ());
+		}
+		for (int i = 0; i < 2; i++) {
+			deck.Add (new AcrobaticsCard ());
+		}
+		for (int i = 0; i < 1; i++) {
+			deck.Add (new AdrenalineCard ());
+		}
 		return deck;
 	}
 
