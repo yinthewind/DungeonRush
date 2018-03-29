@@ -62,50 +62,6 @@ public class CharacterState
 	}
 }
 
-public class WeakState : CharacterState
-{
-	public WeakState(int duration)
-	{
-		this.Name = "Weak";
-		this.SpriteName = "WeakState";
-		this.Comment = "Dealing 25% less damage";
-		this.Duration = duration;
-	}
-
-	public override void StartTurnEffect(CharacterStates states){
-		states.DamageModifier *= 0.75f;
-	}
-
-	public override void Render(GameObject container, Vector3 p, Vector3 targetSize)
-	{
-		base.Render (container, p, targetSize);
-
-		this.SpriteRenderer.material.color = Color.green;
-	}
-}
-
-public class VulnerableState : CharacterState
-{
-	public VulnerableState(int duration)
-	{
-		this.Name = "Vulnerable";
-		this.SpriteName = "VulnerableState";
-		this.Comment = "Take 50% more damage from attack or spells";
-		this.Duration = duration;
-	}
-
-	public override void StartTurnEffect(CharacterStates states) {
-		states.DamageTookModifier *= 1.5f;
-	}
-
-	public override void Render (GameObject container, Vector3 p, Vector3 targetSize)
-	{
-		base.Render (container, p, targetSize);
-
-		this.SpriteRenderer.material.color = Color.red;
-	}
-}
-
 public class CharacterStates
 {
 	// Damage Output : (card/monster base attack + AttackModifier) * DamageModifier
