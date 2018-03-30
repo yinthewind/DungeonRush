@@ -12,7 +12,6 @@ public class Hand {
 
     int cardLimit = 10;
     int drawPerTurn = 5;
-    int cardPos = 0;
 	
     public List<Card> cards;
 
@@ -24,38 +23,51 @@ public class Hand {
         handObject.AddComponent<HandRenderer>();
     }
 
+	public void RenderHand()
+	{
+		var basePos = handObject.transform.position;
+		var hScale = handObject.transform.localScale;
+		var hWidth = hScale.x;
+		var hHeight = hScale.y;
+		basePos -= new Vector3(hWidth / 2, 0);
+		var scale = new Vector3(hWidth / 64, hHeight / 8, 0);
 
-    public void DrawNewCard(int num)
-    {
-        for (int i = cardPos; i < num + cardPos; i++)
-        {
-            var newCard = this.FightScene.DrawPile.Draw();
-            if (newCard == null) {
-                break;
-            }
-            cards.Add(newCard);
+		for (int i = 0; i < cards.Count; i++) 
+		{
+			var pos = basePos + new Vector3(i * hWidth / 12 + hWidth / 24, 0, -0.1f);
+			cards.ElementAt(i).Renderer.SetPosition(pos, scale);
+		}
+	}
 
-            newCard.Render();
-            newCard.FightScene = this.FightScene;
+	public void DrawNewCard(int num)
+	{
+		for (int i = 0; i < num; i++)
+		{
+			var newCard = this.FightScene.DrawPile.Draw();
+			if (newCard == null) {
+				break;
+			}
+			cards.Add(newCard);
 
-            var basePos = handObject.transform.position;
-            var hScale = handObject.transform.localScale;
-            var hWidth = hScale.x;
-            var hHeight = hScale.y;
+			newCard.Render();
+			newCard.FightScene = this.FightScene;
+		}
+		RenderHand ();
+	}
 
-            basePos -= new Vector3(hWidth / 2, 0);
-
-            var pos = basePos + new Vector3(i * hWidth / 12 + hWidth / 24, 0, -0.1f);
-            var scale = new Vector3(hWidth / 64, hHeight / 8, 0);
-            newCard.Renderer.SetPosition(pos, scale);
-        }
-        cardPos += num;
-    }
-
+	public void RemoveCard(Card card)
+	{
+		for (int i = 0; i < cards.Count; i++) 
+		{
+			if (cards.ElementAt (i) == card) 
+			{
+				cards.Remove (card);
+			}
+		}
+	}
 
     public void StartTurn()
     {
-        cardPos = 0;
         cards = new List<Card>();
         DrawNewCard(drawPerTurn);
     }

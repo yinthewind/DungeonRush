@@ -12,6 +12,8 @@ public class Card
 	public delegate void OnClickEventHandler();
 	public OnClickEventHandler OnClick;
 
+	protected bool shouldExhausted = false;
+
 	public Card() 
 	{
 		OnClick += Play;
@@ -29,7 +31,11 @@ public class Card
 	public virtual void Play()
 	{
 		GameObject.Destroy (Object);
-		this.FightScene.DiscardPile.Add (this);
+		this.FightScene.Hand.RemoveCard (this);
+		this.FightScene.Hand.RenderHand ();
+		if (shouldExhausted == false) {
+			this.FightScene.DiscardPile.Add (this);
+		}
 	}
 
 	/// <summary>

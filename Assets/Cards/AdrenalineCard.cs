@@ -6,12 +6,13 @@ public class AdrenalineCard : Card {
 
     public AdrenalineCard(){
         this.SpriteName = "AdrenalineCard";
+        this.shouldExhausted = true;
     }
 
     public override void Play()
     {
         this.FightScene.Player.Energy.Val += 1;
         this.FightScene.Hand.DrawNewCard (2);
-        GameObject.Destroy (Object);
+        base.Play ();
     }
 }
