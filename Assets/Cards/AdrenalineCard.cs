@@ -6,7 +6,7 @@ public class AdrenalineCard : Card {
 
     public AdrenalineCard(){
         this.SpriteName = "AdrenalineCard";
-        this.exhausted = true;
+        this.shouldExhausted = true;
     }
 
     public override void Play()
