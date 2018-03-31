@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class AdrenalineCard : Card {
 
-    public AdrenalineCard(){
-        this.SpriteName = "AdrenalineCard";
-        this.shouldExhausted = true;
-    }
+	public AdrenalineCard(){
+		this.SpriteName = "AdrenalineCard";
+		this.shouldExhausted = true;
+	}
 
-    public override void Play()
-    {
-        this.FightScene.Player.Energy.Val += 1;
-        this.FightScene.Hand.DrawNewCard (2);
-        base.Play ();
-    }
+	public override void Play()
+	{
+		this.FightScene.Player.Energy.Val += 1;
+		this.FightScene.Hand.DrawNewCard (2);
+		base.Play ();
+	}
 }
