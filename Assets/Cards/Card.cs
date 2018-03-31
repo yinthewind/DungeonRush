@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Card
@@ -8,15 +9,21 @@ public class Card
 	public FightScene FightScene;
 
 	public string SpriteName;
+	public string Name;
+	public string Comment;
 
-	public delegate void OnClickEventHandler();
-	public OnClickEventHandler OnClick;
+	public delegate void OnMouseActionEventHandler();
+	public OnMouseActionEventHandler OnMouseDown;
 
 	protected bool shouldExhausted = false;
 
-	public Card() 
+	public Card(CardType cardType) 
 	{
-		OnClick += Play;
+		this.OnMouseDown += Play;
+
+		this.SpriteName = CardConfigurations.Metas [cardType].SpriteName;
+		this.Name = CardConfigurations.Metas [cardType].Name;
+		this.Comment = CardConfigurations.Metas [cardType].Comment;
 	}
 
 	public virtual void Render()
@@ -73,12 +80,49 @@ public class CardRenderer : MonoBehaviour
 
 	public Card Card;
 
+	GameObject cardDescriptionObject;
+
 	protected virtual void OnMouseDown()
 	{
-		if (Card != null && Card.OnClick != null)
+		if (Card != null && Card.OnMouseDown != null)
 		{
-			Card.OnClick();
+			Card.OnMouseDown();
 		}
+	}
+
+	protected virtual void OnMouseOver()
+	{
+		displayCardDescription ();
+	}
+
+	protected virtual void OnMouseExit()
+	{
+		hideCardDescription ();
+	}
+
+
+	public void displayCardDescription()
+	{
+		if (this.cardDescriptionObject != null) {
+			return;
+		}
+
+		this.gameObject.AddComponent<Canvas> ();
+		this.cardDescriptionObject = new GameObject ("text");
+		this.cardDescriptionObject.transform.SetParent (this.gameObject.transform);
+		this.cardDescriptionObject.transform.localPosition = new Vector3 (0, 0);
+
+		var textComponent = this.cardDescriptionObject.AddComponent<Text>();
+		textComponent.text = this.Card.Name + ": " + this.Card.Comment;
+		textComponent.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+		textComponent.color = Color.blue;
+		textComponent.alignment = TextAnchor.MiddleCenter;
+		textComponent.fontSize = 20;
+	}
+
+	public void hideCardDescription()
+	{
+		Destroy (this.cardDescriptionObject);
 	}
 
 	public void SetPosition(Vector3 position, Vector3 scale)

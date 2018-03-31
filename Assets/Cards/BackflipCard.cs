@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BackflipCard : Card {
 
-	public BackflipCard(){
-		this.SpriteName = "BackflipCard";
+	public BackflipCard() : base(CardType.Backflip) {
 	}
 
 	public override void Play(){

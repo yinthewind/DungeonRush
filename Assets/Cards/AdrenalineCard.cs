@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class AdrenalineCard : Card {
 
-	public AdrenalineCard(){
-		this.SpriteName = "AdrenalineCard";
+	public AdrenalineCard() : base(CardType.Adrenaline) {
 		this.shouldExhausted = true;
 	}
 

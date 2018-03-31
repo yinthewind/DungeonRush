@@ -4,8 +4,7 @@ public class NeutralizeCard : Card
 {
 	int baseDamage = 3;
 
-	public NeutralizeCard() {
-		this.SpriteName = "NeutralizeCard";
+	public NeutralizeCard() : base(CardType.Neutralize) {
 	}
 
 	public override void Play()

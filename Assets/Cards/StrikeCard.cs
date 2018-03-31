@@ -4,8 +4,7 @@ public class StrikeCard : Card
 {
 	int baseDamage = 6;
 
-	public StrikeCard() {
-		this.SpriteName = "StrikeCard";
+	public StrikeCard() : base(CardType.Strike) {
 	}
 
 	public override int GetCalculatedDamage(FightScene fightScene)

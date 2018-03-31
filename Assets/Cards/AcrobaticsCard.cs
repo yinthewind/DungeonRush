@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class AcrobaticsCard : Card {
 
-	public AcrobaticsCard(){
-		this.SpriteName = "AcrobaticsCard";
+	public AcrobaticsCard() : base(CardType.Acrobatics) {
 	}
-
 
 	public override void Play(){
 		if (this.FightScene.Player.Energy.Val >= 1){

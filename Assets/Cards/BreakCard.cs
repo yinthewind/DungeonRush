@@ -2,8 +2,7 @@
 
 public class BreakCard : Card
 {
-	public BreakCard() {
-		this.SpriteName = "BreakCard";
+	public BreakCard() : base(CardType.Break) {
 	}
 
 	public override void Play()

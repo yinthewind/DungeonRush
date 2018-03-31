@@ -2,8 +2,7 @@
 
 public class DefendCard : Card
 {
-	public DefendCard() {
-		this.SpriteName = "DefendCard";
+	public DefendCard() : base(CardType.Defend) {
 	}
 
 	public override void Play()
