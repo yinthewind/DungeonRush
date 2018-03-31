@@ -129,10 +129,10 @@ public class StatesBar
 	public void StartTurn()
 	{
 		// Reset Modifiers to default value and then reapply state effects
-		AttackModifier = 1;
+		AttackModifier = 0;
 		DamageModifier = 1;
 		DamageTookModifier = 1;
-		ShieldModifier = 1;
+		ShieldModifier = 0;
 		DefenceModifier = 1;
 
 		foreach (var state in this.States) {
