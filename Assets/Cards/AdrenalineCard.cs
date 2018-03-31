@@ -8,10 +8,9 @@ public class AdrenalineCard : Card {
 		this.shouldExhausted = true;
 	}
 
-	public override void Play()
+	public override void OnPlay()
 	{
-		this.FightScene.Player.Energy.Val += 1;
+		base.OnPlay ();
 		this.FightScene.Hand.DrawNewCard (2);
-		base.Play ();
 	}
 }

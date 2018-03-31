@@ -23,7 +23,7 @@ public class Hand {
         handObject.AddComponent<HandRenderer>();
     }
 
-	public void RenderHand()
+	public void Render()
 	{
 		var basePos = handObject.transform.position;
 		var hScale = handObject.transform.localScale;
@@ -52,7 +52,7 @@ public class Hand {
 			newCard.Render();
 			newCard.FightScene = this.FightScene;
 		}
-		RenderHand ();
+		this.Render ();
 	}
 
 	public void RemoveCard(Card card)
@@ -64,6 +64,7 @@ public class Hand {
 				cards.Remove (card);
 			}
 		}
+		this.Render ();
 	}
 
     public void StartTurn()

@@ -7,15 +7,8 @@ public class AcrobaticsCard : Card {
 	public AcrobaticsCard() : base(CardType.Acrobatics) {
 	}
 
-	public override void Play(){
-		if (this.FightScene.Player.Energy.Val >= 1){
-
-			this.FightScene.Player.Energy.Val -= 1;
-			this.FightScene.Hand.DrawNewCard (3);
-
-			// TODO: should discard one chosen card
-
-			base.Play ();
-		}
+	public override void OnPlay(){
+		base.OnPlay ();
+		this.FightScene.Hand.DrawNewCard (3);
 	}
 }

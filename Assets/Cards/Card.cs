@@ -12,6 +12,10 @@ public class Card
 	public string Name;
 	public string Comment;
 
+	public int baseDamage;
+	public int baseArmor;
+	public int energyCost;
+
 	public delegate void OnMouseActionEventHandler();
 	public OnMouseActionEventHandler OnMouseDown;
 
@@ -24,6 +28,10 @@ public class Card
 		this.SpriteName = CardConfigurations.Metas [cardType].SpriteName;
 		this.Name = CardConfigurations.Metas [cardType].Name;
 		this.Comment = CardConfigurations.Metas [cardType].Comment;
+
+		this.baseDamage = CardConfigurations.Metas [cardType].BaseDamage;
+		this.baseArmor = CardConfigurations.Metas [cardType].BaseArmor;
+		this.energyCost = CardConfigurations.Metas [cardType].EnergyCost;
 	}
 
 	public virtual void Render()
@@ -35,14 +43,41 @@ public class Card
 		this.Object.AddComponent<BoxCollider2D> ();
 	}
 
-	public virtual void Play()
+	public void Play()
+	{
+		if (FightScene.Player.Energy.Val < this.energyCost) {
+			return;
+		}
+		this.BeforePlay ();
+		this.OnPlay ();
+		this.AfterPlay ();
+	}
+
+	public virtual void BeforePlay() 
 	{
 		GameObject.Destroy (Object);
 		this.FightScene.Hand.RemoveCard (this);
-		this.FightScene.Hand.RenderHand ();
+	}
+
+	public virtual void OnPlay()
+	{
+		this.FightScene.Player.Energy.Val -= this.energyCost;
+		this.FightScene.Player.Shield.Val += this.baseArmor;
+		this.FightScene.Monster.Hitpoint.Val -= this.GetCalculatedDamage ();
+	}
+
+	public virtual void AfterPlay() 
+	{
 		if (shouldExhausted == false) {
 			this.FightScene.DiscardPile.Add (this);
 		}
+	}
+
+	public virtual int GetCalculatedDamage()
+	{
+		var damageOutput = (baseDamage + this.FightScene.Player.States.AttackModifier) * this.FightScene.Player.States.DamageModifier;
+		var damageTookByMonster = damageOutput * this.FightScene.Monster.States.DamageTookModifier;
+		return (int)damageTookByMonster;
 	}
 
 	/// <summary>
@@ -66,11 +101,6 @@ public class Card
 	public virtual void Exile()
 	{
 		GameObject.Destroy (Object);
-	}
-
-	public virtual int GetCalculatedDamage(FightScene fightScene)
-	{
-		return 0;
 	}
 }
 
