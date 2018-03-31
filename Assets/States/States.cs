@@ -103,6 +103,7 @@ public class StatesBar
 			this.States [state.Name].Duration += state.Duration;
 		} else {
 			this.States.Add (state.Name, state);
+			state.StartTurnEffect (this);
 		}
 		this.renderer.Dirty = true;
 	}
