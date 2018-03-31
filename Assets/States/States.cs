@@ -2,18 +2,26 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class CharacterState
+public class State
 {
 	public string Name;
 	public string SpriteName;
 	public string Comment;
 	public int Duration;
-
 	public bool ShouldDestroy = false;
 
 	public SpriteRenderer SpriteRenderer;
 
 	protected GameObject go;
+
+	public State(StateType type, int duration)
+	{
+		this.Duration = duration;
+
+		this.Name = StateConfigurations.Metas [type].Name;
+		this.SpriteName = StateConfigurations.Metas [type].SpriteName;
+		this.Comment = StateConfigurations.Metas [type].Comment;
+	}
 
 	public virtual void TakeEffect(GameObject gObject)
 	{
@@ -23,7 +31,7 @@ public class CharacterState
 	{
 	}
 
-	public virtual void StartTurnEffect(CharacterStates states)
+	public virtual void StartTurnEffect(StatesBar states)
 	{
 	}
 
@@ -32,7 +40,6 @@ public class CharacterState
 		if (this.go == null) {
 			return;
 		}
-		Debug.Log ("Should destroy");
 		GameObject.Destroy (this.go);
 	}
 
@@ -62,7 +69,7 @@ public class CharacterState
 	}
 }
 
-public class CharacterStates
+public class StatesBar
 {
 	// Damage Output : (card/monster base attack + AttackModifier) * DamageModifier
 	public int AttackModifier = 0;
@@ -75,22 +82,22 @@ public class CharacterStates
 	public int ShieldModifier = 0;
 	public float DefenceModifier = 1;
 
-	public Dictionary<string, CharacterState> States = new Dictionary<string, CharacterState>();
+	public Dictionary<string, State> States = new Dictionary<string, State>();
 	GameObject character;
 	GameObject statesObject;
-	CharacterStatesRenderer renderer;
+	StatesBarRenderer renderer;
 
-	public CharacterStates(GameObject character)
+	public StatesBar(GameObject character)
 	{
 		this.character = character;
 
-		this.statesObject = new GameObject("charactorStates");
+		this.statesObject = new GameObject("StatesBar");
 		statesObject.transform.SetParent(character.transform, false);
-		renderer = statesObject.AddComponent<CharacterStatesRenderer>();
+		renderer = statesObject.AddComponent<StatesBarRenderer>();
 		renderer.Register (this);
 	}
 
-	public void AddState(CharacterState state)
+	public void AddState(State state)
 	{
 		if (this.States.ContainsKey (state.Name)) {
 			this.States [state.Name].Duration += state.Duration;
@@ -133,10 +140,10 @@ public class CharacterStates
 	}
 }
 
-public class CharacterStatesRenderer : MonoBehaviour
+public class StatesBarRenderer : MonoBehaviour
 {
 	SpriteRenderer spritRenderer;
-	CharacterStates states;
+	StatesBar states;
 
 	// if true, we should clean up and rerender
 	public bool Dirty = true;
@@ -153,7 +160,7 @@ public class CharacterStatesRenderer : MonoBehaviour
 		this.transform.localPosition = new Vector3 (0, -0.6f * pSize.y / pScale.y);
 	}
 
-	public void Register(CharacterStates states) {
+	public void Register(StatesBar states) {
 		this.states = states;
 	}
 

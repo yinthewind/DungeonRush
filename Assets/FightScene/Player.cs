@@ -6,20 +6,20 @@ public class Player
 {
     GameObject playerObject;
     PlayerRenderer playerRenderer;
-	GameStatesPersistor gameStatesPersistor;
+	GameStatsPersistor gameStatesPersistor;
 
 	public int MaxHitpoint;
     public MonitoredValue<int> Hitpoint = new MonitoredValue<int>();
     public MonitoredValue<int> Energy = new MonitoredValue<int>();
 	public MonitoredValue<int> Shield = new MonitoredValue<int>();
 
-	public CharacterStates States;
+	public StatesBar States;
 
     public int EnergyPerTurn = 3;
 
     public Player()
     {
-		this.gameStatesPersistor = GameObject.FindGameObjectWithTag ("GameStatesPersistor").GetComponent<GameStatesPersistor> ();
+		this.gameStatesPersistor = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
 		// init for Fight Scene
 		this.Hitpoint.Val = this.gameStatesPersistor.Hitpoint;
 		this.MaxHitpoint = this.gameStatesPersistor.MaxHitpoint;
@@ -37,7 +37,7 @@ public class Player
         this.playerRenderer = playerObject.AddComponent<PlayerRenderer>();
         this.playerRenderer.Register(this);
 
-		this.States = new CharacterStates (playerObject);
+		this.States = new StatesBar (playerObject);
     }
 
     void onDeath()

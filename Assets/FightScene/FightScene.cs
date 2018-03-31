@@ -6,7 +6,7 @@ using System.Linq;
 
 public class FightScene : MonoBehaviour
 {
-	public GameStatesPersistor GameStates;
+	public GameStatsPersistor GameStats;
 
 	public Player Player;
 	public Monster Monster;
@@ -25,7 +25,7 @@ public class FightScene : MonoBehaviour
 		DebugHelper.initForFightScene();
 #endif
 
-		this.GameStates = GameObject.FindGameObjectWithTag ("GameStatesPersistor").GetComponent<GameStatesPersistor> ();
+		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
 
 		startFight();
 
@@ -45,7 +45,7 @@ public class FightScene : MonoBehaviour
 		endTurnButton.onClick.AddListener(endTurn);
 
 		this.FightReport = new FightReport();
-		this.TopMenuBar = new TopMenuBar(this.GameStates.Level);
+		this.TopMenuBar = new TopMenuBar(this.GameStats.Level);
 	}
 
 	private void startFight()

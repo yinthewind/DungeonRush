@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameStatesPersistor : MonoBehaviour
+public class GameStatsPersistor : MonoBehaviour
 {
 	public int MaxHitpoint = 250;
 	public int Hitpoint;

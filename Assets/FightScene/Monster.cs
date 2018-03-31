@@ -9,7 +9,7 @@ public class Monster
 	public MonitoredValue<int> Shield = new MonitoredValue<int> ();
     FightScene fightScene;
 
-	public CharacterStates States;
+	public StatesBar States;
 
     public Monster(FightScene fightScene)
     {
@@ -28,7 +28,7 @@ public class Monster
             }
         };
 
-		this.States = new CharacterStates (gObject);
+		this.States = new StatesBar (gObject);
     }
 
 	public void StartTurn()

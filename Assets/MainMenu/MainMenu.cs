@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
 
     void onStartButtonClick()
     {
-        initGameStatesPersistor();
+        initGameStatsPersistor();
         SceneManager.LoadScene("fight");
     }
 
@@ -54,15 +54,15 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    void initGameStatesPersistor()
+    void initGameStatsPersistor()
     {
-        GameObject gObject = GameObject.FindGameObjectWithTag("GameStatesPersistor");
+        GameObject gObject = GameObject.FindGameObjectWithTag("GameStatsPersistor");
         if(gObject != null)
         {
             GameObject.Destroy(gObject);
         }
-        gObject = new GameObject("GameStatesPersistor");
-        gObject.tag = "GameStatesPersistor";
-        gObject.AddComponent<GameStatesPersistor>();
+        gObject = new GameObject("GameStatsPersistor");
+        gObject.tag = "GameStatsPersistor";
+        gObject.AddComponent<GameStatsPersistor>();
     }
 }

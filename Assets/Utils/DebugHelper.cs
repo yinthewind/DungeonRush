@@ -3,18 +3,18 @@
 using UnityEditor;
 
 /// <summary>
-/// Help to create a GameStatesPersistor
+/// Help to create a GameStatsPersistor
 /// </summary>
 public static class DebugHelper
 {
 	public static void initForFightScene()
 	{
-		GameObject gObject = GameObject.FindGameObjectWithTag("GameStatesPersistor");
+		GameObject gObject = GameObject.FindGameObjectWithTag("GameStatsPersistor");
 		if(gObject == null)
 		{
-			gObject = new GameObject("GameStatesPersistor");
-			gObject.tag = "GameStatesPersistor";
-			gObject.AddComponent<GameStatesPersistor>();
+			gObject = new GameObject("GameStatsPersistor");
+			gObject.tag = "GameStatsPersistor";
+			gObject.AddComponent<GameStatsPersistor>();
 		}
 	}
 }

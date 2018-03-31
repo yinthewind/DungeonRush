@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
 
-public class WeakState : CharacterState
+public class WeakState : State
 {
-	public WeakState(int duration)
+	public WeakState(int duration) : base(StateType.Weak, duration)
 	{
-		this.Name = "Weak";
-		this.SpriteName = "WeakState";
-		this.Comment = "Dealing 25% less damage";
-		this.Duration = duration;
+
 	}
 
-	public override void StartTurnEffect(CharacterStates states){
+	public override void StartTurnEffect(StatesBar states){
 		states.DamageModifier *= 0.75f;
 	}
 

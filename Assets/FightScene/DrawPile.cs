@@ -9,7 +9,7 @@ public class DrawPile
 	public DrawPile(FightScene fightScene)
 	{
 		this.fightScene = fightScene;
-		cards = new List<Card> (fightScene.GameStates.Deck.Get());
+		cards = new List<Card> (fightScene.GameStats.Deck.Get());
 		this.Shuffle ();
 	}
 
