@@ -45,6 +45,11 @@ public class Card
 
 	public void Play()
 	{
+		if (FightScene.Hand.NeedDiscard > 0) {
+			FightScene.Hand.NeedDiscard--;
+			this.Discard ();
+			return;
+		}
 		if (FightScene.Player.Energy.Val < this.energyCost) {
 			return;
 		}
@@ -90,6 +95,8 @@ public class Card
 	public virtual void Discard()
 	{
 		GameObject.Destroy (Object);
+		this.FightScene.DiscardPile.Add (this);
+		this.FightScene.Hand.RemoveCard (this);
 	}
 
 	/// <summary>

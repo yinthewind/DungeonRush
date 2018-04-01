@@ -12,7 +12,8 @@ public class Hand {
 
     int cardLimit = 10;
     int drawPerTurn = 5;
-	
+	public int NeedDiscard = 0;
+
     public List<Card> cards;
 
     public Hand(FightScene fightScene)
