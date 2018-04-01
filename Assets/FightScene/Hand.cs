@@ -12,7 +12,8 @@ public class Hand {
 
     int cardLimit = 10;
     int drawPerTurn = 5;
-	
+	int discardCount = 0;
+
     public List<Card> cards;
 
     public Hand(FightScene fightScene)
@@ -36,6 +37,29 @@ public class Hand {
 		{
 			var pos = basePos + new Vector3(i * hWidth / 12 + hWidth / 24, 0, -0.1f);
 			cards.ElementAt(i).Renderer.SetPosition(pos, scale);
+		}
+	}
+
+
+
+	public void StartDiscardCard(int num)
+	{
+		this.discardCount = num;
+		foreach (Card card in this.cards) 
+		{
+			card.OnMouseDown -= card.Play;
+			card.OnMouseDown += card.Discard;
+		}
+	}
+
+	public void EndDiscardCard()
+	{
+		this.discardCount -= 1;
+		if (this.discardCount == 0){
+			foreach (Card card in this.cards) {
+				card.OnMouseDown -= card.Discard;
+				card.OnMouseDown += card.Play;
+			}
 		}
 	}
 

@@ -87,6 +87,9 @@ public class Card
 	public virtual void Discard()
 	{
 		GameObject.Destroy (Object);
+		this.FightScene.DiscardPile.Add (this);
+		this.FightScene.Hand.RemoveCard (this);
+		this.FightScene.Hand.EndDiscardCard ();
 	}
 
 	/// <summary>
