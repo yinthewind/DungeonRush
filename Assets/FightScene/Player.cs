@@ -56,6 +56,8 @@ public class Player
 			damage -= this.Shield.Val;
 			this.Shield.Val = 0;
 			this.Hitpoint.Val -= damage;
+
+			this.playerRenderer.Shake ();
 		}
 	}
 
@@ -98,4 +100,9 @@ public class PlayerRenderer : MonoBehaviour
 
 		this.transform.Find ("VitaBar").GetComponent<VitaBar> ().Register (player.Hitpoint, player.MaxHitpoint, player.Shield);
     }
+
+	public void Shake()
+	{
+		this.gameObject.GetComponentInParent<Animator> ().SetTrigger ("hit");
+	}
 }

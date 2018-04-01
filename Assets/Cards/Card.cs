@@ -77,9 +77,6 @@ public class Card
 	{
 		var damageOutput = (baseDamage + this.FightScene.Player.States.AttackModifier) * this.FightScene.Player.States.DamageModifier;
 		var damageTookByMonster = damageOutput * this.FightScene.Monster.States.DamageTookModifier;
-		Debug.Log (baseDamage);
-		Debug.Log (this.FightScene.Player.States.AttackModifier);
-		Debug.Log ((int)damageOutput);
 		return (int)damageTookByMonster;
 	}
 
