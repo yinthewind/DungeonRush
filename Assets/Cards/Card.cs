@@ -117,7 +117,7 @@ public class CardRenderer : MonoBehaviour
 
 	public Card Card;
 
-	GameObject cardDescriptionObject;
+	TextObject cardDescription;
 
 	protected virtual void OnMouseDown()
 	{
@@ -140,26 +140,24 @@ public class CardRenderer : MonoBehaviour
 
 	public void displayCardDescription()
 	{
-		if (this.cardDescriptionObject != null) {
+		if (this.cardDescription != null) {
 			return;
 		}
 
-		this.gameObject.AddComponent<Canvas> ();
-		this.cardDescriptionObject = new GameObject ("text");
-		this.cardDescriptionObject.transform.SetParent (this.gameObject.transform);
-		this.cardDescriptionObject.transform.localPosition = new Vector3 (0, 0);
+		this.cardDescription = new TextObject (this.gameObject);
 
-		var textComponent = this.cardDescriptionObject.AddComponent<Text>();
-		textComponent.text = this.Card.Name + ": " + this.Card.Comment;
-		textComponent.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
-		textComponent.color = Color.blue;
-		textComponent.alignment = TextAnchor.MiddleCenter;
-		textComponent.fontSize = 20;
+		this.cardDescription.Renderer.TextComponent.text = this.Card.Name + ": " + this.Card.Comment;
+		this.cardDescription.Renderer.TextComponent.color = Color.blue;
+		this.cardDescription.Renderer.TextComponent.alignment = TextAnchor.MiddleCenter;
+		this.cardDescription.Renderer.TextComponent.fontSize = 20;
 	}
 
 	public void hideCardDescription()
 	{
-		Destroy (this.cardDescriptionObject);
+		if (this.cardDescription != null) {
+			this.cardDescription.Destroy ();
+			this.cardDescription = null;
+		}
 	}
 
 	public void SetPosition(Vector3 position, Vector3 scale)

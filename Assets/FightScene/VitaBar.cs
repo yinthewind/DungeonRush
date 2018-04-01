@@ -23,10 +23,13 @@ public class VitaBar : MonoBehaviour
 		this.shieldText.text = shield.Val.ToString();
 
 		hitpoint.OnChange += (oldVal, newVal) => {
+			if (newVal < oldVal) {
+				new PopDropText (this.gameObject, (oldVal - newVal).ToString (), Color.red);
+			}
 			if (newVal < 0) {
 				newVal = 0;
 			}
-			this.hitpointText.text = newVal.ToString() + "/" + this.hitpointBar.maxValue.ToString();
+			this.hitpointText.text = newVal.ToString () + "/" + this.hitpointBar.maxValue.ToString ();
 			this.hitpointBar.value = newVal;
 		};
 
