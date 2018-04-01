@@ -9,27 +9,32 @@ public class Monster
 	public MonitoredValue<int> Shield = new MonitoredValue<int> ();
     FightScene fightScene;
 
+	MonsterRenderer renderer;
+
 	public StatesBar States;
 
     public Monster(FightScene fightScene)
-    {
+	{
 		Hitpoint.Val = 25;
 
-        this.fightScene = fightScene;
+		this.fightScene = fightScene;
 
-		GameObject gObject = GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Monster");
-        gObject.AddComponent<MonsterRenderer>().Register(this);
+		GameObject gObject = GameObject.FindGameObjectsWithTag ("Placeholder").Single (o => o.name == "Monster");
+		this.renderer = gObject.AddComponent<MonsterRenderer> ();
+		this.renderer.Register (this);
 
-        Hitpoint.OnChange += (oldVal, newVal) =>
-        {
-            if(newVal <= 0)
-            {
-                onDeath();
-            }
-        };
+		Hitpoint.OnChange += (oldVal, newVal) => {
+			if (newVal < oldVal) {
+				this.renderer.Shake ();
+			}
+
+			if (newVal <= 0) {
+				onDeath ();
+			}
+		};
 
 		this.States = new StatesBar (gObject);
-    }
+	}
 
 	public void StartTurn()
 	{
@@ -58,4 +63,9 @@ public class MonsterRenderer : MonoBehaviour
     {
 		this.transform.Find ("VitaBar").GetComponent<VitaBar> ().Register (monster.Hitpoint, monster.Hitpoint.Val, monster.Shield);
     }
+
+	public void Shake()
+	{
+		this.gameObject.GetComponentInParent<Animator> ().SetTrigger ("hit");
+	}
 }
