@@ -10,6 +10,14 @@ public enum CardType {
 	Backflip,
 	Adrenaline,
 	Neutralize,
+	Bash,
+	Claw,
+	Dodge,
+	PerfectStrike,
+	Relax,
+	Slash,
+	Stab,
+	Stumble
 }
 	
 public class CardMeta
@@ -76,6 +84,46 @@ public static class CardConfigurations
 				Comment = "Deal 6 damage",
 				BaseDamage = 6,
 				EnergyCost = 1
+			}
+		}, {
+			CardType.Bash, new CardMeta {
+				Name = "Bash",
+				SpriteName = "Square"
+			}
+		}, {
+			CardType.Claw, new CardMeta {
+				Name = "Claw",
+				SpriteName = "Square"
+			}
+		}, {
+			CardType.Dodge, new CardMeta {
+				Name = "Dodge",
+				SpriteName = "Square"
+			}
+		}, {
+			CardType.PerfectStrike, new CardMeta {
+				Name = "PerfectStrike",
+				SpriteName = "Square"
+			}
+		}, {
+			CardType.Relax, new CardMeta {
+				Name = "Relax",
+				SpriteName = "Square",
+			}
+		}, {
+			CardType.Slash, new CardMeta {
+				Name = "Slash",
+				SpriteName = "Square"
+			}
+		}, {
+			CardType.Stab, new CardMeta {
+				Name = "Stab",
+				SpriteName = "Square"
+			}
+		}, {
+			CardType.Stumble, new CardMeta {
+				Name = "Stumble",
+				SpriteName = "Square"
 			}
 		}
 	};
