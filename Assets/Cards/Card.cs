@@ -34,13 +34,24 @@ public class Card
 		this.energyCost = CardConfigurations.Metas [cardType].EnergyCost;
 	}
 
-	public virtual void Render()
-	{
-		this.Object = new GameObject("CardInHand");
-		this.Renderer = this.Object.AddComponent<CardRenderer>();
-		this.Renderer.Card = this;
-		this.Object.AddComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>(this.SpriteName);
-		this.Object.AddComponent<BoxCollider2D> ();
+	public void Render(GameObject container, Vector3 pos, Vector3 targetSize) {
+
+		if (this.Object == null) {
+			this.Object = new GameObject ("CardInHand");
+			this.Renderer = this.Object.AddComponent<CardRenderer> ();
+			this.Renderer.Card = this;
+
+			this.Object.transform.SetParent (container.transform, false);
+			this.Object.AddComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> (this.SpriteName);
+			this.Object.GetComponent<SpriteRenderer> ().sortingOrder = 1;
+			this.Object.AddComponent<BoxCollider2D> ();
+
+
+			var spriteSize = this.Object.GetComponent<SpriteRenderer> ().bounds.size;
+
+			this.Object.transform.localScale = new Vector3(targetSize.x / spriteSize.x, targetSize.y / spriteSize.y, 0);
+		}
+		this.Renderer.Render (pos);
 	}
 
 	public virtual void Play()
@@ -160,9 +171,7 @@ public class CardRenderer : MonoBehaviour
 		}
 	}
 
-	public void SetPosition(Vector3 position, Vector3 scale)
-	{
-		this.gameObject.transform.position = position;
-		this.gameObject.transform.localScale = scale;
+	public void Render(Vector3 pos) {
+		this.transform.position = pos;
 	}
 }

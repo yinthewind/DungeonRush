@@ -26,7 +26,7 @@ public class TextObjectRenderer : MonoBehaviour
 	public Text TextComponent;
 
 	public void Awake() {
-		this.gameObject.AddComponent<Canvas> ();
+		this.gameObject.AddComponent<Canvas> ().sortingOrder = 1;
 		this.textObject = new GameObject ("text");
 		this.textObject.transform.SetParent (this.gameObject.transform);
 		this.textObject.transform.localPosition = new Vector3 (0, 0);

@@ -36,10 +36,15 @@ public class Hand {
 		basePos -= new Vector3(hWidth / 2, 0);
 		var scale = new Vector3(hWidth / 64, hHeight / 8, 0);
 
+		var handSize = handObject.GetComponent<SpriteRenderer> ().bounds.size;
+		var cardHeight = handSize.y * 0.7f;
+		var cardWidth = cardHeight * 0.618f;
+		var cardSize = new Vector2 (cardWidth, cardHeight);
+
 		for (int i = 0; i < cards.Count; i++) 
 		{
-			var pos = basePos + new Vector3(i * hWidth / 12 + hWidth / 24, 0, -0.1f);
-			cards.ElementAt(i).Renderer.SetPosition(pos, scale);
+			var pos = basePos + new Vector3(i * hWidth / 12 + hWidth / 24, 0, 1);
+			cards[i].Render (handObject, pos, cardSize);
 		}
 	}
 
@@ -53,8 +58,6 @@ public class Hand {
 					break;
 				}
 				cards.Add(newCard);
-
-				newCard.Render();
 				newCard.FightScene = this.FightScene;
 			}
 			this.Render ();
@@ -96,7 +99,7 @@ public class HandRenderer : MonoBehaviour
 {
     GameObject placeholder;
 
-    private void Start()
+    void Awake()
     {
         placeholder = GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Hand");
     }

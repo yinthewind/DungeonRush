@@ -5,7 +5,6 @@ public class PopDropText
 {
 	GameObject go;
 	Text textComponent;
-	PopDropRenderer renderer;
 
 	public PopDropText(GameObject emitter, string text, Color color)
 	{
