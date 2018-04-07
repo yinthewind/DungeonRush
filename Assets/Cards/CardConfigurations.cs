@@ -6,6 +6,7 @@ public enum CardType {
 	Strike,
 	Defend,
 	Break,
+	Bullet,
 	Acrobatics,
 	Backflip,
 	Adrenaline,
@@ -14,6 +15,8 @@ public enum CardType {
 	Claw,
 	Dodge,
 	PerfectStrike,
+	Predator,
+	Reflex,
 	Relax,
 	Slash,
 	Stab,
@@ -90,6 +93,14 @@ public static class CardConfigurations
 				Name = "Bash",
 				SpriteName = "Square"
 			}
+
+		}, {
+			CardType.Bullet, new CardMeta {
+				Name = "Bullet",
+				SpriteName = "BulletCard",
+				Comment = "You cannot draw any cards this turn. Reduce the cost of cards in your hand to 0 this turn",
+				EnergyCost = 3
+			}
 		}, {
 			CardType.Claw, new CardMeta {
 				Name = "Claw",
@@ -106,9 +117,24 @@ public static class CardConfigurations
 				SpriteName = "Square"
 			}
 		}, {
+			CardType.Predator, new CardMeta {
+				Name = "Predator",
+				SpriteName = "PredatorCard",
+				Comment = "Deal 15 Damage, draw 2 more cards next turn",
+				EnergyCost = 2
+			}
+		}, {
+			CardType.Reflex, new CardMeta {
+				Name = "Reflex",
+				SpriteName = "ReflexCard",
+				Comment = "If this card is discarded from your hand, draw 1 card; unplayable",
+				EnergyCost = 0
+			}
+
+		}, {
 			CardType.Relax, new CardMeta {
 				Name = "Relax",
-				SpriteName = "Square",
+				SpriteName = "Square"
 			}
 		}, {
 			CardType.Slash, new CardMeta {

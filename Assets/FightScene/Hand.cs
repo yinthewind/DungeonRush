@@ -72,6 +72,7 @@ public class Hand {
     {
         cards = new List<Card>();
         DrawNewCard(drawPerTurn);
+
     }
 
     public void EndTurn()

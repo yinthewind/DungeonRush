@@ -43,7 +43,7 @@ public class Card
 		this.Object.AddComponent<BoxCollider2D> ();
 	}
 
-	public void Play()
+	public virtual void Play()
 	{
 		if (FightScene.Hand.NeedDiscard > 0) {
 			FightScene.Hand.NeedDiscard--;
