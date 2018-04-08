@@ -82,6 +82,12 @@ public class Deck
 		for (int i = 0; i < 1; i++) {
 			deck.Add (new ReflexCard ());
 		}
+		for (int i = 0; i < 1; i++) {
+			deck.Add (new PredatorCard ());
+		}
+		for (int i = 0; i < 1; i++) {
+			deck.Add (new BulletCard ());
+		}
 		return deck;
 	}
 

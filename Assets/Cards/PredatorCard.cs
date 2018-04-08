@@ -9,6 +9,6 @@ public class PredatorCard : Card {
 
 	public override void OnPlay(){
 		base.OnPlay ();
-		this.FightScene.Hand.DrawNewCard (2);
+		this.FightScene.Hand.States.AddState (new ExtraCardsState(1));
 	}
 }

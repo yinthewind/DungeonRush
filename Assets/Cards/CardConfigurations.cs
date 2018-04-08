@@ -121,6 +121,7 @@ public static class CardConfigurations
 				Name = "Predator",
 				SpriteName = "PredatorCard",
 				Comment = "Deal 15 Damage, draw 2 more cards next turn",
+				BaseDamage = 15,
 				EnergyCost = 2
 			}
 		}, {

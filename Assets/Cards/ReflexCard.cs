@@ -22,3 +22,4 @@ public class ReflexCard : Card {
 		this.FightScene.Hand.RemoveCard (this);
 	}
 }
+

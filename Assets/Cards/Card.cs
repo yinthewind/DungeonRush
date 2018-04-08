@@ -50,7 +50,7 @@ public class Card
 			this.Discard ();
 			return;
 		}
-		if (FightScene.Player.Energy.Val < this.energyCost) {
+		if (FightScene.Player.Energy.Val < this.energyCost* this.FightScene.Player.States.EnergyModifier) {
 			return;
 		}
 		this.BeforePlay ();
@@ -66,7 +66,7 @@ public class Card
 
 	public virtual void OnPlay()
 	{
-		this.FightScene.Player.Energy.Val -= this.energyCost;
+		this.FightScene.Player.Energy.Val -= this.energyCost * this.FightScene.Player.States.EnergyModifier;
 		this.FightScene.Player.Shield.Val += this.baseArmor;
 		this.FightScene.Monster.Hitpoint.Val -= this.GetCalculatedDamage ();
 	}

@@ -81,6 +81,9 @@ public class StatesBar
 	// Shield Generated : (card base shield + Shield Modifier) * DefenceModifier
 	public int ShieldModifier = 0;
 	public float DefenceModifier = 1;
+	public int ExtraCardsNum = 0;
+	public int EnergyModifier = 1;
+	public bool AllowDraw = true;
 
 	public Dictionary<string, State> States = new Dictionary<string, State>();
 	GameObject character;
@@ -134,6 +137,9 @@ public class StatesBar
 		DamageTookModifier = 1;
 		ShieldModifier = 0;
 		DefenceModifier = 1;
+		ExtraCardsNum = 0;
+		EnergyModifier = 1;
+		AllowDraw = true;
 
 		foreach (var state in this.States) {
 			state.Value.StartTurnEffect (this);
