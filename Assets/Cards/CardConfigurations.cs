@@ -109,7 +109,10 @@ public static class CardConfigurations
 		}, {
 			CardType.Dodge, new CardMeta {
 				Name = "Dodge",
-				SpriteName = "Square"
+				SpriteName = "DodgeCard",
+				Comment = "Evade attack in 50% probability",
+				BaseArmor = 9999,
+				EnergyCost = 1
 			}
 		}, {
 			CardType.PerfectStrike, new CardMeta {
@@ -145,12 +148,16 @@ public static class CardConfigurations
 		}, {
 			CardType.Stab, new CardMeta {
 				Name = "Stab",
-				SpriteName = "Square"
+				SpriteName = "StabCard",
+				Comment = "deal 12 Damage in 50% probability",
+				BaseDamage = 12,
+				EnergyCost = 1
 			}
 		}, {
 			CardType.Stumble, new CardMeta {
 				Name = "Stumble",
 				SpriteName = "Square"
+
 			}
 		}
 	};

@@ -88,6 +88,12 @@ public class Deck
 		for (int i = 0; i < 1; i++) {
 			deck.Add (new BulletCard ());
 		}
+		for (int i = 0; i < 2; i++) {
+			deck.Add (new StabCard ());
+		}
+		for (int i = 0; i < 2; i++) {
+			deck.Add (new DodgeCard ());
+		}
 		return deck;
 	}
 
