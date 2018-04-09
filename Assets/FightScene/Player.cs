@@ -70,6 +70,7 @@ public class Player
 
     public void EndTurn()
     {
+		this.States.EndTurn ();
     }
 
     public void EndFight()

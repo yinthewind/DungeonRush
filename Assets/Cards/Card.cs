@@ -43,14 +43,14 @@ public class Card
 		this.Object.AddComponent<BoxCollider2D> ();
 	}
 
-	public void Play()
+	public virtual void Play()
 	{
 		if (FightScene.Hand.NeedDiscard > 0) {
 			FightScene.Hand.NeedDiscard--;
 			this.Discard ();
 			return;
 		}
-		if (FightScene.Player.Energy.Val < this.energyCost) {
+		if (FightScene.Player.Energy.Val < this.energyCost* this.FightScene.Player.States.EnergyModifier) {
 			return;
 		}
 		this.BeforePlay ();
@@ -66,7 +66,7 @@ public class Card
 
 	public virtual void OnPlay()
 	{
-		this.FightScene.Player.Energy.Val -= this.energyCost;
+		this.FightScene.Player.Energy.Val -= this.energyCost * this.FightScene.Player.States.EnergyModifier;
 		this.FightScene.Player.Shield.Val += this.baseArmor;
 		this.FightScene.Monster.Hitpoint.Val -= this.GetCalculatedDamage ();
 	}

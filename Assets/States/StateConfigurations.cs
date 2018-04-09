@@ -6,6 +6,9 @@ public enum StateType
 {
 	Vulnerable,
 	Weak,
+	ExtraCards,
+	EnergySave,
+	Undrawable,
 }
 
 public class StateMeta 
@@ -29,6 +32,24 @@ public static class StateConfigurations
 				Name = "Weak",
 				SpriteName = "WeakState",
 				Comment = "Dealing 25% less damage"
+			}
+		}, {
+			StateType.ExtraCards, new StateMeta {
+				Name = "ExtraCards",
+				SpriteName = "ExtraCardsState",
+				Comment = "Draw more cards next turn"
+			}
+		}, {
+			StateType.EnergySave, new StateMeta {
+				Name = "EnergySave",
+				SpriteName = "EnergySaveState",
+				Comment = "Reduce the cost of cards in the hand to 0"
+			}
+		}, {
+			StateType.Undrawable, new StateMeta {
+				Name = "Undrawable",
+				SpriteName = "UndrawableState",
+				Comment = "Cannot Draw any cards this turn"
 			}
 		}
 	};

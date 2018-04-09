@@ -9,6 +9,7 @@ public class Hand {
     GameObject handObject;
 
     public FightScene FightScene;
+	public StatesBar States;
 
     int cardLimit = 10;
     int drawPerTurn = 5;
@@ -22,6 +23,8 @@ public class Hand {
 
         handObject = GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Hand");
         handObject.AddComponent<HandRenderer>();
+
+		this.States = new StatesBar (handObject);
     }
 
 	public void Render()
@@ -42,18 +45,20 @@ public class Hand {
 
 	public void DrawNewCard(int num)
 	{
-		for (int i = 0; i < num; i++)
-		{
-			var newCard = this.FightScene.DrawPile.Draw();
-			if (newCard == null) {
-				break;
-			}
-			cards.Add(newCard);
+		if(this.States.AllowDraw == true){
+			for (int i = 0; i < num; i++)
+			{
+				var newCard = this.FightScene.DrawPile.Draw();
+				if (newCard == null) {
+					break;
+				}
+				cards.Add(newCard);
 
-			newCard.Render();
-			newCard.FightScene = this.FightScene;
+				newCard.Render();
+				newCard.FightScene = this.FightScene;
+			}
+			this.Render ();
 		}
-		this.Render ();
 	}
 
 	public void RemoveCard(Card card)
@@ -71,12 +76,16 @@ public class Hand {
     public void StartTurn()
     {
         cards = new List<Card>();
-        DrawNewCard(drawPerTurn);
+		this.States.StartTurn ();
+		var numToDraw = drawPerTurn + this.States.ExtraCardsNum;
+		DrawNewCard(numToDraw);
+
     }
 
     public void EndTurn()
     {
-        foreach(var card in cards)
+		this.States.EndTurn ();
+		foreach(var card in cards)
         {
 			card.PassiveDiscard ();
         }
