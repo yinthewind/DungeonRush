@@ -8,7 +8,7 @@ public class UndrawableState : State {
 	{
 	}
 
-	public override void StartTurnEffect(StatesBar states){
+	public override void ApplyEffect(StatesBar states){
 		states.AllowDraw = false;
 	}
 }

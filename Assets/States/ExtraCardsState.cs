@@ -8,7 +8,7 @@ public class ExtraCardsState : State {
 	{
 	}
 
-	public override void StartTurnEffect(StatesBar states){
+	public override void ApplyEffect(StatesBar states){
 		states.ExtraCardsNum += 2;
 	}
 }

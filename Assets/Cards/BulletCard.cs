@@ -9,7 +9,7 @@ public class BulletCard : Card {
 
 	public override void OnPlay(){
 		base.OnPlay ();
-		this.FightScene.Player.States.AddState (new EnergySaveState(0));
-		this.FightScene.Hand.States.AddState (new UndrawableState (0));
+		this.FightScene.Player.States.AddState (new EnergySaveState(1));
+		this.FightScene.Hand.States.AddState (new UndrawableState (1));
 	}
 }

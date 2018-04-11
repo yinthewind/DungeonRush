@@ -7,7 +7,7 @@ public class VulnerableState : State
 
 	}
 
-	public override void StartTurnEffect(StatesBar states) {
+	public override void ApplyEffect(StatesBar states) {
 		states.DamageTookModifier *= 1.5f;
 	}
 

@@ -8,7 +8,7 @@ public class EnergySaveState : State {
 	{
 	}
 
-	public override void StartTurnEffect(StatesBar states){
+	public override void ApplyEffect(StatesBar states){
 		states.EnergyModifier = 0;
 	}
 }

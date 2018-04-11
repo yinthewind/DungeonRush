@@ -7,7 +7,7 @@ public class WeakState : State
 
 	}
 
-	public override void StartTurnEffect(StatesBar states){
+	public override void ApplyEffect(StatesBar states){
 		states.DamageModifier *= 0.75f;
 	}
 

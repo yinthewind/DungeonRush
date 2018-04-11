@@ -31,7 +31,7 @@ public class State
 	{
 	}
 
-	public virtual void StartTurnEffect(StatesBar states)
+	public virtual void ApplyEffect(StatesBar states)
 	{
 	}
 
@@ -98,6 +98,8 @@ public class StatesBar
 		statesObject.transform.SetParent(character.transform, false);
 		renderer = statesObject.AddComponent<StatesBarRenderer>();
 		renderer.Register (this);
+
+		resetModifiers ();
 	}
 
 	public void AddState(State state)
@@ -106,7 +108,7 @@ public class StatesBar
 			this.States [state.Name].Duration += state.Duration;
 		} else {
 			this.States.Add (state.Name, state);
-			state.StartTurnEffect (this);
+			state.ApplyEffect (this);
 		}
 		this.renderer.Dirty = true;
 	}
@@ -120,18 +122,28 @@ public class StatesBar
 			state.Value.EndTurnEffect (character);
 		}
 
+		var statesToDelete = new List<string> ();
 		foreach (var pair in this.States) {
 			pair.Value.Duration -= 1;
 			if (pair.Value.Duration <= 0) {
-				pair.Value.ShouldDestroy = true;
+				statesToDelete.Add (pair.Value.Name);
 			}
 		}
+		foreach (var stateName in statesToDelete) {
+			this.States.Remove (stateName);
+		}
 		this.renderer.Dirty = true;
+		this.resetModifiers ();
+		this.applyStateEffects ();
 	}
 
 	public void StartTurn()
 	{
-		// Reset Modifiers to default value and then reapply state effects
+		this.applyStateEffects ();
+	}
+
+	void resetModifiers()
+	{
 		AttackModifier = 0;
 		DamageModifier = 1;
 		DamageTookModifier = 1;
@@ -140,9 +152,12 @@ public class StatesBar
 		ExtraCardsNum = 0;
 		EnergyModifier = 1;
 		AllowDraw = true;
+	}
 
+	void applyStateEffects()
+	{
 		foreach (var state in this.States) {
-			state.Value.StartTurnEffect (this);
+			state.Value.ApplyEffect (this);
 		}
 	}
 }
@@ -171,28 +186,22 @@ public class StatesBarRenderer : MonoBehaviour
 		this.states = states;
 	}
 
-	/// <summary>
-	/// Delete all rendered objects, also remove states whose ShouldDestroy are set
-	/// </summary>
-	public void CleanUp() {
-		var namesToDelete = new List<string>();
-		foreach (var state in this.states.States) {
-			if (state.Value.ShouldDestroy) {
-				namesToDelete.Add (state.Value.Name);
-			}
-			state.Value.Destroy ();
-		}
-		foreach (var name in namesToDelete) {
-			this.states.States.Remove (name);
-		}
-	}
-
 	public void Update() {
+		
 		if (!this.Dirty) {
 			return;
 		} else {
-			this.CleanUp ();
 			this.Dirty = false;
+
+
+			var children = this.GetComponentsInChildren<Transform> ();
+			foreach (var child in children) {
+				if (child == this.transform) {
+					continue;
+				}
+				Destroy (child.gameObject);
+			}
+
 		}
 
 		var idx = 0;
