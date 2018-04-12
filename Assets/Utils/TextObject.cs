@@ -12,7 +12,6 @@ public class TextObject{
 		this.go.transform.SetParent (parent.transform);
 		this.go.transform.position = parent.transform.position;
 
-		this.go.AddComponent<Canvas> ();
 		this.Renderer = this.go.AddComponent<TextObjectRenderer> ();
 	}
 

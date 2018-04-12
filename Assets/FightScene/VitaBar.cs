@@ -8,7 +8,7 @@ public class VitaBar : MonoBehaviour
 	Slider hitpointBar;
 	Text shieldText;
 
-	void Start() {
+	void Awake() {
 
 		this.hitpointText = this.GetComponentsInChildren<Text> ().Single (t => t.name == "HitpointText");
 		this.shieldText = this.GetComponentsInChildren<Text> ().Single (t => t.name == "ArmorText");

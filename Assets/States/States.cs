@@ -69,7 +69,7 @@ public class State
 	}
 }
 
-public class StatesBar
+public class StatesBar 
 {
 	// Damage Output : (card/monster base attack + AttackModifier) * DamageModifier
 	public int AttackModifier = 0;
@@ -139,7 +139,6 @@ public class StatesBar
 
 	public void StartTurn()
 	{
-		this.applyStateEffects ();
 	}
 
 	void resetModifiers()
@@ -193,7 +192,6 @@ public class StatesBarRenderer : MonoBehaviour
 		} else {
 			this.Dirty = false;
 
-
 			var children = this.GetComponentsInChildren<Transform> ();
 			foreach (var child in children) {
 				if (child == this.transform) {
@@ -201,7 +199,6 @@ public class StatesBarRenderer : MonoBehaviour
 				}
 				Destroy (child.gameObject);
 			}
-
 		}
 
 		var idx = 0;
