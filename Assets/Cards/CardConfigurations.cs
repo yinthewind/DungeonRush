@@ -25,10 +25,12 @@ public enum CardType {
 
 public enum CardRarity{
 
-	Basic,
 	Common,
 	Uncommon,
-	Rare
+	Rare,
+	Mythical,
+	Legendary
+
 }
 
 public class CardMeta
@@ -50,7 +52,7 @@ public static class CardConfigurations
 				Name = "Acrobatics", 
 				SpriteName = "AcrobaticsCard", 
 				Comment = "Draw 3 cards, then discard 1 card",
-				Rarity = CardRarity.Common,
+				Rarity = CardRarity.Uncommon,
 				EnergyCost = 1
 			}
 		}, { 
@@ -66,7 +68,7 @@ public static class CardConfigurations
 				Name = "Backflip", 
 				SpriteName = "BackflipCard", 
 				Comment = "Draw 2 cards, gain 5 armor",
-				Rarity = CardRarity.Common,
+				Rarity = CardRarity.Uncommon,
 				EnergyCost = 1
 			}
 		}, { 
@@ -74,7 +76,7 @@ public static class CardConfigurations
 				Name = "Break", 
 				SpriteName = "BreakCard", 
 				Comment = "Deal 8 damage, apply vulnerable for 2 turns",
-				Rarity = CardRarity.Common,
+				Rarity = CardRarity.Uncommon,
 				BaseDamage = 8,
 				EnergyCost = 2
 			}
@@ -83,7 +85,7 @@ public static class CardConfigurations
 				Name = "Defend", 
 				SpriteName = "DefendCard", 
 				Comment = "Gain 5 armor",
-				Rarity = CardRarity.Basic,
+				Rarity = CardRarity.Common,
 				BaseArmor = 5,
 				EnergyCost = 1
 			}
@@ -92,7 +94,7 @@ public static class CardConfigurations
 				Name = "Neutralize", 
 				SpriteName = "NeutralizeCard", 
 				Comment = "Deal 3 damage, apply weak for 1 turn",
-				Rarity = CardRarity.Common,
+				Rarity = CardRarity.Uncommon,
 				BaseDamage = 3
 			}
 		}, { 
@@ -100,7 +102,7 @@ public static class CardConfigurations
 				Name = "Strike", 
 				SpriteName = "StrikeCard", 
 				Comment = "Deal 6 damage",
-				Rarity = CardRarity.Basic,
+				Rarity = CardRarity.Common,
 				BaseDamage = 6,
 				EnergyCost = 1
 			}
@@ -108,7 +110,7 @@ public static class CardConfigurations
 			CardType.Bash, new CardMeta {
 				Name = "Bash",
 				SpriteName = "Square",
-				Rarity = CardRarity.Common,
+				Rarity = CardRarity.Uncommon,
 			}
 
 		}, {
@@ -129,7 +131,7 @@ public static class CardConfigurations
 			CardType.Dodge, new CardMeta {
 				Name = "Dodge",
 				SpriteName = "DodgeCard",
-				Comment = "Evade attack in 50% probability",
+				Comment = "50% chance to evade attack",
 				Rarity = CardRarity.Common,
 				BaseArmor = 9999,
 				EnergyCost = 1
@@ -174,7 +176,7 @@ public static class CardConfigurations
 			CardType.Stab, new CardMeta {
 				Name = "Stab",
 				SpriteName = "StabCard",
-				Comment = "deal 12 Damage in 50% probability",
+				Comment = "50% chance to deal 12 Damage",
 				Rarity = CardRarity.Common,
 				BaseDamage = 12,
 				EnergyCost = 1

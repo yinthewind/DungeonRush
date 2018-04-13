@@ -47,19 +47,19 @@ public class DrawPileRenderer : MonoBehaviour
 public class Deck
 {
 	List<Card> cards;
-	public HashSet<CardType> PlayerOwnedCards = new HashSet<CardType>(){
-		CardType.Strike,
-		CardType.Defend,
-		CardType.Break,
-		CardType.Bullet,
-		CardType.Acrobatics,
-		CardType.Backflip,
-		CardType.Adrenaline,
-		CardType.Neutralize,
-		CardType.Dodge,
-		CardType.Predator,
-		CardType.Reflex,
-		CardType.Stab
+	public Dictionary<CardType,int> PlayerOwnedCards = new Dictionary<CardType,int>(){
+		{CardType.Strike,4},
+		{CardType.Defend,4},
+		{CardType.Break,3},
+		{CardType.Bullet,3},
+		{CardType.Acrobatics,2},
+		{CardType.Backflip,2},
+		{CardType.Adrenaline,1},
+		{CardType.Neutralize,3},
+		{CardType.Dodge,2},
+		{CardType.Predator,2},
+		{CardType.Reflex,1},
+		{CardType.Stab,1},
 	};
 
 	/// <summary>
@@ -73,22 +73,22 @@ public class Deck
 	List<Card> getInitialCards() {
 		List<Card> deck = new List<Card> ();
 
-		foreach (CardType card in PlayerOwnedCards) {
+		foreach (KeyValuePair<CardType,int> card in PlayerOwnedCards) {
 			
-			CardMeta cardMeta = CardConfigurations.Metas [card];
+			CardMeta cardMeta = CardConfigurations.Metas [card.Key];
 			int count;
 
 			switch (cardMeta.Rarity) {
-			case CardRarity.Basic:
+			case CardRarity.Common:
 				count = 4;
 				break;
-			case CardRarity.Common:
+			case CardRarity.Uncommon:
 				count = 3;
 				break;
-			case CardRarity.Uncommon:
+			case CardRarity.Rare:
 				count = 2;
 				break;
-			case CardRarity.Rare:
+			case CardRarity.Mythical:
 				count = 1;
 				break;
 			default:
