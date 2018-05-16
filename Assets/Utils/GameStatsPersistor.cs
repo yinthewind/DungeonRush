@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class GameStatsPersistor : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class GameStatsPersistor : MonoBehaviour
 	public int Hitpoint;
 	public int Level = 1;
 	public Deck Deck = new Deck();
+	public ItemStats PlayerItemStats = new ItemStats();
 
 	public void Awake()
 	{

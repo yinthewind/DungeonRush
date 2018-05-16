@@ -22,7 +22,7 @@ public class FightScene : MonoBehaviour
 	void Start()
 	{
 #if UNITY_EDITOR
-		DebugHelper.initForFightScene();
+		DebugHelper.CreateGameStatsPersistor();
 #endif
 
 		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();

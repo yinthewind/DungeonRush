@@ -7,7 +7,7 @@ using UnityEditor;
 /// </summary>
 public static class DebugHelper
 {
-	public static void initForFightScene()
+	public static void CreateGameStatsPersistor()
 	{
 		GameObject gObject = GameObject.FindGameObjectWithTag("GameStatsPersistor");
 		if(gObject == null)
