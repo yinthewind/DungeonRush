@@ -31,13 +31,15 @@ public class ItemsScene : MonoBehaviour {
 			item.Render (pos);
 
 			item.GetDropPosition = (Vector3 p) => {
-				var idx = this.Backpack.GetIndex(p);
-				if(this.Backpack.ClaimIndex(idx)) {
-					this.Backpack.Release(item.BackpackIndex);
-					item.BackpackIndex = idx;
-					return this.Backpack.GetPosition(idx);
+				if(this.Backpack.Inside(p)) {
+					var idx = this.Backpack.GetIndex(p);
+					if(this.Backpack.ClaimIndex(idx)) {
+						this.Backpack.Release(item.BackpackIndex);
+						item.BackpackIndex = idx;
+						return this.Backpack.GetPosition(idx);
+					}
 				}
-				// Grid alread occupied, put this item back to its original position
+				// Grid alread occupied, or item is dragged to an invalid position, put this item back to its original position
 				return this.Backpack.GetPosition(item.BackpackIndex);
 			};
 		}

@@ -52,6 +52,16 @@ public class Backpack : MonoBehaviour {
 		this.gridIsOccupied [index] = false;
 	}
 
+	public bool Inside(Vector3 pos) {
+		if (pos.x < this.bounds.min.x || pos.x > this.bounds.max.x) {
+			return false;
+		}
+		if (pos.y < this.bounds.min.y || pos.y > this.bounds.max.x) {
+			return false;
+		}
+		return true;
+	}
+
 	public Vector3 GetPosition(int index) {
 
 		int c = getCol (index);
