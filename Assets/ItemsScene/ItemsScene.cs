@@ -41,7 +41,6 @@ public class ItemsScene : MonoBehaviour {
 			var pos = this.Backpack.GetPosition (item.BackpackIndex);
 			item.Render (pos);
 
-			// TODO: don't return position, just an event handler
 			item.OnMouseDrop = (Vector3 p) => {
 
 				var slotIndex = insideSlot (p);
