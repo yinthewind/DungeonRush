@@ -342,52 +342,6 @@ MonoBehaviour:
   GameStats: {fileID: 0}
   Backpack: {fileID: 0}
   Slots: []
---- !u!1001 &1454816982
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -290.3596
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 258
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 4.5832777
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151132191263350, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
-      propertyPath: m_Name
-      value: OffHandSlot
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1739349088
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,6 +488,52 @@ Prefab:
     - target: {fileID: 1151132191263350, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
       propertyPath: m_Name
       value: AmulateSlot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &2069640791
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -301
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 258
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 4.5832777
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324103939749002, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151132191263350, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}
+      propertyPath: m_Name
+      value: OffHandSlot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9f4416e2b1f1b6048b46d5af2cc0f5a3, type: 2}

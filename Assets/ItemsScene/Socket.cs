@@ -4,13 +4,11 @@ using UnityEngine;
 using System;
 
 
-public class Slot : MonoBehaviour {
+public class Socket : MonoBehaviour {
 
 	Bounds bounds;
 	Vector3 size;
 	Vector3 leftTopPos;
-
-	public List<Socket> Sockets;
 
 	public bool Inside(Vector3 pos) {
 
@@ -32,12 +30,6 @@ public class Slot : MonoBehaviour {
 	}
 
 	void Start () {
-		var socket0 = transform.Find ("Socket0").GetComponent<Socket> ();
-		var socket1 = transform.Find ("Socket1").GetComponent<Socket> ();
-		var socket2 = transform.Find ("Socket2").GetComponent<Socket> ();
-		var socket3 = transform.Find ("Socket3").GetComponent<Socket> ();
-
-		this.Sockets = new List<Socket> () { socket0, socket1, socket2, socket3 };
 
 		this.bounds = this.gameObject.GetComponent<SpriteRenderer> ().bounds;
 		this.size = bounds.size;
