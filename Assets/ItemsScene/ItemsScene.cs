@@ -101,6 +101,7 @@ public class ItemsScene : MonoBehaviour {
 		item.Slot = slotIndex;
 		this.GameStats.PlayerItemStats.Slots [slotIndex] = item;
 		item.MoveTo (this.Slots [slotIndex].GetPosition ());
+		item.Scale (1.5f);
 
 		return true;
 	}
@@ -110,6 +111,7 @@ public class ItemsScene : MonoBehaviour {
 		var item = this.GameStats.PlayerItemStats.Slots [slotIndex];
 		this.GameStats.PlayerItemStats.Slots [slotIndex] = null;
 		item.Slot = -1;
+		item.Scale (1f);
 
 		return item;
 	}
@@ -190,6 +192,7 @@ public class Item {
 	public delegate void del(Vector3 pos);
 	public del OnMouseDrop;
 	GameObject go;
+	Vector3 defaultScale;
 
 	public void Render(Vector2 pos) {
 
@@ -205,10 +208,16 @@ public class Item {
 		sr.material.color = Color.gray;
 
 		var collider = go.AddComponent<BoxCollider2D> ();
+
+		defaultScale = this.go.transform.localScale;
 	}
 
 	public void MoveTo(Vector3 pos) {
 		go.transform.position = pos;
+	}
+
+	public void Scale(float factor) {
+		go.transform.localScale = defaultScale * factor;
 	}
 }
 
