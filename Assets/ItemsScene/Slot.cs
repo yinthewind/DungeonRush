@@ -14,6 +14,12 @@ public class Slot : MonoBehaviour {
 
 	public bool Inside(Vector3 pos) {
 
+		foreach (var socket in this.Sockets) {
+			if (socket.Inside (pos)) {
+				return true;
+			}
+		}
+
 		if (pos.x < this.bounds.min.x || pos.x > this.bounds.max.x) {
 			return false;
 		}

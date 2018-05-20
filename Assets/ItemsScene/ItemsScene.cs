@@ -56,7 +56,7 @@ public class ItemsScene : MonoBehaviour {
 							var otherItem = takeFromSlot (slotIndex);
 							putIntoBackpack (bIndex, otherItem);
 						}
-						putIntoSlot (slotIndex, item);
+						putIntoSlot (slotIndex, item, p);
 				
 					} else if (this.Backpack.Inside (p)) { // To Backpack
 						var bIndex = this.Backpack.GetIndex (p);
@@ -75,9 +75,9 @@ public class ItemsScene : MonoBehaviour {
 
 						if (this.GameStats.PlayerItemStats.Slots[slotIndex] != null) { // other slot is occupied
 							var otherItem = takeFromSlot(slotIndex);
-							putIntoSlot(thisSlot, otherItem);
+							putIntoSlot(thisSlot, otherItem, p);
 						}
-						putIntoSlot(slotIndex, thisItem);
+						putIntoSlot(slotIndex, thisItem, p);
 						
 					} else if (this.Backpack.Inside(p)) { // To Backpack
 						
@@ -96,8 +96,32 @@ public class ItemsScene : MonoBehaviour {
 		}
 	}
 
+	bool putIntoSocket(int slotIndex, int socketIndex, Item item) {
+
+		item.Slot = slotIndex;
+		this.GameStats.PlayerItemStats.Sockets [slotIndex] [socketIndex] = item;
+		item.MoveTo (this.Slots [slotIndex].Sockets [socketIndex].GetPosition ());
+		item.Scale (0.3f);
+
+		return true;
+	}
+
 	// Return true on a success put
-	bool putIntoSlot(int slotIndex, Item item) {
+	bool putIntoSlot(int slotIndex, Item item, Vector3 pos) {
+
+		var slot = this.Slots [slotIndex];
+		for(int i = 0; i < slot.Sockets.Count; i++) {
+			if (slot.Sockets[i].Inside(pos)) { // Drop into the ith socket of this slot
+
+				item.Slot = slotIndex;
+				if (this.GameStats.PlayerItemStats.Sockets [slotIndex] [i] == null) {
+
+					putIntoSocket (slotIndex, i, item);
+				}
+				return true;
+			}
+		}
+
 		item.Slot = slotIndex;
 		this.GameStats.PlayerItemStats.Slots [slotIndex] = item;
 		item.MoveTo (this.Slots [slotIndex].GetPosition ());
@@ -171,6 +195,13 @@ public class ItemStats {
 	public Item Body;
 	public Item Amulate;
 	public List<Item> Slots = new List<Item>() {null, null, null, null};
+	public List<List<Item>> Sockets = new List<List<Item>> ();
+
+	public ItemStats() {
+		for(int i = 0; i < this.Slots.Count; i++) {
+			this.Sockets.Add(new List<Item>() { null, null, null, null });
+		}
+	}
 
 	public void AddItem(Item item) {
 		Items.Add (item);
