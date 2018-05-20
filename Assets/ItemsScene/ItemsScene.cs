@@ -26,9 +26,16 @@ public class ItemsScene : MonoBehaviour {
 			{ PositionCategory.OffHand, new EquipmentRenderer("OffHand") },
 		};
 
-		this.GameStats.PlayerItemStats.AddToBackpack (new MagicSquare ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new MagicHex ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new MagicCircle ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new Axe ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new Sword ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new Sword ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new Bow ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new Sapphire ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new Ruby ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new Sapphire ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new Sapphire ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new Shield ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new Armor ());
 
 		foreach (var item in this.GameStats.PlayerItemStats.GetItems()) {
 
@@ -77,27 +84,6 @@ public class ItemsScene : MonoBehaviour {
 			}
 		}
 		return new Position(PositionCategory.Nowhere, 0);
-	}
-}
-
-public class MagicSquare : Item {
-	public MagicSquare() {
-		this.Name = "MagicSquare";
-		this.SpriteName = "Square";
-	}
-}
-
-public class MagicHex : Item {
-	public MagicHex() {
-		this.Name = "MagicHex";
-		this.SpriteName = "Hex";
-	}
-}
-
-public class MagicCircle : Item {
-	public MagicCircle() {
-		this.Name = "MagicCircle";
-		this.SpriteName = "Circle";
 	}
 }
 

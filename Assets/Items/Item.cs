@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using System.Linq;
 
 public class Item {
 	public Position Pos;
 
 	public string Name;
+	public string SpriteFile;
 	public string SpriteName;
 
 	public ItemRenderer Renderer;
@@ -17,13 +19,15 @@ public class Item {
 		this.go = new GameObject (this.Name);
 
 		go.transform.position = pos;
-		go.transform.localScale = new Vector2 (100, 100);
+		go.transform.localScale = new Vector2 (500, 500);
 
 		this.Renderer = go.AddComponent<ItemRenderer> ();
 		this.Renderer.Item = this;
 
 		var sr = go.AddComponent<SpriteRenderer> ();
-		sr.sprite = Resources.Load<Sprite> (SpriteName);
+		var sprites = Resources.LoadAll<Sprite> (SpriteFile);
+		sr.sprite = sprites.Single ((x) => x.name == SpriteName);
+		sr.sortingOrder = 1;
 		sr.material.color = Color.gray;
 
 		var collider = go.AddComponent<BoxCollider2D> ();
