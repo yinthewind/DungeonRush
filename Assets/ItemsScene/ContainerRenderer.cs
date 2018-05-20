@@ -1,17 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
-/*
-public class Socket : MonoBehaviour {
+public class ContainerRenderer : MonoBehaviour {
 
-	Bounds bounds;
-	Vector3 size;
-	Vector3 leftTopPos;
+	protected Bounds bounds;
+	protected Vector3 size;
+	protected Vector3 leftTopPos;
 
 	public bool Inside(Vector3 pos) {
-
 		if (pos.x < this.bounds.min.x || pos.x > this.bounds.max.x) {
 			return false;
 		}
@@ -25,10 +20,6 @@ public class Socket : MonoBehaviour {
 		return this.bounds.center;
 	}
 
-	public Vector3 GetSize() {
-		return this.size;
-	}
-
 	void Start () {
 
 		this.bounds = this.gameObject.GetComponent<SpriteRenderer> ().bounds;
@@ -36,4 +27,3 @@ public class Socket : MonoBehaviour {
 		this.leftTopPos = bounds.center - new Vector3 (size.x / 2, -size.y / 2);
 	}
 }
-*/

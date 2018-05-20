@@ -1,276 +1,82 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ItemsScene : MonoBehaviour {
 
 	public GameStatsPersistor GameStats;
-	public Backpack Backpack;
-	// 0: main, 1: off, 2: body, 3: amulate
-	public List<Slot> Slots = new List<Slot> ();
+	BackpackRenderer backpackRenderer;
+	Dictionary<PositionCategory, EquipmentRenderer> equipmentRenderers;
 
 	void Start () {
 
-#if UNITY_EDITOR
+		#if UNITY_EDITOR
 		DebugHelper.CreateGameStatsPersistor ();
-#endif
+		#endif
 
 		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
 
-		this.Backpack = GameObject.Find ("Backpack").GetComponent<Backpack> ();
+		this.backpackRenderer = GameObject.Find ("Backpack").GetComponent<BackpackRenderer> ();
 
-		var MainHandSlot = GameObject.Find ("MainHandSlot").GetComponent<Slot> ();
-		var OffHandSlot = GameObject.Find ("OffHandSlot").GetComponent<Slot> ();
-		var BodySlot = GameObject.Find ("BodySlot").GetComponent<Slot> ();
-		var AmulateSlot = GameObject.Find ("AmulateSlot").GetComponent<Slot> ();
-		this.Slots.Add (MainHandSlot);
-		this.Slots.Add (OffHandSlot);
-		this.Slots.Add (BodySlot);
-		this.Slots.Add (AmulateSlot);
+		equipmentRenderers = new Dictionary<PositionCategory, EquipmentRenderer> () { 
+			{ PositionCategory.Amulate, new EquipmentRenderer("Amulate") }, 
+			{ PositionCategory.Body, new EquipmentRenderer("Body") },
+			{ PositionCategory.MainHand, new EquipmentRenderer("MainHand") },
+			{ PositionCategory.OffHand, new EquipmentRenderer("OffHand") },
+		};
 
-		this.GameStats.PlayerItemStats.AddItem (new MagicSquare ());
-		this.GameStats.PlayerItemStats.AddItem (new MagicHex ());
-		this.GameStats.PlayerItemStats.AddItem (new MagicCircle ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new MagicSquare ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new MagicHex ());
+		this.GameStats.PlayerItemStats.AddToBackpack (new MagicCircle ());
 
-		foreach (var item in this.GameStats.PlayerItemStats.Items) {
-			if (item.BackpackIndex == -1) {
-				var idx = this.Backpack.NextAvailableIndex ();
-				this.Backpack.ClaimIndex (idx, item.Index);
-				item.BackpackIndex = idx;
-			}
-			var pos = this.Backpack.GetPosition (item.BackpackIndex);
-			item.Render (pos);
+		foreach (var item in this.GameStats.PlayerItemStats.GetItems()) {
 
-			item.OnMouseDrop = (Vector3 p) => {
+			render (item.Pos);
 
-				var slotIndex = insideSlot (p);
+			item.OnMouseDrop = (Vector3 posV) => {
 
-				if (item.Slot == -1) { // Not equipped
-					if (slotIndex != -1) { // Dropped in one of slots
 
-						var bIndex = item.BackpackIndex;
-						takeFromBackpack (item);
-
-						if (this.GameStats.PlayerItemStats.Slots [slotIndex] != null) {
-
-							var otherItem = takeFromSlot (slotIndex);
-							putIntoBackpack (bIndex, otherItem);
-						}
-						putIntoSlot (slotIndex, item, p);
-				
-					} else if (this.Backpack.Inside (p)) { // To Backpack
-						var bIndex = this.Backpack.GetIndex (p);
-						if (!putIntoBackpack (bIndex, item)) { // Backpack grid occupied  
-							swapInBackpack (bIndex, item.BackpackIndex);
-						} 
-					} else { // Don't move
-						item.MoveTo(this.Backpack.GetPosition (item.BackpackIndex));
-					}
-				} else { // Equipped
-
-					if (slotIndex != -1) { // Dropped in one of slots
-
-						var thisSlot = item.Slot;
-						var thisItem = takeFromSlot(item.Slot);
-
-						if (this.GameStats.PlayerItemStats.Slots[slotIndex] != null) { // other slot is occupied
-							var otherItem = takeFromSlot(slotIndex);
-							putIntoSlot(thisSlot, otherItem, p);
-						}
-						putIntoSlot(slotIndex, thisItem, p);
-						
-					} else if (this.Backpack.Inside(p)) { // To Backpack
-						
-						var bIndex = this.Backpack.GetIndex(p);
-						if (putIntoBackpack(bIndex, item)) {
-							takeFromSlot(item.Slot);
-						} else {
-							item.MoveTo(this.Slots[item.Slot].GetPosition());
-						}
-
-					} else {
-						item.MoveTo(this.Slots[item.Slot].GetPosition());
-					}
+				var thisPos = item.Pos;
+				var thatPos = getPosition(posV);
+				if (thatPos.Category == PositionCategory.Nowhere) {
+					return ;
 				}
+				var success = this.GameStats.PlayerItemStats.Put(thatPos, item);
+
+				render(thisPos);
+				render(thatPos);
 			};
 		}
 	}
 
-	bool putIntoSocket(int slotIndex, int socketIndex, Item item) {
-
-		item.Slot = slotIndex;
-		this.GameStats.PlayerItemStats.Sockets [slotIndex] [socketIndex] = item;
-		item.MoveTo (this.Slots [slotIndex].Sockets [socketIndex].GetPosition ());
-		item.Scale (0.3f);
-
-		return true;
+	void render(Position pos) {
+		var item = this.GameStats.PlayerItemStats.GetItem (pos);
+		if (item == null) {
+			return;
+		}
+		if (pos.Category == PositionCategory.Backpack) {
+			this.backpackRenderer.Render (pos, item);
+		} else {
+			var render = this.equipmentRenderers [pos.Category];
+			render.Render (pos, item);
+		}
 	}
 
-	// Return true on a success put
-	bool putIntoSlot(int slotIndex, Item item, Vector3 pos) {
-
-		var slot = this.Slots [slotIndex];
-		for(int i = 0; i < slot.Sockets.Count; i++) {
-			if (slot.Sockets[i].Inside(pos)) { // Drop into the ith socket of this slot
-
-				item.Slot = slotIndex;
-				if (this.GameStats.PlayerItemStats.Sockets [slotIndex] [i] == null) {
-
-					putIntoSocket (slotIndex, i, item);
-				}
-				return true;
+	Position getPosition(Vector3 posV) {
+		if (this.backpackRenderer.Inside (posV)) {
+			var index = this.backpackRenderer.GetIndex (posV);
+			return new Position (PositionCategory.Backpack, index);
+		}
+		foreach (var kv in equipmentRenderers) {
+			var cat = kv.Key;
+			var render = kv.Value;
+			if (render.Inside(posV)) {
+				var index = render.GetIndex (posV);
+				return new Position(cat, index);
 			}
 		}
-
-		item.Slot = slotIndex;
-		this.GameStats.PlayerItemStats.Slots [slotIndex] = item;
-		item.MoveTo (this.Slots [slotIndex].GetPosition ());
-		item.Scale (1.5f);
-
-		return true;
-	}
-
-	Item takeFromSlot(int slotIndex) {
-		
-		var item = this.GameStats.PlayerItemStats.Slots [slotIndex];
-		this.GameStats.PlayerItemStats.Slots [slotIndex] = null;
-		item.Slot = -1;
-		item.Scale (1f);
-
-		return item;
-	}
-	
-	int insideSlot(Vector3 pos) {
-
-		for(int i = 0; i < this.Slots.Count; i++) {
-			if (this.Slots [i].Inside (pos)) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	// try to put into backpack, return true if succeed
-	bool putIntoBackpack(int bIndex, Item item) {
-		if (this.Backpack.ClaimIndex(bIndex, item.Index)) { // Backpack grid vacant
-			this.Backpack.Release(item.BackpackIndex);
-			item.BackpackIndex = bIndex;
-			item.MoveTo (this.Backpack.GetPosition (bIndex));
-			return true;
-		}
-		return false;
-	}
-
-	void takeFromBackpack(Item item) {
-
-		this.Backpack.Release (item.BackpackIndex);
-		item.BackpackIndex = -1;
-	}
-
-	void swapInBackpack(int bIndex1, int bIndex2) {
-		
-		var thisItem = this.Backpack.GetItem (bIndex1);
-		var otherItem = this.Backpack.GetItem (bIndex2);
-
-		// update item status
-		this.GameStats.PlayerItemStats.Items [thisItem].BackpackIndex = bIndex2;
-		this.GameStats.PlayerItemStats.Items [otherItem].BackpackIndex = bIndex1;
-
-		// update graphics
-		this.GameStats.PlayerItemStats.Items [thisItem].MoveTo (this.Backpack.GetPosition (bIndex2));
-		this.GameStats.PlayerItemStats.Items [otherItem].MoveTo (this.Backpack.GetPosition (bIndex1));
-
-		// update backpack status
-		this.Backpack.Release (bIndex1);
-		this.Backpack.Release (bIndex2);
-		this.Backpack.ClaimIndex (bIndex2, thisItem);
-		this.Backpack.ClaimIndex (bIndex1, otherItem);
-	}
-}
-
-public class ItemStats {
-	public List<Item> Items = new List<Item>();
-	public Item MainHand;
-	public Item OffHand;
-	public Item Body;
-	public Item Amulate;
-	public List<Item> Slots = new List<Item>() {null, null, null, null};
-	public List<List<Item>> Sockets = new List<List<Item>> ();
-
-	public ItemStats() {
-		for(int i = 0; i < this.Slots.Count; i++) {
-			this.Sockets.Add(new List<Item>() { null, null, null, null });
-		}
-	}
-
-	public void AddItem(Item item) {
-		Items.Add (item);
-		item.Index = Items.Count - 1;
-	}
-
-	public void RemoveItem(int index) {
-	}
-}
-
-public class Item {
-	public int Index;
-
-	public string Name;
-	public string SpriteName;
-
-	public int Slot = -1;
-	public int BackpackIndex = -1;
-	public delegate void del(Vector3 pos);
-	public del OnMouseDrop;
-	GameObject go;
-	Vector3 defaultScale;
-
-	public void Render(Vector2 pos) {
-
-		this.go = new GameObject (this.Name);
-
-		go.transform.position = pos;
-		go.transform.localScale = new Vector2 (100, 100);
-
-		go.AddComponent<ItemRenderer> ().Item = this;
-
-		var sr = go.AddComponent<SpriteRenderer> ();
-		sr.sprite = Resources.Load<Sprite> (SpriteName);
-		sr.material.color = Color.gray;
-
-		var collider = go.AddComponent<BoxCollider2D> ();
-
-		defaultScale = this.go.transform.localScale;
-	}
-
-	public void MoveTo(Vector3 pos) {
-		go.transform.position = pos;
-	}
-
-	public void Scale(float factor) {
-		go.transform.localScale = defaultScale * factor;
-	}
-}
-
-public class ItemRenderer : MonoBehaviour {
-
-	public Item Item;
-
-	void OnMouseDown() {
-		this.gameObject.GetComponent<SpriteRenderer> ().material.color = Color.yellow;
-	}
-
-	void OnMouseDrag() {
-		var mouseWorldPoint = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		mouseWorldPoint.z = 0;
-		var newPos = mouseWorldPoint;
-		transform.position = newPos;
-	}
-
-	void OnMouseUp() {
-		this.gameObject.GetComponent<SpriteRenderer> ().material.color = Color.gray;
-
-		this.Item.OnMouseDrop(this.transform.position);
+		return new Position(PositionCategory.Nowhere, 0);
 	}
 }
 
@@ -281,18 +87,144 @@ public class MagicSquare : Item {
 	}
 }
 
-
 public class MagicHex : Item {
 	public MagicHex() {
 		this.Name = "MagicHex";
 		this.SpriteName = "Hex";
 	}
 }
-		
 
 public class MagicCircle : Item {
 	public MagicCircle() {
 		this.Name = "MagicCircle";
 		this.SpriteName = "Circle";
+	}
+}
+
+public enum PositionCategory {
+	Nowhere,
+	MainHand,
+	OffHand,
+	Body,
+	Amulate,
+	Backpack,
+};
+
+public class Position {
+	public PositionCategory Category;
+	public int Index;
+
+	public Position(PositionCategory cat, int idx) {
+		this.Category = cat;
+		this.Index = idx;
+	}
+
+	public override int GetHashCode() {
+		return Index * Enum.GetNames (typeof(PositionCategory)).Length + (int)Category;
+	}
+
+	public override bool Equals(System.Object obj) 
+	{
+		// Check for null values and compare run-time types.
+		if (obj == null || GetType() != obj.GetType()) 
+			return false;
+
+		Position p = (Position)obj;
+		return (Category == p.Category) && (Index == p.Index);
+	}
+}
+
+public class ItemStats {
+	Dictionary<Position, Item> items;
+	Dictionary<PositionCategory, Func<Position, Item, bool>> checkers;
+
+	public ItemStats() {
+		items = new Dictionary<Position, Item> ();
+
+		Func<Position, Item, bool> dummyChecker = (Position position, Item item) => {
+			return true;
+		};
+		checkers = new Dictionary<PositionCategory, Func<Position, Item, bool>> () { { 
+				PositionCategory.Amulate, dummyChecker
+			}, { 
+				PositionCategory.Backpack, dummyChecker
+			}, { 
+				PositionCategory.Body, dummyChecker 
+			}, {
+				PositionCategory.MainHand, dummyChecker
+			}, {
+				PositionCategory.OffHand, dummyChecker
+			},
+		};
+	}
+
+	public Dictionary<Position, Item>.ValueCollection GetItems() {
+		return items.Values;
+	}
+
+	public bool Put(Position pos, Item item) {
+
+		var thatItem = GetItem (pos);
+		var thisDest = pos;
+		var thatDest = item.Pos;
+
+		var thisChecker = checkers[thisDest.Category];
+		var thatChecker = checkers [thatDest.Category];
+		if (thatItem != null) { // swapping two items
+			if (thisChecker (thisDest, item) && thatChecker (thatDest, thatItem)) {
+
+				put (thatDest, thatItem);
+				put (thisDest, item);
+
+				return true;
+			} else {
+				return false;
+			}
+		} else { // put
+			if (thisChecker (thisDest, item)) {
+				take (thatDest);
+				put (thisDest, item);
+
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	void put(Position pos, Item item) {
+		if (!this.items.ContainsKey (pos)) {
+			this.items.Add (pos, item);
+		} else {
+			this.items [pos] = item;
+		}
+		item.Pos = pos;
+	}
+
+	void take(Position pos) {
+		items [pos] = null;
+	}
+
+	public Item GetItem(Position pos) {
+		if (items.ContainsKey (pos) == false) {
+			return null;
+		}
+		return items [pos];
+	}
+
+	bool isVacant(Position pos) {
+		return items.ContainsKey(pos) == false || items[pos] == null;
+	}
+
+	public void AddToBackpack(Item item) {
+		for (int i = 0; i < 60; i++) {
+			var pos = new Position (PositionCategory.Backpack, i);
+			if (isVacant (pos)) {
+				item.Pos = pos;
+				put (pos, item);
+
+				return;
+			}
+		}
 	}
 }
