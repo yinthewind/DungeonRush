@@ -47,6 +47,8 @@ public class ItemsScene : MonoBehaviour {
 				var thisPos = item.Pos;
 				var thatPos = getPosition(posV);
 				if (thatPos.Category == PositionCategory.Nowhere) {
+					this.GameStats.PlayerItemStats.Put(thisPos, item);
+					render(thisPos);
 					return ;
 				}
 				var success = this.GameStats.PlayerItemStats.Put(thatPos, item);
