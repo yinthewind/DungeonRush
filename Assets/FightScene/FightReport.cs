@@ -61,7 +61,7 @@ public class FightReportRenderer : MonoBehaviour
 	{
 		if (Random.value > 0.5)
 		{
-			SceneManager.LoadScene("fight");
+			SceneManager.LoadScene("mapScene");
 		}
 		else
 		{

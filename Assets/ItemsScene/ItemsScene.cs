@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 
 public class ItemsScene : MonoBehaviour {
@@ -16,6 +18,9 @@ public class ItemsScene : MonoBehaviour {
 		DebugHelper.CreateGameStatsPersistor ();
 		#endif
 
+		GameObject.Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
+			SceneManager.LoadScene("mapScene");
+		});
 		this.ItemFactory = new ItemFactory ();
 		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
 
