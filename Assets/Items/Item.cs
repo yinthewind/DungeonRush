@@ -49,9 +49,15 @@ public class Item {
 public class ItemRenderer : MonoBehaviour {
 
 	public Item Item;
+	int defaultSortingOrder;
 
 	void OnMouseDown() {
-		this.gameObject.GetComponent<SpriteRenderer> ().material.color = Color.yellow;
+		var sr = this.gameObject.GetComponent<SpriteRenderer> ();
+		sr.material.color = Color.yellow;
+		this.defaultSortingOrder = sr.sortingOrder;
+
+		// before anything else
+		sr.sortingOrder = 999;
 	}
 
 	void OnMouseDrag() {
@@ -62,7 +68,9 @@ public class ItemRenderer : MonoBehaviour {
 	}
 
 	void OnMouseUp() {
-		this.gameObject.GetComponent<SpriteRenderer> ().material.color = Color.gray;
+		var sr = this.gameObject.GetComponent<SpriteRenderer> ();
+		sr.material.color = Color.gray;
+		sr.sortingOrder = this.defaultSortingOrder;
 
 		this.Item.OnMouseDrop(this.transform.position);
 	}
