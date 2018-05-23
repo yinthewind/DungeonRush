@@ -12,7 +12,7 @@ public class Hand {
 	public StatesBar States;
 
     int cardLimit = 10;
-    int drawPerTurn = 5;
+	int drawPerTurn;
 	public int NeedDiscard = 0;
 
     public List<Card> cards;
@@ -25,6 +25,7 @@ public class Hand {
         handObject.AddComponent<HandRenderer>();
 
 		this.States = new StatesBar (handObject);
+		this.drawPerTurn = FightScene.GameStats.Speed;
     }
 
 	public void Render()

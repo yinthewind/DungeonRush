@@ -4,8 +4,10 @@ using System.Linq;
 public class Item {
 	public Position Pos;
 
-	public string Name;
 	Sprite sprite;
+	public string Name;
+	public string Comment;
+	public int SpeedBonus;
 
 	public ItemRenderer Renderer;
 	public delegate void del(Vector3 pos);
@@ -15,6 +17,7 @@ public class Item {
 
 	public void Init(ItemMeta meta, Sprite sprite) {
 		this.sprite = sprite;
+		this.SpeedBonus = meta.SpeedBonus;
 	}
 
 	public void Render(Vector2 pos) {

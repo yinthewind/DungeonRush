@@ -150,6 +150,10 @@ public class ItemStats {
 		};
 	}
 
+	public Item GetWeapon() {
+		return this.GetItem (new Position (PositionCategory.MainHand, 0));
+	}
+
 	public Dictionary<Position, Item>.ValueCollection GetItems() {
 		return items.Values;
 	}
