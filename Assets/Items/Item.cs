@@ -5,14 +5,17 @@ public class Item {
 	public Position Pos;
 
 	public string Name;
-	public string SpriteFile;
-	public string SpriteName;
+	Sprite sprite;
 
 	public ItemRenderer Renderer;
 	public delegate void del(Vector3 pos);
 	public del OnMouseDrop;
 	GameObject go;
 	Vector3 defaultScale;
+
+	public void Init(ItemMeta meta, Sprite sprite) {
+		this.sprite = sprite;
+	}
 
 	public void Render(Vector2 pos) {
 
@@ -25,8 +28,7 @@ public class Item {
 		this.Renderer.Item = this;
 
 		var sr = go.AddComponent<SpriteRenderer> ();
-		var sprites = Resources.LoadAll<Sprite> (SpriteFile);
-		sr.sprite = sprites.Single ((x) => x.name == SpriteName);
+		sr.sprite = sprite;
 		sr.sortingOrder = 1;
 		sr.material.color = Color.gray;
 

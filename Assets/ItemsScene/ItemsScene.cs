@@ -8,6 +8,7 @@ public class ItemsScene : MonoBehaviour {
 	public GameStatsPersistor GameStats;
 	BackpackRenderer backpackRenderer;
 	Dictionary<PositionCategory, EquipmentRenderer> equipmentRenderers;
+	public ItemFactory ItemFactory;
 
 	void Start () {
 
@@ -15,6 +16,7 @@ public class ItemsScene : MonoBehaviour {
 		DebugHelper.CreateGameStatsPersistor ();
 		#endif
 
+		this.ItemFactory = new ItemFactory ();
 		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
 
 		this.backpackRenderer = GameObject.Find ("Backpack").GetComponent<BackpackRenderer> ();
@@ -26,16 +28,13 @@ public class ItemsScene : MonoBehaviour {
 			{ PositionCategory.OffHand, new EquipmentRenderer("OffHand") },
 		};
 
-		this.GameStats.PlayerItemStats.AddToBackpack (new Axe ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new Sword ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new Sword ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new Bow ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new Sapphire ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new Ruby ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new Sapphire ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new Sapphire ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new Shield ());
-		this.GameStats.PlayerItemStats.AddToBackpack (new Armor ());
+		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create(ItemType.IronSword));
+		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create(ItemType.IronSword));
+		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create(ItemType.WoodenBow));
+		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.Ruby));
+		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.Ruby));
+		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.Ruby));
+		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.Sapphire));
 
 		foreach (var item in this.GameStats.PlayerItemStats.GetItems()) {
 
