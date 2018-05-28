@@ -42,6 +42,6 @@ public class EventScene : MonoBehaviour {
 
 	void ignoreButtonOnClick()
 	{
-		SceneManager.LoadScene("fight");
+		SceneManager.LoadScene("items");
 	}
 }

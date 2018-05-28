@@ -13,6 +13,10 @@ ehthumbs.db
 [Tt]humbs.db
 [Dd]esktop.ini
 
+
+# Vim Generated
+*.swp
+
 # Visual Studio / MonoDevelop generated
 # =====================================
 [Ee]xported[Oo]bj/
