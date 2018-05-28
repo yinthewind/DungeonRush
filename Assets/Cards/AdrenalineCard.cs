@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AdrenalineCard : Card {
 
-	public AdrenalineCard() : base(CardType.Adrenaline) {
+	public AdrenalineCard() {
 		this.shouldExhausted = true;
 	}
 

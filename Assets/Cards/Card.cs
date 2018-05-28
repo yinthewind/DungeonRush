@@ -21,13 +21,6 @@ public class Card
 
 	protected bool shouldExhausted = false;
 
-	public Card(CardType cardType) 
-	{
-	}
-
-	public Card() {
-	}
-
 	public void Init(CardMeta meta) {
 		this.OnMouseDown += Play;
 

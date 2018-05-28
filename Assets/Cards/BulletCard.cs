@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletCard : Card {
 
-	public BulletCard() : base(CardType.Bullet) {
+	public BulletCard() {
 	}
 
 	public override void OnPlay(){

@@ -2,8 +2,6 @@
 
 public class DodgeCard : Card
 {
-	public DodgeCard() : base(CardType.Dodge) {
-	}
 
 	public override void OnPlay()
 	{

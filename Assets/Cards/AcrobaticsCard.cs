@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AcrobaticsCard : Card {
 
-	public AcrobaticsCard() : base(CardType.Acrobatics) {
+	public AcrobaticsCard() {
 	}
 
 	public override void OnPlay(){

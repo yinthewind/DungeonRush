@@ -2,8 +2,6 @@
 
 public class NeutralizeCard : Card
 {
-	public NeutralizeCard() : base(CardType.Neutralize) {
-	}
 
 	public override void OnPlay()
 	{

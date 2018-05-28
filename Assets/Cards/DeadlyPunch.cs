@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 
-public class DeadlyPunch : Card
-{
-}
-
+public class DeadlyPunch : Card {}
 public class Punch : Card {}
 public class Miss : Card {}
 public class Shot : Card {}

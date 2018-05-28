@@ -2,6 +2,6 @@
 
 public class BashCard : Card
 {
-	public BashCard() : base(CardType.Bash) {
+	public BashCard() {
 	}
 }

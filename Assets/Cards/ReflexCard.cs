@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ReflexCard : Card {
-
-	public ReflexCard() : base(CardType.Reflex) {
-	}
-
 	public override void Play(){
 		if (FightScene.Hand.NeedDiscard > 0) {
 			FightScene.Hand.NeedDiscard--;

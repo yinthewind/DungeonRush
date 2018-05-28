@@ -2,7 +2,7 @@
 
 public class BreakCard : Card
 {
-	public BreakCard() : base(CardType.Break) {
+	public BreakCard() {
 	}
 
 	public override void OnPlay()

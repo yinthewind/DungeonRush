@@ -9,7 +9,6 @@ public class GameStatsPersistor : MonoBehaviour
 	public int Hitpoint;
 	public int Level = 1;
 	int speed = 5;
-	public Deck Deck = new Deck();
 	public ItemStats PlayerItemStats = new ItemStats();
 	public ItemFactory ItemFactory;
 	public CardFactory CardFactory;
