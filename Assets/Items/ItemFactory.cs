@@ -11,40 +11,21 @@ public class ItemFactory {
 
 	public ItemFactory() {
 		this.sprites = Resources.LoadAll<Sprite> ("roguelikeitems");
-		this.creators = initCreators ();
 	}
 
-	public Item Create(ItemType type) {
-		var item = creators [type] ();
-		var meta = configs.ItemMetas [type];
+	public Item Create(ItemType itemType) {
+
+		var meta = this.configs.ItemMetas [itemType];
+		Type t = Type.GetType (itemType.ToString());
+		var item = (Item)Activator.CreateInstance (t);
+
 		var sprite = sprites.Single (x => x.name == meta.SpriteName);
-		item.Init (configs.ItemMetas [type], sprite);
+		item.Init (meta, sprite);
 
 		return item;
 	}
 
-	Dictionary<ItemType, Func<Item>> initCreators() {
-		return new Dictionary<ItemType, Func<Item>> () { { 
-				ItemType.IronSword,
-				() => {
-					return new IronSword();
-				}
-			}, {
-				ItemType.WoodenBow,
-				() => {
-					return new WoodenBow();
-				}
-			}, {
-				ItemType.Sapphire,
-				() => {
-					return new Sapphire();
-				}
-			}, {
-				ItemType.Ruby,
-				() => {
-					return new Ruby();
-				}
-			},
-		};
+	public List<Item> Create(List<ItemType> itemTypes) {
+		return itemTypes.Select (itemType => this.Create (itemType)).ToList();
 	}
 }

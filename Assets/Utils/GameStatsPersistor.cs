@@ -11,6 +11,8 @@ public class GameStatsPersistor : MonoBehaviour
 	int speed = 5;
 	public Deck Deck = new Deck();
 	public ItemStats PlayerItemStats = new ItemStats();
+	public ItemFactory ItemFactory;
+	public CardFactory CardFactory;
 
 	public int Speed {
 		get { 
@@ -24,8 +26,16 @@ public class GameStatsPersistor : MonoBehaviour
 		}
 	}
 
+	public List<Card> GetDeck() {
+		var cardTypes = this.PlayerItemStats.GetDeck ();
+		return CardFactory.Create (cardTypes);
+	}
+
 	public void Awake()
 	{
+		this.ItemFactory = new ItemFactory ();
+		this.CardFactory = new CardFactory ();
+
 		DontDestroyOnLoad(transform.gameObject);
 
 		this.Hitpoint = this.MaxHitpoint;

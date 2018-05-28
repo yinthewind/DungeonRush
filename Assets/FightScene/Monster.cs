@@ -15,7 +15,7 @@ public class Monster
 
     public Monster(FightScene fightScene)
 	{
-		Hitpoint.Val = 80;
+		Hitpoint.Val = 30;
 
 		this.fightScene = fightScene;
 

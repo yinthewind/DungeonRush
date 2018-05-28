@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 
 public class Item {
 	public Position Pos;
@@ -14,10 +15,12 @@ public class Item {
 	public del OnMouseDrop;
 	GameObject go;
 	Vector3 defaultScale;
+	public List<CardType> Cards;
 
 	public void Init(ItemMeta meta, Sprite sprite) {
 		this.sprite = sprite;
 		this.SpeedBonus = meta.SpeedBonus;
+		this.Cards = meta.Cards;
 	}
 
 	public void Render(Vector2 pos) {

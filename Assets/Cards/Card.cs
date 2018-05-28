@@ -23,15 +23,21 @@ public class Card
 
 	public Card(CardType cardType) 
 	{
+	}
+
+	public Card() {
+	}
+
+	public void Init(CardMeta meta) {
 		this.OnMouseDown += Play;
 
-		this.SpriteName = CardConfigurations.Metas [cardType].SpriteName;
-		this.Name = CardConfigurations.Metas [cardType].Name;
-		this.Comment = CardConfigurations.Metas [cardType].Comment;
+		this.SpriteName = meta.SpriteName;
+		this.Name = meta.Name;
+		this.Comment = meta.Comment;
 
-		this.baseDamage = CardConfigurations.Metas [cardType].BaseDamage;
-		this.baseArmor = CardConfigurations.Metas [cardType].BaseArmor;
-		this.energyCost = CardConfigurations.Metas [cardType].EnergyCost;
+		this.baseDamage = meta.BaseDamage;
+		this.baseArmor = meta.BaseArmor;
+		this.energyCost = meta.EnergyCost;
 	}
 
 	public void Render(GameObject container, Vector3 pos, Vector3 targetSize) {

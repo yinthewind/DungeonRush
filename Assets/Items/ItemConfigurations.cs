@@ -45,6 +45,8 @@ public class ItemMeta {
 	public string SpriteName;
 
 	public int SpeedBonus;
+
+	public List<CardType> Cards;
 }
 
 public class ItemConfigurations {
@@ -56,6 +58,14 @@ public class ItemConfigurations {
 				Comment = "Common stuff",
 
 				SpeedBonus = 1,
+				Cards = new List<CardType>() {
+					CardType.DoubleShot,
+					CardType.DoubleShot,
+					CardType.Shot,
+					CardType.Shot,
+					CardType.Shot,
+					CardType.Miss,
+				},
 			}
 		}, {
 			ItemType.IronSword, new ItemMeta () {
@@ -64,6 +74,14 @@ public class ItemConfigurations {
 				Comment = "Casual stuff",
 
 				SpeedBonus = 0,
+				Cards = new List<CardType>() {
+					CardType.Stab,
+					CardType.Stab,
+					CardType.Slash,
+					CardType.Slash,
+					CardType.Slash,
+					CardType.Miss,
+				},
 			}
 		}, {
 			ItemType.Sapphire, new ItemMeta() {

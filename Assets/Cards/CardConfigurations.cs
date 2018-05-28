@@ -18,9 +18,14 @@ public enum CardType {
 	Predator,
 	Reflex,
 	Relax,
-	Slash,
+	Stumble,
+	Punch,
+	DeadlyPunch,
+	Miss,
+	Shot,
+	DoubleShot,
 	Stab,
-	Stumble
+	Slash,
 }
 
 public enum CardRarity{
@@ -45,9 +50,9 @@ public class CardMeta
 	public int EnergyCost = 0;
 }
 
-public static class CardConfigurations
+public class CardConfigurations
 {
-	public static Dictionary<CardType, CardMeta> Metas = new Dictionary<CardType, CardMeta> () { { 
+	public Dictionary<CardType, CardMeta> Metas = new Dictionary<CardType, CardMeta> () { { 
 			CardType.Acrobatics, new CardMeta { 
 				Name = "Acrobatics", 
 				SpriteName = "AcrobaticsCard", 
@@ -167,26 +172,60 @@ public static class CardConfigurations
 				Rarity = CardRarity.Common,
 			}
 		}, {
-			CardType.Slash, new CardMeta {
-				Name = "Slash",
-				SpriteName = "Square",
-				Rarity = CardRarity.Common,
-			}
-		}, {
-			CardType.Stab, new CardMeta {
-				Name = "Stab",
-				SpriteName = "StabCard",
-				Comment = "50% chance to deal 12 Damage",
-				Rarity = CardRarity.Common,
-				BaseDamage = 12,
-				EnergyCost = 1
-			}
-		}, {
 			CardType.Stumble, new CardMeta {
 				Name = "Stumble",
 				SpriteName = "Square",
 				Rarity = CardRarity.Common,
+			}
+		}, {
+			CardType.Slash, new CardMeta {
+				Name = "Slash",
+				SpriteName = "Slash",
+				Rarity = CardRarity.Common,
 
+				BaseDamage = 5,
+			}
+		}, {
+			CardType.Stab, new CardMeta {
+				Name = "Stab",
+				SpriteName = "Stab",
+				Comment = "Deal 12 Damage",
+
+				Rarity = CardRarity.Common,
+				BaseDamage = 12,
+			}
+		}, {
+			CardType.Punch, new CardMeta {
+				Name = "Punch",
+				SpriteName = "Punch",
+
+				BaseDamage = 2,
+			}
+		}, {
+			CardType.DeadlyPunch, new CardMeta {
+				Name = "DeadlyPunch",
+				SpriteName = "DeadlyPunch",
+
+				BaseDamage = 4,
+			}
+		}, {
+			CardType.Miss, new CardMeta {
+				Name = "Miss",
+				SpriteName = "Miss",
+			}
+		}, {
+			CardType.Shot, new CardMeta {
+				Name = "Shot",
+				SpriteName = "Shot",
+
+				BaseDamage = 6,
+			}
+		}, {
+			CardType.DoubleShot, new CardMeta {
+				Name = "DoubleShot",
+				SpriteName = "DoubleShot",
+
+				BaseDamage = 10,
 			}
 		}
 	};

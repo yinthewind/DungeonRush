@@ -32,12 +32,6 @@ public class FightScene : MonoBehaviour
 		initUIElements();
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
-
 	void initUIElements()
 	{
 		var canvas = GameObject.FindObjectsOfType<Canvas>().Single(c => c.name == "FightScene");
