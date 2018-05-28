@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class AcrobaticsCard : Card {
 
-	public AcrobaticsCard() {
-	}
-
 	public override void OnPlay(){
 		base.OnPlay ();
 		this.FightScene.Hand.DrawNewCard (3);

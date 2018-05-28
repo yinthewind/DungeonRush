@@ -2,6 +2,4 @@
 
 public class BashCard : Card
 {
-	public BashCard() {
-	}
 }

@@ -34,10 +34,7 @@ public class ItemsScene : MonoBehaviour {
 		};
 
 		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create(ItemType.IronSword));
-		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create(ItemType.IronSword));
 		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create(ItemType.WoodenBow));
-		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.Ruby));
-		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.Ruby));
 		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.Ruby));
 		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.Sapphire));
 

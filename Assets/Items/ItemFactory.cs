@@ -6,7 +6,6 @@ using UnityEngine;
 public class ItemFactory {
 
 	ItemConfigurations configs = new ItemConfigurations ();
-	Dictionary<ItemType, Func<Item>> creators;
 	Sprite[] sprites;
 
 	public ItemFactory() {

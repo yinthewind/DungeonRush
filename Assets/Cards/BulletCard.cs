@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class BulletCard : Card {
 
-	public BulletCard() {
-	}
-
 	public override void OnPlay(){
 		base.OnPlay ();
 		this.FightScene.Player.States.AddState (new EnergySaveState(1));

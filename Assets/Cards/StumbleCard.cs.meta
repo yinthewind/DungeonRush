@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BulletCard : Card {
-
-	public BulletCard() : base(CardType.Bullet) {
-	}
-
-	public override void OnPlay(){
-		base.OnPlay ();
-		this.FightScene.Player.States.AddState (new EnergySaveState(1));
-		this.FightScene.Hand.States.AddState (new UndrawableState (1));
-	}
-}
+fileFormatVersion: 2
+guid: 17df7ed8fc4ad5f4c96def54032e4587
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
