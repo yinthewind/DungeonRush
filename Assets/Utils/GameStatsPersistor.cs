@@ -21,7 +21,22 @@ public class GameStatsPersistor : MonoBehaviour
 			if (weapon != null) {
 				baseSpeed += weapon.SpeedBonus;
 			}
+
+			var amulate = PlayerItemStats.GetAmulate ();
+			if (amulate != null) {
+				baseSpeed += amulate.SpeedBonus;
+			}
 			return baseSpeed;
+		}
+	}
+
+	public int Defence {
+		get {
+			var armor = PlayerItemStats.GetArmor ();
+			if (armor != null) {
+				return armor.DefenceBonus;
+			}
+			return 0;
 		}
 	}
 

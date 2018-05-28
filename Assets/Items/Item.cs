@@ -9,6 +9,7 @@ public class Item {
 	public string Name;
 	public string Comment;
 	public int SpeedBonus;
+	public int DefenceBonus;
 
 	public ItemRenderer Renderer;
 	public delegate void del(Vector3 pos);
@@ -21,6 +22,7 @@ public class Item {
 		this.sprite = sprite;
 		this.SpeedBonus = meta.SpeedBonus;
 		this.Cards = meta.Cards;
+		this.DefenceBonus = meta.DefenceBonus;
 	}
 
 	public void Render(Vector2 pos) {

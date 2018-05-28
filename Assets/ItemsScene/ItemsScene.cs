@@ -37,6 +37,8 @@ public class ItemsScene : MonoBehaviour {
 		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create(ItemType.WoodenBow));
 		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.Ruby));
 		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.Sapphire));
+		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.ChainMail));
+		this.GameStats.PlayerItemStats.AddToBackpack (ItemFactory.Create (ItemType.SpeedAmulate));
 
 		foreach (var item in this.GameStats.PlayerItemStats.GetItems()) {
 

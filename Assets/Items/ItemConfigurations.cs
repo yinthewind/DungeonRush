@@ -8,6 +8,10 @@ public enum ItemType {
 	Sapphire,
 	Ruby,
 
+	ChainMail,
+
+	SpeedAmulate,
+
 	Weapon,
 	Shield,
 	Armor,
@@ -30,6 +34,10 @@ public class WoodenBow : Item {
 public class IronSword : Item {
 }
 
+public class ChainMail : Item {}
+
+public class SpeedAmulate : Item {}
+
 public class Sapphire : Item {
 }
 
@@ -45,6 +53,7 @@ public class ItemMeta {
 	public string SpriteName;
 
 	public int SpeedBonus;
+	public int DefenceBonus;
 
 	public List<CardType> Cards;
 }
@@ -94,6 +103,23 @@ public class ItemConfigurations {
 				Name = "Ruby",
 				SpriteName = "roguelikeitems_31",
 				Comment = "Fiery beauty",
+			}
+		}, {
+			ItemType.ChainMail, new ItemMeta() {
+				Name = "Chain Mail",
+				SpriteName = "roguelikeitems_85",
+				Comment = "Fine quality!",
+
+				SpeedBonus = -1,
+				DefenceBonus = 3,
+			}
+		}, {
+			ItemType.SpeedAmulate, new ItemMeta() {
+				Name = "Speed Amulate",
+				SpriteName = "roguelikeitems_3",
+				Comment = "Feel like wind!",
+
+				SpeedBonus = 1,
 			}
 		},
 	};

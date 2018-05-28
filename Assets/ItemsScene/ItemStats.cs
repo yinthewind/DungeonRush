@@ -62,6 +62,14 @@ public class ItemStats {
 		return this.GetItem (new Position (PositionCategory.MainHand, 0));
 	}
 
+	public Item GetArmor() {
+		return this.GetItem (new Position (PositionCategory.Body, 0));
+	}
+
+	public Item GetAmulate() {
+		return this.GetItem (new Position (PositionCategory.Amulate, 0));
+	}
+
 	public Dictionary<Position, Item>.ValueCollection GetItems() {
 		return items.Values;
 	}

@@ -49,6 +49,11 @@ public class Player
 	{
 		damage = (int) (this.States.DamageTookModifier * damage);
 
+		damage -= this.gameStatesPersistor.Defence;
+		if (damage < 0) {
+			return;
+		}
+
 		if (this.Shield.Val >= damage) {
 			this.Shield.Val -= damage;
 		} else {
