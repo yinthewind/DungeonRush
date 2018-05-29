@@ -29,22 +29,24 @@ public class FightScene : MonoBehaviour
 		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
 		this.PlayerFightStats = this.GameStats.PlayerFightStats;
 
-		startFight();
-
 		initUIElements();
+
+		startFight ();
 	}
 
 	void initUIElements()
 	{
 		var canvas = GameObject.FindObjectsOfType<Canvas>().Single(c => c.name == "FightScene");
 		endTurnButton = canvas.GetComponentInChildren<Button>();
-		endTurnButton.onClick.AddListener(endTurn);
+		endTurnButton.onClick.AddListener(() => {
+			this.endButtonClicked = true;
+		});
 
 		this.FightReport = new FightReport();
 		this.TopMenuBar = new TopMenuBar(this.PlayerFightStats.Level);
 	}
 
-	private void startFight()
+	void startFight()
 	{
 		this.DrawPile = new DrawPile(this);
 		this.Player = newPlayer();
@@ -65,7 +67,21 @@ public class FightScene : MonoBehaviour
 		};
 		this.Hand = newHand();
 
-		startTurn();
+		StartCoroutine(turnCycle());
+	}
+
+	bool endButtonClicked = false;
+
+	IEnumerator turnCycle() {
+		while(true) {
+			this.startTurn();
+
+			yield return new WaitUntil(() => endButtonClicked);
+			endButtonClicked = false;
+
+			endTurn();
+			yield return new WaitForEndOfFrame();
+		}
 	}
 
 	private void startTurn()
@@ -86,8 +102,6 @@ public class FightScene : MonoBehaviour
 		this.Monster.StartTurn ();
 		this.Monster.TakeAction();
 		this.Monster.EndTurn ();
-
-		startTurn();
 	}
 
 	void onVictory()

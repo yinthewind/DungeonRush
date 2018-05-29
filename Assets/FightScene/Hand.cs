@@ -11,7 +11,6 @@ public class Hand {
     public FightScene FightScene;
 	public StatesBar States;
 
-    int cardLimit = 10;
 	int drawPerTurn;
 	public int NeedDiscard = 0;
 
@@ -83,7 +82,6 @@ public class Hand {
 		this.States.StartTurn ();
 		var numToDraw = drawPerTurn + this.States.ExtraCardsNum;
 		DrawNewCard(numToDraw);
-
     }
 
     public void EndTurn()
