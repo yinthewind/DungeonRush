@@ -25,7 +25,7 @@ public class Hand {
         handObject.AddComponent<HandRenderer>();
 
 		this.States = new StatesBar (handObject);
-		this.drawPerTurn = FightScene.GameStats.Speed;
+		this.drawPerTurn = FightScene.PlayerFightStats.Speed;
     }
 
 	public void Render()

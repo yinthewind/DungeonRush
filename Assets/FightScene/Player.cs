@@ -7,6 +7,7 @@ public class Player
     GameObject playerObject;
     PlayerRenderer playerRenderer;
 	GameStatsPersistor gameStatesPersistor;
+	FightScene fightScene;
 
 	public int MaxHitpoint;
     public MonitoredValue<int> Hitpoint = new MonitoredValue<int>();
@@ -17,12 +18,13 @@ public class Player
 
     public int EnergyPerTurn = 3;
 
-    public Player()
+	public Player(FightScene fightScene)
     {
+		this.fightScene = fightScene;
 		this.gameStatesPersistor = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
 		// init for Fight Scene
-		this.Hitpoint.Val = this.gameStatesPersistor.Hitpoint;
-		this.MaxHitpoint = this.gameStatesPersistor.MaxHitpoint;
+		this.Hitpoint.Val = this.fightScene.PlayerFightStats.Hitpoint;
+		this.MaxHitpoint = this.fightScene.PlayerFightStats.MaxHitpoint;
 		this.Shield.Val = 0;
 
         this.Hitpoint.OnChange += (oldVal, newVal) =>
@@ -49,7 +51,7 @@ public class Player
 	{
 		damage = (int) (this.States.DamageTookModifier * damage);
 
-		damage -= this.gameStatesPersistor.Defence;
+		damage -= this.fightScene.PlayerFightStats.Defence;
 		if (damage < 0) {
 			return;
 		}

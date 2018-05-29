@@ -9,6 +9,7 @@ public class FightScene : MonoBehaviour
 	public GameStatsPersistor GameStats;
 
 	public Player Player;
+	public FightStats PlayerFightStats;
 	public Monster Monster;
 	public Hand Hand;
 	public FightReport FightReport;
@@ -26,6 +27,7 @@ public class FightScene : MonoBehaviour
 #endif
 
 		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
+		this.PlayerFightStats = this.GameStats.PlayerFightStats;
 
 		startFight();
 
@@ -39,7 +41,7 @@ public class FightScene : MonoBehaviour
 		endTurnButton.onClick.AddListener(endTurn);
 
 		this.FightReport = new FightReport();
-		this.TopMenuBar = new TopMenuBar(this.GameStats.Level);
+		this.TopMenuBar = new TopMenuBar(this.PlayerFightStats.Level);
 	}
 
 	private void startFight()
@@ -107,7 +109,7 @@ public class FightScene : MonoBehaviour
 
 	Player newPlayer()
 	{
-		var player = new Player();
+		var player = new Player(this);
 		return player;
 	}
 
