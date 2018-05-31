@@ -182,12 +182,12 @@ public class ItemStats {
 
 		var mainHandCards = getMainHandCards ();
 		var offHandCards = getOffHandCards ();
-		var armorCards = getArmorCards ();
+		var bodyCards = getBodyCards ();
 		var amulateCards = getAmulateCards ();
 
 		deck.AddRange (mainHandCards);
 		deck.AddRange (offHandCards);
-		deck.AddRange (armorCards);
+		deck.AddRange (bodyCards);
 		deck.AddRange (amulateCards);
 
 		return deck;
@@ -200,6 +200,31 @@ public class ItemStats {
 		CardType.Punch,
 		CardType.Miss,
 		CardType.Miss,
+	};
+
+	Dictionary<PositionCategory, List<CardType>> defaultCards = new Dictionary<PositionCategory, List<CardType>>() { {
+			PositionCategory.MainHand, new List<CardType>() {
+				CardType.DeadlyPunch,
+				CardType.Punch,
+				CardType.Punch,
+				CardType.Punch,
+				CardType.Miss,
+				CardType.Miss,
+			}
+		}, {
+			PositionCategory.OffHand, new List<CardType>() {
+				CardType.DeadlyPunch,
+				CardType.Punch,
+				CardType.Punch,
+				CardType.Punch,
+				CardType.Miss,
+				CardType.Miss,
+			}
+		}, {
+			PositionCategory.Body, new List<CardType>()
+		}, {
+			PositionCategory.Amulate, new List<CardType>()
+		},
 	};
 
 	List<Item> getEquipments(PositionCategory category) {
@@ -238,33 +263,36 @@ public class ItemStats {
 		return result;
 	}
 
-	List<CardType> getMainHandCards() {
+	List<CardType> getEquipmentCards(PositionCategory category) {
+		var items = this.getEquipments (category);
 
-		var items = this.getMainHandItems ();
-
-		if (items.Count == 0 || items[0] ==  null) {
-			return mainHandDefaultCards;
+		if(items.Count == 0) {
+			return defaultCards [category];
 		}
 
 		var result = new List<CardType> ();
-		foreach (var item in items) {
-			result.AddRange (item.Cards);
+		foreach(var item in items) {
+			if (item.Cards == null) {
+				continue;
+			}
+			result.AddRange(item.Cards);
 		}
 		return result;
 	}
 
-	List<CardType> getOffHandCards() {
-		var cards = new List<CardType> ();
-		return cards;
+	List<CardType> getMainHandCards() {
+		return getEquipmentCards (PositionCategory.MainHand);
 	}
 
-	List<CardType> getArmorCards() {
-		var cards = new List<CardType> ();
-		return cards;
+	List<CardType> getOffHandCards() {
+		return getEquipmentCards (PositionCategory.OffHand);
+	}
+
+	List<CardType> getBodyCards() {
+		return getEquipmentCards (PositionCategory.Body);
 	}
 
 	List<CardType> getAmulateCards() {
-		var cards = new List<CardType> ();
-		return cards;
+		return getEquipmentCards (PositionCategory.Amulate);
 	}
 }
