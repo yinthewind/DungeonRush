@@ -50,11 +50,27 @@ public class ItemsScene : MonoBehaviour {
 				var thisPos = item.Pos;
 				var thatPos = getPosition(posV);
 				if (thatPos.Category == PositionCategory.Nowhere) {
-					this.GameStats.PlayerItemStats.Put(thisPos, item);
 					render(thisPos);
 					return ;
 				}
 				var success = this.GameStats.PlayerItemStats.Put(thatPos, item);
+
+				if (success) {
+					foreach(var category in equipmentRenderers.Keys) {
+						var pos = new Position(category, 0);
+						if(!thisPos.Equals(pos)) {
+							continue;
+						}
+						// If core equipment is removed, remove items in its sockets as well
+						var items = this.GameStats.PlayerItemStats.GetEquipments(category);
+						foreach(var x in items) {
+							this.GameStats.PlayerItemStats.Take(x.Pos);
+							render(x.Pos);
+							this.GameStats.PlayerItemStats.AddToBackpack(x);
+							render(x.Pos);
+						}
+					}
+				}
 
 				render(thisPos);
 				render(thatPos);

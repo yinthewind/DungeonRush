@@ -136,6 +136,14 @@ public class ItemStats {
 		}
 	}
 
+	public bool Take(Position pos) {
+		if (!items.ContainsKey (pos)) {
+			return false;
+		}
+		take (pos);
+		return true;
+	}
+
 	void put(Position pos, Item item) {
 		if (!this.items.ContainsKey (pos)) {
 			this.items.Add (pos, item);
@@ -227,7 +235,7 @@ public class ItemStats {
 		},
 	};
 
-	List<Item> getEquipments(PositionCategory category) {
+	public List<Item> GetEquipments(PositionCategory category) {
 		var result = new List<Item> ();
 		for(int i = 0;i < 5; i++) {
 			var item = this.GetItem (category, i);
@@ -239,19 +247,19 @@ public class ItemStats {
 	}
 
 	List<Item> getMainHandItems() {
-		return getEquipments(PositionCategory.MainHand);
+		return GetEquipments(PositionCategory.MainHand);
 	}
 
 	List<Item> getOffHandItems() {
-		return getEquipments (PositionCategory.OffHand);
+		return GetEquipments (PositionCategory.OffHand);
 	}
 
 	List<Item> getBodyItems() {
-		return getEquipments (PositionCategory.Body);
+		return GetEquipments (PositionCategory.Body);
 	}
 
 	List<Item> getAmulateItems() {
-		return getEquipments (PositionCategory.Amulate);
+		return GetEquipments (PositionCategory.Amulate);
 	}
 
 	public List<Item> GetAllEquipments() {
@@ -264,7 +272,7 @@ public class ItemStats {
 	}
 
 	List<CardType> getEquipmentCards(PositionCategory category) {
-		var items = this.getEquipments (category);
+		var items = this.GetEquipments (category);
 
 		if(items.Count == 0) {
 			return defaultCards [category];
