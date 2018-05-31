@@ -45,15 +45,47 @@ public class ItemStats {
 			return true;
 		};
 		checkers = new Dictionary<PositionCategory, Func<Position, Item, bool>> () { { 
-				PositionCategory.Amulate, dummyChecker
+				PositionCategory.Amulate, (Position position, Item item) => {
+					if (position.Index == 0) {
+						return item.Category == ItemCategory.Amulate;
+					} else if (this.GetItem(position.Category, 0) == null) {
+						return false;
+					} else {
+						return item.Category == ItemCategory.Gem;
+					}
+				}
 			}, { 
 				PositionCategory.Backpack, dummyChecker
 			}, { 
-				PositionCategory.Body, dummyChecker 
+				PositionCategory.Body, (Position position, Item item) => {
+					if (position.Index == 0) {
+						return item.Category == ItemCategory.Armor;
+					} else if (this.GetItem(position.Category, 0) == null) {
+						return false;
+					} else {
+						return item.Category == ItemCategory.Gem;
+					}
+				}
 			}, {
-				PositionCategory.MainHand, dummyChecker
+				PositionCategory.MainHand, (Position position, Item item) => {
+					if (position.Index == 0) {
+						return item.Category == ItemCategory.Weapon;
+					} else if (this.GetItem(position.Category, 0) == null) {
+						return false;
+					} else {
+						return item.Category == ItemCategory.Gem;
+					}
+				}
 			}, {
-				PositionCategory.OffHand, dummyChecker
+				PositionCategory.OffHand, (Position position, Item item) => {
+					if (position.Index == 0) {
+						return item.Category == ItemCategory.Weapon || item.Category == ItemCategory.Shield;
+					} else if (this.GetItem(position.Category, 0) == null) {
+						return false;
+					} else {
+						return item.Category == ItemCategory.Gem;
+					}
+				}
 			},
 		};
 	}
@@ -115,6 +147,10 @@ public class ItemStats {
 
 	void take(Position pos) {
 		items [pos] = null;
+	}
+
+	public Item GetItem(PositionCategory category, int index) {
+		return this.GetItem (new Position (category, index));
 	}
 
 	public Item GetItem(Position pos) {
