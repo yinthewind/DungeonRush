@@ -11,7 +11,9 @@ public enum ItemType {
 	ChainMail,
 
 	SpeedAmulate,
+}
 
+public enum ItemCategory {
 	Weapon,
 	Shield,
 	Armor,
@@ -45,8 +47,9 @@ public class Ruby : Item {
 } 
 
 public class ItemMeta {
-	public ItemType Type;
-	int Level;
+	public ItemCategory Category;
+
+	public int Level;
 
 	public string Name;
 	public string Comment;
@@ -62,6 +65,8 @@ public class ItemConfigurations {
 
 	public Dictionary<ItemType, ItemMeta> ItemMetas = new Dictionary<ItemType, ItemMeta> () { { 
 			ItemType.WoodenBow, new ItemMeta () {
+				Category = ItemCategory.Weapon,
+
 				Name = "Wooden Bow",
 				SpriteName = "roguelikeitems_87",
 				Comment = "Common stuff",
@@ -78,6 +83,8 @@ public class ItemConfigurations {
 			}
 		}, {
 			ItemType.IronSword, new ItemMeta () {
+				Category = ItemCategory.Weapon,
+
 				Name = "Iron Sword",
 				SpriteName = "roguelikeitems_71",
 				Comment = "Casual stuff",
@@ -94,18 +101,24 @@ public class ItemConfigurations {
 			}
 		}, {
 			ItemType.Sapphire, new ItemMeta() {
+				Category = ItemCategory.Gem,
+
 				Name = "Sapphire",
 				SpriteName = "roguelikeitems_29",
 				Comment = "Ice cold",
 			}
 		}, {
 			ItemType.Ruby, new ItemMeta() {
+				Category = ItemCategory.Gem,
+
 				Name = "Ruby",
 				SpriteName = "roguelikeitems_31",
 				Comment = "Fiery beauty",
 			}
 		}, {
 			ItemType.ChainMail, new ItemMeta() {
+				Category = ItemCategory.Armor,
+
 				Name = "Chain Mail",
 				SpriteName = "roguelikeitems_85",
 				Comment = "Fine quality!",
@@ -115,6 +128,8 @@ public class ItemConfigurations {
 			}
 		}, {
 			ItemType.SpeedAmulate, new ItemMeta() {
+				Category = ItemCategory.Amulate,
+
 				Name = "Speed Amulate",
 				SpriteName = "roguelikeitems_3",
 				Comment = "Feel like wind!",

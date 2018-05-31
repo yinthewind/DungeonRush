@@ -5,6 +5,9 @@ using System.Collections.Generic;
 public class Item {
 	public Position Pos;
 
+	public ItemType Type;
+	public ItemCategory Category;
+
 	Sprite sprite;
 	public string Name;
 	public string Comment;
@@ -23,6 +26,8 @@ public class Item {
 		this.SpeedBonus = meta.SpeedBonus;
 		this.Cards = meta.Cards;
 		this.DefenceBonus = meta.DefenceBonus;
+
+		this.Category = meta.Category;
 	}
 
 	public void Render(Vector2 pos) {
