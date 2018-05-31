@@ -56,6 +56,7 @@ public class ItemMeta {
 	public string SpriteName;
 
 	public int SpeedBonus;
+	public int AttachBonus;
 	public int DefenceBonus;
 
 	public List<CardType> Cards;
@@ -114,6 +115,13 @@ public class ItemConfigurations {
 				Name = "Ruby",
 				SpriteName = "roguelikeitems_31",
 				Comment = "Fiery beauty",
+
+				AttachBonus = 1,
+				Cards = new List<CardType>() {
+					CardType.PerfectStrike,
+					CardType.PerfectStrike,
+					CardType.PerfectStrike,
+				},
 			}
 		}, {
 			ItemType.ChainMail, new ItemMeta() {

@@ -11,6 +11,7 @@ public class Item {
 	Sprite sprite;
 	public string Name;
 	public string Comment;
+	public int AttackBonus;
 	public int SpeedBonus;
 	public int DefenceBonus;
 
@@ -25,6 +26,7 @@ public class Item {
 		this.sprite = sprite;
 		this.SpeedBonus = meta.SpeedBonus;
 		this.Cards = meta.Cards;
+		this.AttackBonus = meta.AttachBonus;
 		this.DefenceBonus = meta.DefenceBonus;
 
 		this.Category = meta.Category;

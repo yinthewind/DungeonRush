@@ -202,19 +202,40 @@ public class ItemStats {
 		CardType.Miss,
 	};
 
-	List<Item> getMainHandItems() {
-
-		var mainHandPos = new Position (PositionCategory.MainHand, 0);
-
+	List<Item> getEquipments(PositionCategory category) {
 		var result = new List<Item> ();
-
-		for(int i = 0;i < 5;i++) {
-			mainHandPos.Index = i;
-			if(this.GetItem(mainHandPos) != null) {
-				result.Add (this.items [mainHandPos]);
+		for(int i = 0;i < 5; i++) {
+			var item = this.GetItem (category, i);
+			if(item != null) {
+				result.Add (item);
 			}
 		}
-		return result; 
+		return result;
+	}
+
+	List<Item> getMainHandItems() {
+		return getEquipments(PositionCategory.MainHand);
+	}
+
+	List<Item> getOffHandItems() {
+		return getEquipments (PositionCategory.OffHand);
+	}
+
+	List<Item> getBodyItems() {
+		return getEquipments (PositionCategory.Body);
+	}
+
+	List<Item> getAmulateItems() {
+		return getEquipments (PositionCategory.Amulate);
+	}
+
+	public List<Item> GetAllEquipments() {
+		var result = new List<Item> ();
+		result.AddRange (getMainHandItems ());
+		result.AddRange (getOffHandItems ());
+		result.AddRange (getBodyItems ());
+		result.AddRange (getAmulateItems ());
+		return result;
 	}
 
 	List<CardType> getMainHandCards() {
@@ -224,7 +245,12 @@ public class ItemStats {
 		if (items.Count == 0 || items[0] ==  null) {
 			return mainHandDefaultCards;
 		}
-		return items [0].Cards;
+
+		var result = new List<CardType> ();
+		foreach (var item in items) {
+			result.AddRange (item.Cards);
+		}
+		return result;
 	}
 
 	List<CardType> getOffHandCards() {

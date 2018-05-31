@@ -8,6 +8,7 @@ public class FightStats
 	public int MaxHitpoint;
 	public int Hitpoint;
 	public int Speed;
+	public int Attack;
 	public int Defence;
 	public List<Card> Deck;
 }
@@ -19,6 +20,7 @@ public class GameStatsPersistor : MonoBehaviour
 	public int Level = 1;
 	int baseSpeed = 5;
 	int baseDefence = 0;
+	int baseAttack = 0;
 	public ItemStats PlayerItemStats = new ItemStats();
 	public ItemFactory ItemFactory;
 	public CardFactory CardFactory;
@@ -32,6 +34,7 @@ public class GameStatsPersistor : MonoBehaviour
 				Speed = this.speed,
 				Defence = this.defence,
 				Deck = this.GetDeck(),
+				Attack = this.attack,
 			};
 			return stats;
 		}
@@ -51,6 +54,17 @@ public class GameStatsPersistor : MonoBehaviour
 				speed += amulate.SpeedBonus;
 			}
 			return speed;
+		}
+	}
+
+	int attack {
+		get {
+			var attack = baseAttack;
+			var items = PlayerItemStats.GetAllEquipments ();
+			foreach (var item in items) {
+				attack += item.AttackBonus;
+			}
+			return attack;
 		}
 	}
 

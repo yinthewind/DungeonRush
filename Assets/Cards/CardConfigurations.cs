@@ -146,6 +146,8 @@ public class CardConfigurations
 				Name = "PerfectStrike",
 				SpriteName = "Square",
 				Rarity = CardRarity.Uncommon,
+
+				BaseDamage = 7,
 			}
 		}, {
 			CardType.Predator, new CardMeta {
