@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class FightStats
 {
@@ -60,7 +61,7 @@ public class GameStatsPersistor : MonoBehaviour
 	int attack {
 		get {
 			var attack = baseAttack;
-			var items = PlayerItemStats.GetAllEquipments ();
+			var items = PlayerItemStats.GetAllEquipments ().Values.SelectMany(x => x);
 			foreach (var item in items) {
 				attack += item.AttackBonus;
 			}
@@ -80,8 +81,22 @@ public class GameStatsPersistor : MonoBehaviour
 	}
 
 	public List<Card> GetDeck() {
-		var cardTypes = this.PlayerItemStats.GetDeck ();
-		return CardFactory.Create (cardTypes);
+		var result = new List<Card> ();
+
+		var items = this.PlayerItemStats.GetAllEquipments ().Values.SelectMany (x => x);
+
+		foreach (var item in items) {
+			var cardTypes = item.Cards;
+			var cards = CardFactory.Create (cardTypes);
+			if (item.IsDragging) {
+				foreach (var card in cards) {
+					card.IsActive = true;
+				}
+			}
+			result.AddRange (cards);
+		}
+
+		return result;
 	}
 
 	public void Awake()

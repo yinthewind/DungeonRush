@@ -184,23 +184,6 @@ public class ItemStats {
 		}
 	}
 
-	public List<CardType> GetDeck() {
-
-		var deck = new List<CardType> ();
-
-		var mainHandCards = getMainHandCards ();
-		var offHandCards = getOffHandCards ();
-		var bodyCards = getBodyCards ();
-		var amulateCards = getAmulateCards ();
-
-		deck.AddRange (mainHandCards);
-		deck.AddRange (offHandCards);
-		deck.AddRange (bodyCards);
-		deck.AddRange (amulateCards);
-
-		return deck;
-	}
-
 	List<CardType> mainHandDefaultCards = new List<CardType>() {
 		CardType.DeadlyPunch,
 		CardType.Punch,
@@ -262,13 +245,18 @@ public class ItemStats {
 		return GetEquipments (PositionCategory.Amulate);
 	}
 
-	public List<Item> GetAllEquipments() {
-		var result = new List<Item> ();
-		result.AddRange (getMainHandItems ());
-		result.AddRange (getOffHandItems ());
-		result.AddRange (getBodyItems ());
-		result.AddRange (getAmulateItems ());
-		return result;
+	public Dictionary<PositionCategory, List<Item>> GetAllEquipments() {
+
+		return new Dictionary<PositionCategory, List<Item>> () { {
+				PositionCategory.MainHand, getMainHandItems ()
+			}, {
+				PositionCategory.OffHand, getOffHandItems ()
+			}, {
+				PositionCategory.Body, getBodyItems ()
+			}, {
+				PositionCategory.Amulate, getAmulateItems ()
+			},
+		};
 	}
 
 	List<CardType> getEquipmentCards(PositionCategory category) {
@@ -286,21 +274,5 @@ public class ItemStats {
 			result.AddRange(item.Cards);
 		}
 		return result;
-	}
-
-	List<CardType> getMainHandCards() {
-		return getEquipmentCards (PositionCategory.MainHand);
-	}
-
-	List<CardType> getOffHandCards() {
-		return getEquipmentCards (PositionCategory.OffHand);
-	}
-
-	List<CardType> getBodyCards() {
-		return getEquipmentCards (PositionCategory.Body);
-	}
-
-	List<CardType> getAmulateCards() {
-		return getEquipmentCards (PositionCategory.Amulate);
 	}
 }

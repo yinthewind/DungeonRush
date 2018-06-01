@@ -8,6 +8,9 @@ public class Card
 	public CardRenderer Renderer;
 	public FightScene FightScene;
 
+	// Highlight those cards to draw attention from player
+	public bool IsActive = false;
+
 	public string SpriteName;
 	public string Name;
 	public string Comment;
@@ -47,11 +50,14 @@ public class Card
 			this.Object.GetComponent<SpriteRenderer> ().sortingOrder = 1;
 			this.Object.AddComponent<BoxCollider2D> ();
 
-
 			var spriteSize = this.Object.GetComponent<SpriteRenderer> ().bounds.size;
 
 			this.Object.transform.localScale = new Vector3(targetSize.x / spriteSize.x, targetSize.y / spriteSize.y, 0);
 		}
+		if (this.IsActive) {
+			this.Object.GetComponent<SpriteRenderer> ().material.color = Color.red;
+		}
+
 		this.Renderer.Render (pos);
 	}
 

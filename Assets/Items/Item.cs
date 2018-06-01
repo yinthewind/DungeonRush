@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 public class Item {
 	public Position Pos;
+	// User is dragging this item
+	public bool IsDragging = false;
 
 	public ItemType Type;
 	public ItemCategory Category;
@@ -18,6 +21,7 @@ public class Item {
 	public ItemRenderer Renderer;
 	public delegate void del(Vector3 pos);
 	public del OnMouseDrop;
+	public Func<bool> OnMouseDown;
 	GameObject go;
 	Vector3 defaultScale;
 	public List<CardType> Cards;
@@ -73,6 +77,9 @@ public class ItemRenderer : MonoBehaviour {
 
 		// before anything else
 		sr.sortingOrder = 999;
+
+		this.Item.IsDragging = true;
+		this.Item.OnMouseDown ();
 	}
 
 	void OnMouseDrag() {
@@ -88,5 +95,7 @@ public class ItemRenderer : MonoBehaviour {
 		sr.sortingOrder = this.defaultSortingOrder;
 
 		this.Item.OnMouseDrop(this.transform.position);
+
+		this.Item.IsDragging = false;
 	}
 }

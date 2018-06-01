@@ -46,8 +46,12 @@ public class ItemsScene : MonoBehaviour {
 
 			render (item.Pos);
 
-			item.OnMouseDrop = (Vector3 posV) => {
+			item.OnMouseDown = () => {
+				deckViewerIsDirty = true;
+				return true;
+			};
 
+			item.OnMouseDrop = (Vector3 posV) => {
 
 				var thisPos = item.Pos;
 				var thatPos = getPosition(posV);
