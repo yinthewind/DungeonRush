@@ -73,6 +73,7 @@ public class ItemConfigurations {
 				Comment = "Common stuff",
 
 				SpeedBonus = 1,
+				AttachBonus = 4,
 				Cards = new List<CardType>() {
 					CardType.DoubleShot,
 					CardType.DoubleShot,
@@ -91,6 +92,7 @@ public class ItemConfigurations {
 				Comment = "Casual stuff",
 
 				SpeedBonus = 0,
+				AttachBonus = 7,
 				Cards = new List<CardType>() {
 					CardType.Stab,
 					CardType.Stab,

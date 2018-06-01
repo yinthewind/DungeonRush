@@ -45,6 +45,7 @@ public class CardMeta
 	public string Comment;
 	public CardRarity Rarity;
 
+	public float DamageMultifier = 1f;
 	public int BaseDamage = 0;
 	public int BaseArmor = 0;
 	public int EnergyCost = 0;
@@ -147,7 +148,7 @@ public class CardConfigurations
 				SpriteName = "Square",
 				Rarity = CardRarity.Uncommon,
 
-				BaseDamage = 7,
+				DamageMultifier = 2f,
 			}
 		}, {
 			CardType.Predator, new CardMeta {
@@ -185,7 +186,7 @@ public class CardConfigurations
 				SpriteName = "Slash",
 				Rarity = CardRarity.Common,
 
-				BaseDamage = 5,
+				DamageMultifier = 1f,
 			}
 		}, {
 			CardType.Stab, new CardMeta {
@@ -194,40 +195,43 @@ public class CardConfigurations
 				Comment = "Deal 12 Damage",
 
 				Rarity = CardRarity.Common,
-				BaseDamage = 12,
+
+				DamageMultifier = 1.5f,
 			}
 		}, {
 			CardType.Punch, new CardMeta {
 				Name = "Punch",
 				SpriteName = "Punch",
 
-				BaseDamage = 2,
+				DamageMultifier = 0.3f,
 			}
 		}, {
 			CardType.DeadlyPunch, new CardMeta {
 				Name = "DeadlyPunch",
 				SpriteName = "DeadlyPunch",
 
-				BaseDamage = 4,
+				DamageMultifier = 0.8f,
 			}
 		}, {
 			CardType.Miss, new CardMeta {
 				Name = "Miss",
 				SpriteName = "Miss",
+
+				DamageMultifier = 0.1f,
 			}
 		}, {
 			CardType.Shot, new CardMeta {
 				Name = "Shot",
 				SpriteName = "Shot",
 
-				BaseDamage = 6,
+				DamageMultifier = 1f,
 			}
 		}, {
 			CardType.DoubleShot, new CardMeta {
 				Name = "DoubleShot",
 				SpriteName = "DoubleShot",
 
-				BaseDamage = 10,
+				DamageMultifier = 1.8f,
 			}
 		}
 	};

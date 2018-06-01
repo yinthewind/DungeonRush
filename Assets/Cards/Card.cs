@@ -12,9 +12,10 @@ public class Card
 	public string Name;
 	public string Comment;
 
-	public int baseDamage = 0;
-	public int baseArmor = 0;
-	public int energyCost = 0;
+	protected float damageMotifier = 1f;
+	protected int baseDamage = 0;
+	protected int baseArmor = 0;
+	protected int energyCost = 0;
 
 	public delegate void OnMouseActionEventHandler();
 	public OnMouseActionEventHandler OnMouseDown;
@@ -29,6 +30,7 @@ public class Card
 		this.Comment = meta.Comment;
 
 		this.baseDamage = meta.BaseDamage;
+		this.damageMotifier = meta.DamageMultifier;
 		this.baseArmor = meta.BaseArmor;
 		this.energyCost = meta.EnergyCost;
 	}
@@ -90,7 +92,7 @@ public class Card
 
 	public virtual int GetCalculatedDamage()
 	{
-		var damageOutput = (baseDamage + this.FightScene.Player.States.AttackModifier + this.FightScene.PlayerFightStats.Attack) * this.FightScene.Player.States.DamageModifier;
+		var damageOutput = (baseDamage + this.FightScene.Player.States.AttackModifier + this.FightScene.PlayerFightStats.Attack) * this.FightScene.Player.States.DamageModifier * this.damageMotifier;
 		var damageTookByMonster = damageOutput * this.FightScene.Monster.States.DamageTookModifier;
 		return (int)damageTookByMonster;
 	}
