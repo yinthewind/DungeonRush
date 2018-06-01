@@ -11,6 +11,7 @@ public class ItemsScene : MonoBehaviour {
 	BackpackRenderer backpackRenderer;
 	Dictionary<PositionCategory, EquipmentRenderer> equipmentRenderers;
 	public ItemFactory ItemFactory;
+	public DeckViewer deckViewer;
 
 	void Start () {
 
@@ -25,6 +26,7 @@ public class ItemsScene : MonoBehaviour {
 		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
 
 		this.backpackRenderer = GameObject.Find ("Backpack").GetComponent<BackpackRenderer> ();
+		this.deckViewer = GameObject.Find ("DeckViewer").GetComponent<DeckViewer> ();
 
 		equipmentRenderers = new Dictionary<PositionCategory, EquipmentRenderer> () { 
 			{ PositionCategory.Amulate, new EquipmentRenderer("Amulate") }, 
@@ -70,11 +72,23 @@ public class ItemsScene : MonoBehaviour {
 							render(x.Pos);
 						}
 					}
+					deckViewerIsDirty = true;
 				}
 
 				render(thisPos);
 				render(thatPos);
 			};
+		}
+	}
+
+	bool deckViewerIsDirty = true;
+
+	void Update() {
+		if (deckViewerIsDirty) {
+			deckViewerIsDirty = false;
+			var deck = this.GameStats.GetDeck ();
+			this.deckViewer.Clear ();
+			this.deckViewer.RenderCards (deck);
 		}
 	}
 

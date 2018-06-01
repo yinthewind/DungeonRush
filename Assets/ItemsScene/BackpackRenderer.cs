@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class BackpackRenderer : ContainerRenderer {
-	int col = 5;
-	int row = 4;
+public class GridContainerRenderer : ContainerRenderer {
+	protected int col = 5;
+	protected int row = 4;
 
 	int getRow(int index) {
 		return index / col;
@@ -44,4 +44,7 @@ public class BackpackRenderer : ContainerRenderer {
 
 		return r * col + c;
 	}
+}
+
+public class BackpackRenderer : GridContainerRenderer {
 }

@@ -38,7 +38,7 @@ public class Card
 	public void Render(GameObject container, Vector3 pos, Vector3 targetSize) {
 
 		if (this.Object == null) {
-			this.Object = new GameObject ("CardInHand");
+			this.Object = new GameObject ("Card");
 			this.Renderer = this.Object.AddComponent<CardRenderer> ();
 			this.Renderer.Card = this;
 
