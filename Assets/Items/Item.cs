@@ -21,7 +21,7 @@ public class Item {
 	public ItemRenderer Renderer;
 	public delegate void del(Vector3 pos);
 	public del OnMouseDrop;
-	public Func<bool> OnMouseDown;
+	public Func<bool> OnMouseAction;
 	GameObject go;
 	Vector3 defaultScale;
 	public List<CardType> Cards;
@@ -79,7 +79,7 @@ public class ItemRenderer : MonoBehaviour {
 		sr.sortingOrder = 999;
 
 		this.Item.IsDragging = true;
-		this.Item.OnMouseDown ();
+		this.Item.OnMouseAction ();
 	}
 
 	void OnMouseDrag() {
@@ -97,5 +97,6 @@ public class ItemRenderer : MonoBehaviour {
 		this.Item.OnMouseDrop(this.transform.position);
 
 		this.Item.IsDragging = false;
+		this.Item.OnMouseAction ();
 	}
 }

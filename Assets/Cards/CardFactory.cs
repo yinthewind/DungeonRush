@@ -9,7 +9,6 @@ public class CardFactory {
 	public Card Create(CardType cardType) {
 
 		var meta = this.configs.Metas [cardType];
-		Debug.Log ("card type: " + cardType.ToString ());
 		Type t = Type.GetType (cardType.ToString());
 		var card = (Card)Activator.CreateInstance (t);
 		card.Init (meta);
@@ -18,6 +17,9 @@ public class CardFactory {
 	}
 
 	public List<Card> Create(List<CardType> types) {
+		if (types == null) {
+			return new List<Card> ();
+		}
 		return types.Select (type => this.Create (type)).ToList ();
 	}
 }

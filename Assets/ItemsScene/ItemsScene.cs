@@ -46,7 +46,7 @@ public class ItemsScene : MonoBehaviour {
 
 			render (item.Pos);
 
-			item.OnMouseDown = () => {
+			item.OnMouseAction = () => {
 				deckViewerIsDirty = true;
 				return true;
 			};
@@ -55,7 +55,7 @@ public class ItemsScene : MonoBehaviour {
 
 				var thisPos = item.Pos;
 				var thatPos = getPosition(posV);
-				if (thatPos.Category == PositionCategory.Nowhere) {
+				if (thisPos.Equals(thatPos) || thatPos.Category == PositionCategory.Nowhere) {
 					render(thisPos);
 					return ;
 				}
