@@ -41,7 +41,7 @@ public class MainMenu : MonoBehaviour
     void onStartButtonClick()
     {
         initGameStatsPersistor();
-        SceneManager.LoadScene("fight");
+        SceneManager.LoadScene("mapScene");
     }
 
     void onSettingsButtonClick()
