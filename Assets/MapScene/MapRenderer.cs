@@ -74,7 +74,7 @@ public class MapRenderer : MonoBehaviour, HexTile.IClickCallback
         }
         else
         {
-            Debug.Log("You can go there.");
+            Debug.Log("You can't go there.");
         }
     }
 }
