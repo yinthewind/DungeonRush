@@ -1,21 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
 
+public class MapScene : MonoBehaviour
+{
+	public GameObject TilePrefab;
+	public MapRenderer MapRenderer;
 
-public class MapScene : MonoBehaviour {
-
-	void Start() {
-
-		GameObject.Find ("FightButton").GetComponent<Button> ().onClick.AddListener (onFightButtonClick);
+	private void Start() {
 		GameObject.Find ("ItemButton").GetComponent<Button> ().onClick.AddListener (onItemButtonClick);
+		renderDungeonMap();
 	}
 
-	void onFightButtonClick() {
-		SceneManager.LoadScene ("fight");
+	private void renderDungeonMap()
+	{
+		MapRenderer = GameObject.Find("MapContainer").GetComponent<MapRenderer>();
+		MapRenderer.RenderMap();
 	}
 
 	void onItemButtonClick() {

@@ -39,3 +39,6 @@ sysinfo.txt
 # Extra Unity
 Library/
 Temp/
+
+# Idea generated (Rider)
+.idea/

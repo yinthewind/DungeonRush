@@ -25,6 +25,7 @@ public class GameStatsPersistor : MonoBehaviour
 	public ItemStats PlayerItemStats = new ItemStats();
 	public ItemFactory ItemFactory;
 	public CardFactory CardFactory;
+	public DungeonMapData DungeonMap;
 
 	public FightStats PlayerFightStats {
 		get {
@@ -103,6 +104,9 @@ public class GameStatsPersistor : MonoBehaviour
 	{
 		this.ItemFactory = new ItemFactory ();
 		this.CardFactory = new CardFactory ();
+		// Create a new map.
+		this.DungeonMap = new DungeonMapData();
+		Debug.Log("create a new dungeon map");
 
 		DontDestroyOnLoad(transform.gameObject);
 
