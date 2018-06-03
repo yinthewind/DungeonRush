@@ -47,13 +47,15 @@ public class GridContainerRenderer : ContainerRenderer {
 }
 
 public class BackpackRenderer : MonoBehaviour {
+	public int row = 4;
+	public int col = 6;
+
 	protected Bounds bounds;
 	protected Vector3 size;
 	protected Vector3 leftTopPos;
+
 	List<SlotObject> slots;
 	Vector2 gridExtend;
-	public int row = 4;
-	public int col = 6;
 	GameObject slotPrefab;
 
 	int getRow(int index) {
