@@ -16,6 +16,7 @@ ehthumbs.db
 
 # Vim Generated
 *.swp
+*.swo
 
 # Visual Studio / MonoDevelop generated
 # =====================================
@@ -42,4 +43,4 @@ Temp/
 
 # Idea generated (Rider)
 .idea/
-Assets/.*.sln.meta
+Assets/*.sln.meta
