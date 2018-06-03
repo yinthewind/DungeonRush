@@ -5,7 +5,7 @@ public class ItemObject : MonoBehaviour {
 
 	public SlotObject Slot;
 
-	int defaultSortingOrder;
+	int defaultSortingOrder = 9;
 	public SlotObject Destination;
 
 	void Start() {
