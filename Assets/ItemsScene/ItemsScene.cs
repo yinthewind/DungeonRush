@@ -27,5 +27,8 @@ public class ItemsScene : MonoBehaviour {
 			.GetComponent<GameStatsPersistor> ();
 
 		this.deckViewer = GameObject.Find ("DeckViewer").GetComponent<DeckViewer> ();
+		this.equipmentRenderers = new Dictionary<PositionCategory, EquipmentRenderer>() { {
+			PositionCategory.MainHand, new EquipmentRenderer("MainHand")
+		}};
 	}
 }
