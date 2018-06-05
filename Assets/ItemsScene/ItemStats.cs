@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 public enum PositionCategory {
@@ -42,7 +43,7 @@ public class ItemStats {
 	public bool Add(Position position, ItemType itemType) {
 		var item = this.itemFactory.Create(itemType);
 		if(this.GetItem(position) == null) {
-			this.put(position, item);
+			this.Put(position, item);
 			return true;
 		}
 		return false;
@@ -114,59 +115,25 @@ public class ItemStats {
 		return this.GetItem (new Position (PositionCategory.Amulate, 0));
 	}
 
-	public Dictionary<Position, Item>.ValueCollection GetItems() {
-		return items.Values;
-	}
-
-	public bool Put(Position pos, Item item) {
-
-		var thatItem = GetItem (pos);
-		var thisDest = pos;
-		var thatDest = item.Position;
-
-		var thisChecker = checkers[thisDest.Category];
-		var thatChecker = checkers [thatDest.Category];
-		if (thatItem != null) { // swapping two items
-			if (thisChecker (thisDest, item) && thatChecker (thatDest, thatItem)) {
-
-				put (thatDest, thatItem);
-				put (thisDest, item);
-
-				return true;
-			} else {
-				return false;
-			}
-		} else { // put
-			if (thisChecker (thisDest, item)) {
-				take (thatDest);
-				put (thisDest, item);
-
-				return true;
-			} else {
-				return false;
-			}
-		}
+	public List<Item> GetItems() {
+		return this.items.Select(kv => kv.Value).ToList();
 	}
 
 	public bool Take(Position pos) {
 		if (!items.ContainsKey (pos)) {
 			return false;
 		}
-		take (pos);
+		items[pos] = null;
 		return true;
 	}
 
-	void put(Position pos, Item item) {
+	public void Put(Position pos, Item item) {
 		if (!this.items.ContainsKey (pos)) {
 			this.items.Add (pos, item);
 		} else {
 			this.items [pos] = item;
 		}
 		item.Position = pos;
-	}
-
-	void take(Position pos) {
-		items [pos] = null;
 	}
 
 	public Item GetItem(PositionCategory category, int index) {
@@ -182,18 +149,6 @@ public class ItemStats {
 
 	bool isVacant(Position pos) {
 		return items.ContainsKey(pos) == false || items[pos] == null;
-	}
-
-	public void AddToBackpack(Item item) {
-		for (int i = 0; i < 60; i++) {
-			var pos = new Position (PositionCategory.Backpack, i);
-			if (isVacant (pos)) {
-				item.Position = pos;
-				put (pos, item);
-
-				return;
-			}
-		}
 	}
 
 	List<CardType> mainHandDefaultCards = new List<CardType>() {

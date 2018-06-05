@@ -23,6 +23,14 @@ public class SlotObject : MonoBehaviour {
 		this.leftTopPos = bounds.center - new Vector3 (size.x / 2, -size.y / 2);
 	}
 
+	void Start() {
+		// There is an issue with initialization order...
+		// Now we have to start testing from mainMenu scene
+		// TODO: change to use manager scene instead of DontDestroyOnLoad GameStatsPersistor object
+		this.gameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor")
+			.GetComponent<GameStatsPersistor> ();
+	}
+
 	void OnTriggerStay2D(Collider2D other) {
 		var sr = other.gameObject.GetComponent<SpriteRenderer>();
 		if(this.Inside(sr.bounds.center)) {
@@ -44,9 +52,11 @@ public class SlotObject : MonoBehaviour {
 		var item = this.item;
 		item.Slot = null;
 		this.item = null;
-		return item;
 
 		// Update GameStats.PlayerItemStats
+		this.gameStats.PlayerItemStats.Take(this.Position);
+
+		return item;
 	}
 
 	public void Put(ItemObject item) {
@@ -59,6 +69,7 @@ public class SlotObject : MonoBehaviour {
 		item.transform.localScale = item.transform.localScale * scale;
 
 		// Update GameStats.PlayerItemStats
+		this.gameStats.PlayerItemStats.Put(this.Position, item.Item);
 	}
 	
 	public bool Drop(ItemObject otherItem) {

@@ -13,17 +13,21 @@ public class ItemsScene : MonoBehaviour {
 	DeckViewer deckViewer;
 	Dictionary<Position, SlotObject> positionToSlot;
 
-	void Start () {
+	void Awake() {
 
 		#if UNITY_EDITOR
 		DebugHelper.CreateGameStatsPersistor ();
 		#endif
 
+		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor")
+			.GetComponent<GameStatsPersistor> ();
+
 		GameObject.Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
 			SceneManager.LoadScene("mapScene");
 		});
-		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor")
-			.GetComponent<GameStatsPersistor> ();
+	}
+
+	void Start () {
 
 		this.deckViewer = GameObject.Find ("DeckViewer").GetComponent<DeckViewer> ();
 		this.equipmentRenderers = new Dictionary<PositionCategory, EquipmentRenderer>() { {
@@ -44,5 +48,12 @@ public class ItemsScene : MonoBehaviour {
 			var itemObject = item.InitItemObject();
 			this.positionToSlot[pos].Put(itemObject);
 		}
+	}
+
+	void Update() {
+
+		var deck = this.GameStats.GetDeck();
+		this.deckViewer.Clear();
+		this.deckViewer.RenderCards(deck);
 	}
 }
