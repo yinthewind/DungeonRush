@@ -8,10 +8,10 @@ using System;
 public class ItemsScene : MonoBehaviour {
 
 	public GameStatsPersistor GameStats;
-	BackpackRenderer backpackRenderer;
 	Dictionary<PositionCategory, EquipmentRenderer> equipmentRenderers;
-	public ItemFactory ItemFactory;
-	public DeckViewer deckViewer;
+	BackpackRenderer backpackRenderer;
+	DeckViewer deckViewer;
+	Dictionary<Position, SlotObject> positionToSlot;
 
 	void Start () {
 
@@ -22,13 +22,27 @@ public class ItemsScene : MonoBehaviour {
 		GameObject.Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
 			SceneManager.LoadScene("mapScene");
 		});
-		this.ItemFactory = new ItemFactory ();
 		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor")
 			.GetComponent<GameStatsPersistor> ();
 
 		this.deckViewer = GameObject.Find ("DeckViewer").GetComponent<DeckViewer> ();
 		this.equipmentRenderers = new Dictionary<PositionCategory, EquipmentRenderer>() { {
-			PositionCategory.MainHand, new EquipmentRenderer("MainHand")
+			PositionCategory.MainHand, new EquipmentRenderer(PositionCategory.MainHand)
+		}, {
+			PositionCategory.OffHand, new EquipmentRenderer(PositionCategory.OffHand)
 		}};
+		this.backpackRenderer = GameObject.Find("Backpack").GetComponent<BackpackRenderer>();
+
+		this.positionToSlot = new Dictionary<Position, SlotObject>() {};
+
+		foreach(var slot in this.backpackRenderer.GetSlots()) {
+			this.positionToSlot.Add(slot.Position, slot);
+		}
+
+		foreach(var item in this.GameStats.PlayerItemStats.GetItems()) {
+			var pos = item.Position;
+			var itemObject = item.InitItemObject();
+			this.positionToSlot[pos].Put(itemObject);
+		}
 	}
 }

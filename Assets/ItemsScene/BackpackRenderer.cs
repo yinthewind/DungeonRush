@@ -15,19 +15,6 @@ public class GridContainerRenderer : ContainerRenderer {
 		return index % col;
 	}
 
-	public void Render(Position pos, Item item) {
-
-		var index = pos.Index;
-		var posV = this.GetPosition (index);
-
-		if (item.Renderer == null) {
-			item.Render (posV);
-		} else {
-			item.MoveTo (posV);
-		}
-		item.Scale (1f);
-	}
-
 	public Vector3 GetPosition(int index) {
 
 		int c = getCol (index);
@@ -79,26 +66,29 @@ public class BackpackRenderer : MonoBehaviour {
 		return Instantiate(this.slotPrefab, position, Quaternion.identity);
 	}
 
+	public List<SlotObject> GetSlots() {
+		return this.slots;
+	}
+
 	void Awake() {
 		var prefabPath = "Prefabs/Slot";
 		this.slotPrefab = Resources.Load<GameObject>(prefabPath);
-	}
-
-	void Start() {
 
 		this.bounds = this.gameObject.GetComponent<SpriteRenderer> ().bounds;
 		this.size = bounds.size;
 		this.leftTopPos = bounds.center - new Vector3 (size.x / 2, -size.y / 2);
 		gridExtend = new Vector2(bounds.size.x / col / 2, bounds.size.y / row / 2);
 
-		var sr = this.gameObject.GetComponent<SpriteRenderer>();
-		bounds = sr.bounds;
 		this.slots = new List<SlotObject>();
 
 		for(int i = 0; i < this.row * this.col; i++) {
 			var pos = this.GetPosition(i);
 			var slot = createBackpackSlot(pos).GetComponent<SlotObject>();
+			slot.Position = new Position(PositionCategory.Backpack, i);
 			this.slots.Add(slot);
 		}
+
+		var sr = this.gameObject.GetComponent<SpriteRenderer>();
+		bounds = sr.bounds;
 	}
 }

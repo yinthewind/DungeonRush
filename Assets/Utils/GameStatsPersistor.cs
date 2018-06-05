@@ -22,7 +22,7 @@ public class GameStatsPersistor : MonoBehaviour
 	int baseSpeed = 5;
 	int baseDefence = 0;
 	int baseAttack = 0;
-	public ItemStats PlayerItemStats = new ItemStats();
+	public ItemStats PlayerItemStats;
 	public ItemFactory ItemFactory;
 	public CardFactory CardFactory;
 	public DungeonMapData DungeonMap;
@@ -102,7 +102,11 @@ public class GameStatsPersistor : MonoBehaviour
 
 	public void Awake()
 	{
-		this.ItemFactory = new ItemFactory ();
+		this.PlayerItemStats = new ItemStats();
+		this.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 0), ItemType.WoodenBow);
+		this.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 1), ItemType.WoodenBow);
+		this.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 2), ItemType.WoodenBow);
+
 		this.CardFactory = new CardFactory ();
 		// Create a new map.
 		this.DungeonMap = new DungeonMapData();

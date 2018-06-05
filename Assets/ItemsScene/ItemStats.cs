@@ -37,8 +37,20 @@ public class Position {
 public class ItemStats {
 	Dictionary<Position, Item> items;
 	Dictionary<PositionCategory, Func<Position, Item, bool>> checkers;
+	ItemFactory itemFactory;
+
+	public bool Add(Position position, ItemType itemType) {
+		var item = this.itemFactory.Create(itemType);
+		if(this.GetItem(position) == null) {
+			this.put(position, item);
+			return true;
+		}
+		return false;
+	}
 
 	public ItemStats() {
+		itemFactory = new ItemFactory();
+
 		items = new Dictionary<Position, Item> ();
 
 		Func<Position, Item, bool> dummyChecker = (Position position, Item item) => {
@@ -110,7 +122,7 @@ public class ItemStats {
 
 		var thatItem = GetItem (pos);
 		var thisDest = pos;
-		var thatDest = item.Pos;
+		var thatDest = item.Position;
 
 		var thisChecker = checkers[thisDest.Category];
 		var thatChecker = checkers [thatDest.Category];
@@ -150,7 +162,7 @@ public class ItemStats {
 		} else {
 			this.items [pos] = item;
 		}
-		item.Pos = pos;
+		item.Position = pos;
 	}
 
 	void take(Position pos) {
@@ -176,7 +188,7 @@ public class ItemStats {
 		for (int i = 0; i < 60; i++) {
 			var pos = new Position (PositionCategory.Backpack, i);
 			if (isVacant (pos)) {
-				item.Pos = pos;
+				item.Position = pos;
 				put (pos, item);
 
 				return;

@@ -1,6 +1,9 @@
 using UnityEngine;
+using System;
 
 public class SlotObject : MonoBehaviour {
+
+	public Position Position;
 
 	protected ItemObject item;
 
@@ -8,7 +11,10 @@ public class SlotObject : MonoBehaviour {
 	protected Vector3 size;
 	protected Vector3 leftTopPos;
 
-	void Start() {
+	GameStatsPersistor gameStats;
+
+	void Awake() {
+
 		var collider = this.gameObject.AddComponent<BoxCollider2D> ();
 		collider.isTrigger = true;
 
@@ -24,6 +30,16 @@ public class SlotObject : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerExit2D(Collider2D other) {
+		if(other.gameObject.GetComponent<ItemObject>().Destination == this) {
+			other.gameObject.GetComponent<ItemObject>().Destination = null;
+		}
+	}
+
+	void reportGameStats() {
+		//this.gameStats.PlayerItemStats.
+	}
+
 	public ItemObject Take() {
 		var item = this.item;
 		item.Slot = null;
@@ -36,8 +52,11 @@ public class SlotObject : MonoBehaviour {
 	public void Put(ItemObject item) {
 		this.item = item;
 
-		item.transform.position = this.bounds.center;
 		item.Slot = this;
+		item.transform.position = this.bounds.center;
+		var itemSize = item.GetSize();
+		var scale = Math.Min(size.x / itemSize.x, size.y / itemSize.y) * 0.85f;
+		item.transform.localScale = item.transform.localScale * scale;
 
 		// Update GameStats.PlayerItemStats
 	}

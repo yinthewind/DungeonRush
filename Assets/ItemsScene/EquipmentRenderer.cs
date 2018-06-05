@@ -5,18 +5,22 @@ using System;
 
 public class EquipmentRenderer {
 
-	public SlotObject Core;
-	public List<SlotObject> Sockets;
+	public List<SlotObject> Slots;
 
-	public EquipmentRenderer(string objectName) {
-		var gameObject = GameObject.Find (objectName);
-		this.Core = gameObject.GetComponent<SlotObject> ();
+	public EquipmentRenderer(PositionCategory category) {
+		var gameObject = GameObject.Find (category.ToString());
 
-		this.Sockets = new List<SlotObject> () { 
+		this.Slots = new List<SlotObject> () { 
+			gameObject.GetComponent<SlotObject> (),
 			gameObject.transform.Find ("Socket0").GetComponent<SlotObject> (),
 			gameObject.transform.Find ("Socket1").GetComponent<SlotObject> (),
 			gameObject.transform.Find ("Socket2").GetComponent<SlotObject> (),
 			gameObject.transform.Find ("Socket3").GetComponent<SlotObject> (),
 		};
+
+		for(int i = 0; i < this.Slots.Count; i++) {
+			var slot = this.Slots[i];
+			slot.Position = new Position(category, i);
+		}
 	}
 }

@@ -3,18 +3,11 @@ using UnityEngine;
 
 public class ItemObject : MonoBehaviour {
 
+	public Item Item;
 	public SlotObject Slot;
 
 	int defaultSortingOrder = 9;
 	public SlotObject Destination;
-
-	void Start() {
-		this.gameObject.AddComponent<BoxCollider2D>();
-		this.gameObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-	}
-
-	void OnTriggerStay2D(Collider2D other) {
-	}
 
 	void OnMouseDown() {
 		var sr = this.gameObject.GetComponent<SpriteRenderer>();
@@ -42,4 +35,7 @@ public class ItemObject : MonoBehaviour {
 		transform.position = newPos;
 	}
 
+	public Vector3 GetSize() {
+		return this.gameObject.GetComponent<SpriteRenderer>().bounds.size;
+	}
 }

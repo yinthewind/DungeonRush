@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 public class Item {
-	public Position Pos;
+	public Position Position;
 	// User is dragging this item
 	public bool IsDragging = false;
 
@@ -18,11 +18,7 @@ public class Item {
 	public int SpeedBonus;
 	public int DefenceBonus;
 
-	public ItemRenderer Renderer;
-	public delegate void del(Vector3 pos);
-	public del OnMouseDrop;
-	public Func<bool> OnMouseAction;
-	GameObject go;
+	GameObject gameObject;
 	Vector3 defaultScale;
 	public List<CardType> Cards;
 
@@ -36,67 +32,19 @@ public class Item {
 		this.Category = meta.Category;
 	}
 
-	public void Render(Vector2 pos) {
+	public ItemObject InitItemObject() {
+		this.gameObject = new GameObject(this.Name);
 
-		this.go = new GameObject (this.Name);
+		var itemObject = this.gameObject.AddComponent<ItemObject>();
+		itemObject.Item = this;
 
-		go.transform.position = pos;
-		go.transform.localScale = new Vector2 (500, 500);
-
-		this.Renderer = go.AddComponent<ItemRenderer> ();
-		this.Renderer.Item = this;
-
-		var sr = go.AddComponent<SpriteRenderer> ();
-		sr.sprite = sprite;
+		var sr = this.gameObject.AddComponent<SpriteRenderer>();
+		sr.sprite = this.sprite;
 		sr.sortingOrder = 1;
-		sr.material.color = Color.gray;
 
-		var collider = go.AddComponent<BoxCollider2D> ();
+		this.gameObject.AddComponent<BoxCollider2D>();
+		this.gameObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 
-		defaultScale = this.go.transform.localScale;
-	}
-
-	public void MoveTo(Vector3 pos) {
-		go.transform.position = pos;
-	}
-
-	public void Scale(float factor) {
-		go.transform.localScale = defaultScale * factor;
-	}
-}
-
-public class ItemRenderer : MonoBehaviour {
-
-	public Item Item;
-	int defaultSortingOrder;
-
-	void OnMouseDown() {
-		var sr = this.gameObject.GetComponent<SpriteRenderer> ();
-		sr.material.color = Color.yellow;
-		this.defaultSortingOrder = sr.sortingOrder;
-
-		// before anything else
-		sr.sortingOrder = 999;
-
-		this.Item.IsDragging = true;
-		this.Item.OnMouseAction ();
-	}
-
-	void OnMouseDrag() {
-		var mouseWorldPoint = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		mouseWorldPoint.z = 0;
-		var newPos = mouseWorldPoint;
-		transform.position = newPos;
-	}
-
-	void OnMouseUp() {
-		var sr = this.gameObject.GetComponent<SpriteRenderer> ();
-		sr.material.color = Color.gray;
-		sr.sortingOrder = this.defaultSortingOrder;
-
-		this.Item.OnMouseDrop(this.transform.position);
-
-		this.Item.IsDragging = false;
-		this.Item.OnMouseAction ();
+		return itemObject;
 	}
 }
