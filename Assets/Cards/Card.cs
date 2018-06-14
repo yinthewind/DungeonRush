@@ -98,7 +98,9 @@ public class Card
 
 	public virtual int GetCalculatedDamage()
 	{
-		var damageOutput = (baseDamage + this.FightScene.Player.States.AttackModifier + this.FightScene.PlayerFightStats.Attack) * this.FightScene.Player.States.DamageModifier * this.damageMotifier;
+		var damageOutput = (baseDamage + this.FightScene.Player.States.AttackModifier 
+			+ this.FightScene.GameStats.GetAttack()) 
+			* this.FightScene.Player.States.DamageModifier * this.damageMotifier;
 		var damageTookByMonster = damageOutput * this.FightScene.Monster.States.DamageTookModifier;
 		return (int)damageTookByMonster;
 	}

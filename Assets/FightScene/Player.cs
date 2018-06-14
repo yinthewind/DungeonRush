@@ -6,7 +6,7 @@ public class Player
 {
     GameObject playerObject;
     PlayerRenderer playerRenderer;
-	GameStatsPersistor gameStatesPersistor;
+	GameStats gameStats;
 	FightScene fightScene;
 
 	public int MaxHitpoint;
@@ -21,10 +21,11 @@ public class Player
 	public Player(FightScene fightScene)
     {
 		this.fightScene = fightScene;
-		this.gameStatesPersistor = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
+		this.gameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor")
+			.GetComponent<GameStatsPersistor> ().GameStats;
 		// init for Fight Scene
-		this.Hitpoint.Val = this.fightScene.PlayerFightStats.Hitpoint;
-		this.MaxHitpoint = this.fightScene.PlayerFightStats.MaxHitpoint;
+		this.Hitpoint.Val = this.fightScene.GameStats.Hitpoint;
+		this.MaxHitpoint = this.fightScene.GameStats.MaxHitpoint;
 		this.Shield.Val = 0;
 
         this.Hitpoint.OnChange += (oldVal, newVal) =>
@@ -51,7 +52,7 @@ public class Player
 	{
 		damage = (int) (this.States.DamageTookModifier * damage);
 
-		damage -= this.fightScene.PlayerFightStats.Defence;
+		damage -= this.fightScene.GameStats.GetDefence();
 		if (damage < 0) {
 			return;
 		}
@@ -82,8 +83,8 @@ public class Player
 
     public void EndFight()
 	{
-		gameStatesPersistor.Hitpoint = this.Hitpoint.Val;
-		gameStatesPersistor.Level++;
+		gameStats.Hitpoint = this.Hitpoint.Val;
+		gameStats.Level++;
 	}
 }
 

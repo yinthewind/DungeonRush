@@ -12,13 +12,15 @@ public class MapRenderer : MonoBehaviour, HexTile.IClickCallback
     private DungeonMapData mapData;
 
     private GameStatsPersistor persistor;
+	public GameStats GameStats;
 
     private void Awake()
     {
         var bounds = TilePrefab.GetComponent<Renderer>().bounds;
         edgeLength = bounds.size.x / 2;
         persistor = GameObject.FindGameObjectWithTag ("GameStatsPersistor").GetComponent<GameStatsPersistor> ();
-        mapData = persistor.DungeonMap;
+		GameStats = persistor.GameStats;
+        mapData = GameStats.DungeonMap;
         mapData.CommitMovement();
     }
 

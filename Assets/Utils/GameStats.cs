@@ -40,4 +40,38 @@ public static class GameStatsExtensions {
 
 		return result;
 	}
+
+	public static int GetAttack(this GameStats gameStats) {
+		var attack = gameStats.baseAttack;
+		var items = gameStats.PlayerItemStats.GetAllEquipments ().Values.SelectMany(x => x);
+		foreach (var item in items) {
+			attack += item.AttackBonus;
+		}
+		return attack;
+	}
+
+	public static int GetDefence(this GameStats gameStats) {
+		var defence = gameStats.baseDefence;
+		var armor = gameStats.PlayerItemStats.GetArmor ();
+		if (armor != null) {
+			return defence += armor.DefenceBonus;
+		}
+		return defence;
+	}
+
+	public static int GetSpeed(this GameStats gameStats) {
+		var speed = gameStats.baseSpeed;
+
+		var weapon = gameStats.PlayerItemStats.GetWeapon ();
+		if (weapon != null) {
+			speed += weapon.SpeedBonus;
+		}
+
+		var amulate = gameStats.PlayerItemStats.GetAmulate ();
+		if (amulate != null) {
+			speed += amulate.SpeedBonus;
+		}
+		return speed;
+	}
+
 }
