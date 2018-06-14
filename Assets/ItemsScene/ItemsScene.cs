@@ -36,7 +36,11 @@ public class ItemsScene : MonoBehaviour {
 			PositionCategory.MainHand, new EquipmentRenderer(PositionCategory.MainHand)
 		}, {
 			PositionCategory.OffHand, new EquipmentRenderer(PositionCategory.OffHand)
-		}};
+		}, {
+			PositionCategory.Body, new EquipmentRenderer(PositionCategory.Body)
+		}, {
+			PositionCategory.Amulate, new EquipmentRenderer(PositionCategory.Amulate)
+		} };
 		this.backpackRenderer = GameObject.Find("Backpack").GetComponent<BackpackRenderer>();
 
 		this.positionToSlot = new Dictionary<Position, SlotObject>() {};

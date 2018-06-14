@@ -20,9 +20,20 @@ public class GameStatsPersistor : MonoBehaviour
 			baseSpeed = 5,
 		};
 
-		this.GameStats.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 0), ItemType.WoodenBow);
-		this.GameStats.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 1), ItemType.WoodenBow);
-		this.GameStats.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 2), ItemType.WoodenBow);
+		this.GameStats.PlayerItemStats
+			.Add(new Position(PositionCategory.Backpack, 0), ItemType.WoodenBow);
+		this.GameStats.PlayerItemStats
+			.Add(new Position(PositionCategory.Backpack, 1), ItemType.WoodenBow);
+		this.GameStats.PlayerItemStats
+			.Add(new Position(PositionCategory.Backpack, 8), ItemType.IronSword);
+		this.GameStats.PlayerItemStats
+			.Add(new Position(PositionCategory.Backpack, 9), ItemType.Ruby);
+		this.GameStats.PlayerItemStats
+			.Add(new Position(PositionCategory.Backpack, 10), ItemType.Ruby);
+		this.GameStats.PlayerItemStats
+			.Add(new Position(PositionCategory.Backpack, 11), ItemType.Ruby);
+		this.GameStats.PlayerItemStats
+			.Add(new Position(PositionCategory.Backpack, 18), ItemType.SpeedAmulate);
 
 		this.CardFactory = new CardFactory ();
 		// Create a new map.
