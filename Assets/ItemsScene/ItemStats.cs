@@ -116,7 +116,7 @@ public class ItemStats {
 	}
 
 	public List<Item> GetItems() {
-		return this.items.Select(kv => kv.Value).ToList();
+		return this.items.Select(kv => kv.Value).Where(x => x != null).ToList();
 	}
 
 	public bool Take(Position pos) {

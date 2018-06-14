@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using System.Linq;
 
 public class ItemsScene : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class ItemsScene : MonoBehaviour {
 	Dictionary<PositionCategory, EquipmentRenderer> equipmentRenderers;
 	BackpackRenderer backpackRenderer;
 	DeckViewer deckViewer;
+	// Don't really need this..
+	// A bit hacky now..
 	Dictionary<Position, SlotObject> positionToSlot;
 
 	void Awake() {
@@ -47,6 +50,11 @@ public class ItemsScene : MonoBehaviour {
 
 		foreach(var slot in this.backpackRenderer.GetSlots()) {
 			this.positionToSlot.Add(slot.Position, slot);
+		}
+		foreach(var er in this.equipmentRenderers.Select(x => x.Value)) {
+			foreach(var slot in er.Slots) {
+				this.positionToSlot.Add(slot.Position, slot);
+			}
 		}
 
 		foreach(var item in this.GameStats.PlayerItemStats.GetItems()) {
