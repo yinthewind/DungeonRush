@@ -7,17 +7,24 @@ public class ItemObject : MonoBehaviour {
 	public SlotObject Slot;
 
 	int defaultSortingOrder = 9;
+	Color defaultColor;
 	public SlotObject Destination;
 
 	void OnMouseDown() {
 		var sr = this.gameObject.GetComponent<SpriteRenderer>();
 		// before anything else
 		sr.sortingOrder = 999;
+		this.defaultColor = sr.material.color;
+		sr.material.color = Color.yellow;
+
+		this.Item.IsDragging = true;
 	}
 
 	void OnMouseUp() {
 		var sr = this.gameObject.GetComponent<SpriteRenderer>();
-		sr.sortingOrder = defaultSortingOrder;
+		sr.sortingOrder = this.defaultSortingOrder;
+		sr.material.color = this.defaultColor;
+		this.Item.IsDragging = false;
 
 		if(this.Destination != null && this.Destination != this.Slot) {
 			this.Destination.Drop(this);
