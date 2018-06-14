@@ -36,6 +36,7 @@ public class DrawPile
 		var cnt = cards.Count;
 		var card = cards[cnt-1];
 		cards.RemoveAt(cnt-1);
+
 		return card;
 	}
 }

@@ -7,7 +7,8 @@ using System;
 
 public class ItemsScene : MonoBehaviour {
 
-	public GameStatsPersistor GameStats;
+	public GameStats GameStats;
+	public GameStatsPersistor GameStatsPersistor;
 	Dictionary<PositionCategory, EquipmentRenderer> equipmentRenderers;
 	BackpackRenderer backpackRenderer;
 	DeckViewer deckViewer;
@@ -19,8 +20,9 @@ public class ItemsScene : MonoBehaviour {
 		DebugHelper.CreateGameStatsPersistor ();
 		#endif
 
-		this.GameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor")
+		this.GameStatsPersistor = GameObject.FindGameObjectWithTag ("GameStatsPersistor")
 			.GetComponent<GameStatsPersistor> ();
+		this.GameStats = this.GameStatsPersistor.GameStats;
 
 		GameObject.Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
 			SceneManager.LoadScene("mapScene");
@@ -46,7 +48,7 @@ public class ItemsScene : MonoBehaviour {
 		foreach(var item in this.GameStats.PlayerItemStats.GetItems()) {
 			var pos = item.Position;
 			var itemObject = item.InitItemObject();
-			this.positionToSlot[pos].Put(itemObject);
+			this.positionToSlot[pos].Render(itemObject);
 		}
 	}
 

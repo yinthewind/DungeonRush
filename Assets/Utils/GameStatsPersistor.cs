@@ -16,42 +16,60 @@ public class FightStats
 
 public class GameStatsPersistor : MonoBehaviour
 {
-	public int MaxHitpoint = 250;
-	public int Hitpoint;
-	public int Level = 1;
-	int baseSpeed = 5;
-	int baseDefence = 0;
-	int baseAttack = 0;
-	public ItemStats PlayerItemStats;
+	public GameStats GameStats;
+
 	public ItemFactory ItemFactory;
 	public CardFactory CardFactory;
-	public DungeonMapData DungeonMap;
 
 	public FightStats PlayerFightStats {
 		get {
 			var stats = new FightStats() {
-				Level = this.Level,
-				MaxHitpoint = this.MaxHitpoint,
-				Hitpoint = this.Hitpoint,
+				Level = this.GameStats.Level,
+				MaxHitpoint = this.GameStats.MaxHitpoint,
+				Hitpoint = this.GameStats.Hitpoint,
 				Speed = this.speed,
 				Defence = this.defence,
-				Deck = this.GetDeck(),
+				Deck = this.GameStats.GetDeck(),
 				Attack = this.attack,
 			};
 			return stats;
 		}
 	}
 
+	public int Hitpoint {
+		get {
+			return this.GameStats.Hitpoint;
+		}
+		set {
+			this.GameStats.Hitpoint = value;
+		}
+	}
+
+	public int Level {
+		get {
+			return this.GameStats.Level;
+		}
+		set {
+			this.GameStats.Level = value;
+		}
+	}
+
+	public DungeonMapData DungeonMap {
+		get {
+			return this.GameStats.DungeonMap;
+		}
+	}
+
 	int speed {
 		get { 
-			var speed = this.baseSpeed;
+			var speed = this.GameStats.baseSpeed;
 
-			var weapon = PlayerItemStats.GetWeapon ();
+			var weapon = this.GameStats.PlayerItemStats.GetWeapon ();
 			if (weapon != null) {
 				speed += weapon.SpeedBonus;
 			}
 
-			var amulate = PlayerItemStats.GetAmulate ();
+			var amulate = this.GameStats.PlayerItemStats.GetAmulate ();
 			if (amulate != null) {
 				speed += amulate.SpeedBonus;
 			}
@@ -61,8 +79,8 @@ public class GameStatsPersistor : MonoBehaviour
 
 	int attack {
 		get {
-			var attack = baseAttack;
-			var items = PlayerItemStats.GetAllEquipments ().Values.SelectMany(x => x);
+			var attack = this.GameStats.baseAttack;
+			var items = this.GameStats.PlayerItemStats.GetAllEquipments ().Values.SelectMany(x => x);
 			foreach (var item in items) {
 				attack += item.AttackBonus;
 			}
@@ -72,8 +90,8 @@ public class GameStatsPersistor : MonoBehaviour
 
 	int defence {
 		get {
-			var defence = baseDefence;
-			var armor = PlayerItemStats.GetArmor ();
+			var defence = this.GameStats.baseDefence;
+			var armor = this.GameStats.PlayerItemStats.GetArmor ();
 			if (armor != null) {
 				return defence += armor.DefenceBonus;
 			}
@@ -82,38 +100,30 @@ public class GameStatsPersistor : MonoBehaviour
 	}
 
 	public List<Card> GetDeck() {
-		var result = new List<Card> ();
-
-		var items = this.PlayerItemStats.GetAllEquipments ().Values.SelectMany (x => x);
-
-		foreach (var item in items) {
-			var cardTypes = item.Cards;
-			var cards = CardFactory.Create (cardTypes);
-			if (item.IsDragging) {
-				foreach (var card in cards) {
-					card.IsActive = true;
-				}
-			}
-			result.AddRange (cards);
-		}
-
-		return result;
+		return this.GameStats.GetDeck();
 	}
 
 	public void Awake()
 	{
-		this.PlayerItemStats = new ItemStats();
-		this.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 0), ItemType.WoodenBow);
-		this.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 1), ItemType.WoodenBow);
-		this.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 2), ItemType.WoodenBow);
+		this.GameStats = new GameStats() {
+			MaxHitpoint = 250,
+			Level = 1,
+			DungeonMap = new DungeonMapData(),
+			PlayerItemStats = new ItemStats(),
+			baseSpeed = 5,
+		};
+
+		this.GameStats.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 0), ItemType.WoodenBow);
+		this.GameStats.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 1), ItemType.WoodenBow);
+		this.GameStats.PlayerItemStats.Add(new Position(PositionCategory.Backpack, 2), ItemType.WoodenBow);
 
 		this.CardFactory = new CardFactory ();
 		// Create a new map.
-		this.DungeonMap = new DungeonMapData();
+		this.GameStats.DungeonMap = new DungeonMapData();
 		Debug.Log("create a new dungeon map");
 
 		DontDestroyOnLoad(transform.gameObject);
 
-		this.Hitpoint = this.MaxHitpoint;
+		this.GameStats.Hitpoint = this.GameStats.MaxHitpoint;
 	}
 }

@@ -11,7 +11,7 @@ public class SlotObject : MonoBehaviour {
 	protected Vector3 size;
 	protected Vector3 leftTopPos;
 
-	GameStatsPersistor gameStats;
+	GameStats gameStats;
 
 	void Awake() {
 
@@ -24,11 +24,7 @@ public class SlotObject : MonoBehaviour {
 	}
 
 	void Start() {
-		// There is an issue with initialization order...
-		// Now we have to start testing from mainMenu scene
-		// TODO: change to use manager scene instead of DontDestroyOnLoad GameStatsPersistor object
-		this.gameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor")
-			.GetComponent<GameStatsPersistor> ();
+		this.gameStats = GameObject.Find("Main Camera").GetComponent<ItemsScene>().GameStats;
 	}
 
 	void OnTriggerStay2D(Collider2D other) {
@@ -44,10 +40,6 @@ public class SlotObject : MonoBehaviour {
 		}
 	}
 
-	void reportGameStats() {
-		//this.gameStats.PlayerItemStats.
-	}
-
 	public ItemObject Take() {
 		var item = this.item;
 		item.Slot = null;
@@ -59,7 +51,7 @@ public class SlotObject : MonoBehaviour {
 		return item;
 	}
 
-	public void Put(ItemObject item) {
+	public void Render(ItemObject item) {
 		this.item = item;
 
 		item.Slot = this;
@@ -67,6 +59,10 @@ public class SlotObject : MonoBehaviour {
 		var itemSize = item.GetSize();
 		var scale = Math.Min(size.x / itemSize.x, size.y / itemSize.y) * 0.85f;
 		item.transform.localScale = item.transform.localScale * scale;
+	}
+
+	public void Put(ItemObject item) {
+		this.Render(item);
 
 		// Update GameStats.PlayerItemStats
 		this.gameStats.PlayerItemStats.Put(this.Position, item.Item);
