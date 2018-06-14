@@ -17,6 +17,8 @@ ehthumbs.db
 # Vim Generated
 *.swp
 *.swo
+*.swn
+*.swm
 
 # Visual Studio / MonoDevelop generated
 # =====================================
