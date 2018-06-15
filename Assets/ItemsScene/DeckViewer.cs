@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class DeckViewer : GridContainerRenderer {
+public class DeckViewer : GridContainer {
 
 	List<Card> cardsOnDisplay;
 

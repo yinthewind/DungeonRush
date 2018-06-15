@@ -19,6 +19,7 @@ ehthumbs.db
 *.swo
 *.swn
 *.swm
+*.swl
 
 # Visual Studio / MonoDevelop generated
 # =====================================

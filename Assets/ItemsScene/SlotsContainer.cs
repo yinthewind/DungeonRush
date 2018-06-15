@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlotsContainer : GridContainerRenderer {
+public class SlotsContainer : GridContainer {
 	public PositionCategory PositionCategory;
 
 	List<SlotObject> slots;
@@ -15,7 +15,7 @@ public class SlotsContainer : GridContainerRenderer {
 		return this.slots;
 	}
 
-	void Start () {
+	void initSlots() {
 		var prefabPath = "Prefabs/Slot";
 		this.slotPrefab = Resources.Load<GameObject>(prefabPath);
 
@@ -23,13 +23,14 @@ public class SlotsContainer : GridContainerRenderer {
 
 		for(int i = 0; i < this.row * this.col; i++) {
 			var pos = this.GetPosition(i);
-			Debug.Log(pos + " ");
 			var slot = createBackpackSlot(pos).GetComponent<SlotObject>();
 			slot.Position = new Position(PositionCategory, i);
 			this.slots.Add(slot);
 		}
+	}
 
-		var sr = this.gameObject.GetComponent<SpriteRenderer>();
-		bounds = sr.bounds;
+	void Awake () {
+		base.Awake();
+		this.initSlots();
 	}
 }

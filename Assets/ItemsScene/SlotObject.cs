@@ -24,7 +24,9 @@ public class SlotObject : MonoBehaviour {
 	}
 
 	void Start() {
-		this.gameStats = GameObject.Find("Main Camera").GetComponent<ItemsScene>().GameStats;
+		this.gameStats = tryFindGameStats();
+
+		renderContainedItem();
 	}
 
 	void OnTriggerStay2D(Collider2D other) {
@@ -40,6 +42,30 @@ public class SlotObject : MonoBehaviour {
 		}
 	}
 
+	void renderContainedItem() {
+		if(this.gameStats == null) {
+			return;
+		}
+		var item = this.gameStats.PlayerItemStats.GetItem(Position);
+		if (item == null) {
+			return;
+		}
+		this.item = item.InitItemObject();
+		this.Render();
+	}
+
+	GameStats tryFindGameStats() {
+		var gameStatsPersistorObject = GameObject.FindGameObjectWithTag ("GameStatsPersistor");
+		if(gameStatsPersistorObject == null) {
+			return null;
+		}
+		var gameStatsPersistor = gameStatsPersistorObject.GetComponent<GameStatsPersistor> ();
+		if(gameStatsPersistor == null) {
+			return null;
+		}
+		return gameStatsPersistor.GameStats;
+	}
+
 	public ItemObject Take() {
 		var item = this.item;
 		item.Slot = null;
@@ -51,8 +77,7 @@ public class SlotObject : MonoBehaviour {
 		return item;
 	}
 
-	public void Render(ItemObject item) {
-		this.item = item;
+	public void Render() {
 
 		item.Slot = this;
 		item.transform.position = this.bounds.center;
@@ -62,7 +87,8 @@ public class SlotObject : MonoBehaviour {
 	}
 
 	public void Put(ItemObject item) {
-		this.Render(item);
+		this.item = item;
+		this.Render();
 
 		// Update GameStats.PlayerItemStats
 		this.gameStats.PlayerItemStats.Put(this.Position, item.Item);

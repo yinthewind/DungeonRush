@@ -142,6 +142,9 @@ public class ItemStats {
 	}
 
 	public Item GetItem(Position pos) {
+		if (pos == null) {
+			return null;
+		}
 		if (items.ContainsKey (pos) == false) {
 			return null;
 		}
