@@ -150,7 +150,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4616864169624988, guid: 5359d7fb9cf4d194ea03fef58cbf9114, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1657213730454900, guid: 5359d7fb9cf4d194ea03fef58cbf9114, type: 2}
       propertyPath: m_Name
@@ -290,7 +290,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4616864169624988, guid: 5359d7fb9cf4d194ea03fef58cbf9114, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1657213730454900, guid: 5359d7fb9cf4d194ea03fef58cbf9114, type: 2}
       propertyPath: m_Name
@@ -447,7 +447,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4616864169624988, guid: 5359d7fb9cf4d194ea03fef58cbf9114, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1657213730454900, guid: 5359d7fb9cf4d194ea03fef58cbf9114, type: 2}
       propertyPath: m_Name
@@ -541,6 +541,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecdccd54a4b1a2b43819b2b5cbe71c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  col: 13
+  row: 3
 --- !u!1 &832737557
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,11 +719,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1311877174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf322fe2439bf094799216a38a93980c, type: 3}
+  m_Script: {fileID: 11500000, guid: 40f8a53420256ca47968ece4ca1dba0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  row: 4
   col: 6
+  row: 4
+  PositionCategory: 5
 --- !u!1001 &1371147067
 Prefab:
   m_ObjectHideFlags: 0

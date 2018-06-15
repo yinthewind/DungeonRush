@@ -9,6 +9,7 @@ public enum PositionCategory {
 	Body,
 	Amulate,
 	Backpack,
+	Temporary,
 };
 
 public class Position {

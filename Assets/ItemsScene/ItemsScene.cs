@@ -11,7 +11,7 @@ public class ItemsScene : MonoBehaviour {
 	public GameStats GameStats;
 	public GameStatsPersistor GameStatsPersistor;
 	Dictionary<PositionCategory, EquipmentRenderer> equipmentRenderers;
-	BackpackRenderer backpackRenderer;
+	SlotsContainer backpackRenderer;
 	DeckViewer deckViewer;
 	// Don't really need this..
 	// A bit hacky now..
@@ -44,7 +44,7 @@ public class ItemsScene : MonoBehaviour {
 		}, {
 			PositionCategory.Amulate, new EquipmentRenderer(PositionCategory.Amulate)
 		} };
-		this.backpackRenderer = GameObject.Find("Backpack").GetComponent<BackpackRenderer>();
+		this.backpackRenderer = GameObject.Find("Backpack").GetComponent<SlotsContainer>();
 
 		this.positionToSlot = new Dictionary<Position, SlotObject>() {};
 

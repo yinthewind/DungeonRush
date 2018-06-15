@@ -20,7 +20,7 @@ public class ContainerRenderer : MonoBehaviour {
 		return this.bounds.center;
 	}
 
-	void Start () {
+	void Awake () {
 
 		this.bounds = this.gameObject.GetComponent<SpriteRenderer> ().bounds;
 		this.size = bounds.size;
