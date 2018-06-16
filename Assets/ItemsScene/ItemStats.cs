@@ -120,6 +120,17 @@ public class ItemStats {
 		return this.items.Select(kv => kv.Value).Where(x => x != null).ToList();
 	}
 
+	public bool AddItemToBackpack(Item item) {
+		for(int i = 0; i < 24; i++) {
+			var pos = new Position(PositionCategory.Backpack, i);
+			if (this.isVacant(pos)) {
+				this.Put(pos, item);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public bool Take(Position pos) {
 		if (!items.ContainsKey (pos)) {
 			return false;
@@ -151,6 +162,9 @@ public class ItemStats {
 		return items [pos];
 	}
 
+	bool isVacant(PositionCategory category, int index) {
+		return this.isVacant(new Position(category, index));
+	}
 	bool isVacant(Position pos) {
 		return items.ContainsKey(pos) == false || items[pos] == null;
 	}
