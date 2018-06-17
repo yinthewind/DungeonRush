@@ -104,6 +104,10 @@ public class ItemStats {
 		};
 	}
 
+	public Dictionary<Position, Item> Items() {
+		return this.items;
+	}
+
 	public Item GetWeapon() {
 		return this.GetItem (new Position (PositionCategory.MainHand, 0));
 	}

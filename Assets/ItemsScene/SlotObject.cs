@@ -84,6 +84,9 @@ public class SlotObject : MonoBehaviour {
 		var itemSize = item.GetSize();
 		var scale = Math.Min(size.x / itemSize.x, size.y / itemSize.y) * 0.85f;
 		item.transform.localScale = item.transform.localScale * scale;
+
+		item.GetComponent<SpriteRenderer>().sortingOrder = 
+			this.GetComponent<SpriteRenderer>().sortingOrder + 1;
 	}
 
 	public void Put(ItemObject item) {
