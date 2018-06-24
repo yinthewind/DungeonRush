@@ -6,96 +6,60 @@ using System.Linq;
 
 public class FightReport
 {
-	public GameObject Object;
-	FightReportRenderer renderer;
+	GameObject rewardsWindow;
+	GameObject rewardsWindowPrefab;
+	Vector3 rewardsWindowPosition;
+	FightScene fightScene;
 
-	public FightReport()
+
+	public FightReport(FightScene fightScene)
 	{
-		this.Object = new GameObject("FightReport");
-		renderer = this.Object.AddComponent<FightReportRenderer>();
+		this.rewardsWindowPrefab = Resources.Load<GameObject>("Prefabs/RewardsWindow");
+		this.rewardsWindowPosition = new Vector3(621, 390);
+		this.fightScene = fightScene;
 	}
 
 	public void DeclareVictory()
 	{
-		renderer.RenderVictory();
+		this.rewardsWindow = GameObject.Instantiate(
+			this.rewardsWindowPrefab, this.rewardsWindowPosition, Quaternion.identity);
 
-	}
-	public void DeclareDefeat()
-	{
-		renderer.RenderDefeat();
-	}
-}
+		var persistor = this.fightScene.GameStatsPersistor;
+		var stats = this.fightScene.GameStats;
 
-public class FightReportRenderer : MonoBehaviour
-{
-	GameObject Object;
-	Text fightReportText;
-	Button leaveFightButton;
-
-	private void Start()
-	{
-		var canvas = GameObject.FindObjectsOfType<Canvas>().Single(c => c.name == "FightScene");
-		this.fightReportText = canvas.transform.Find("fightResult").GetComponent<Text>();
-		this.fightReportText.enabled = false;
-
-		this.Object = new GameObject("leaveFightButton");
-		this.Object.transform.SetParent(canvas.transform);
-		this.Object.transform.position = canvas.transform.position;
-
-
-		this.leaveFightButton = this.Object.AddComponent<Button>();
-		this.leaveFightButton.enabled = false;
-	}
-
-	public void RenderVictory()
-	{
-		this.fightReportText.enabled = true;
-
-		this.Object.AddComponent<Image>().sprite = Resources.Load<Sprite>("Square");
-		addLeaveFightButtonText();
-		this.leaveFightButton.enabled = true;
-		this.leaveFightButton.onClick.AddListener(victoryOnClick);
-	}
-
-	void victoryOnClick()
-	{
-		if (Random.value > 0.5)
-		{
-			SceneManager.LoadScene("mapScene");
+		var oldRewardsToDelete = stats.PlayerItemStats.Items()
+			.Where(x => x.Key.Category == PositionCategory.Rewards)
+			.Select(x => x.Key).ToList();
+		foreach(var key in oldRewardsToDelete) {
+			stats.PlayerItemStats.Items().Remove(key);
 		}
-		else
-		{
-			SceneManager.LoadScene("event");
-		}
+		stats.PlayerItemStats.Add(new Position(PositionCategory.Rewards, 0), ItemType.Ruby);
+
+		this.rewardsWindow.transform.Find("Canvas")
+			.Find("LeaveButton")
+			.GetComponent<Button>().onClick.AddListener(victoryOnClick);
+
+		this.rewardsWindow.transform.Find("Canvas")
+			.Find("TakeAllButton")
+			.GetComponent<Button>().onClick.AddListener(()=>{
+				var rewards = stats.PlayerItemStats.Items()
+					.Where(x => x.Key.Category == PositionCategory.Rewards)
+					.Select(x => x.Value)
+					.ToList();
+
+				foreach(var reward in rewards) {
+					stats.PlayerItemStats.AddItemToBackpack(reward);
+				}
+
+				victoryOnClick();
+		});
 	}
 
-	public void RenderDefeat()
-	{
-		this.fightReportText.text = "Defeated!!";
-		this.fightReportText.enabled = true;
-
-		this.Object.AddComponent<Image>().sprite = Resources.Load<Sprite>("Square");
-		addLeaveFightButtonText();
-
-		this.leaveFightButton.enabled = true;
-		this.leaveFightButton.onClick.AddListener(defeatOnClick);
-	}
-
-	void defeatOnClick()
-	{
+	public void DeclareDefeat() {
 		SceneManager.LoadScene("mainMenu");
 	}
 
-	void addLeaveFightButtonText()
-	{
-		var textObject = new GameObject();
-		textObject.transform.SetParent(this.Object.transform);
-		textObject.transform.position = this.Object.transform.position;
-
-		var textComponent = textObject.AddComponent<Text>();
-		textComponent.text = "Leave this fight";
-		textComponent.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
-		textComponent.color = Color.black;
-		textComponent.fontSize = 25;
+	void victoryOnClick() {
+		SceneManager.LoadScene("mapScene");
 	}
 }

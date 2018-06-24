@@ -25,6 +25,7 @@ public class SlotsContainer : GridContainer {
 			var pos = this.GetPosition(i);
 			var slot = createBackpackSlot(pos).GetComponent<SlotObject>();
 			slot.Position = new Position(PositionCategory, i);
+			slot.GetComponent<SpriteRenderer>().sortingOrder = 3;
 			this.slots.Add(slot);
 		}
 	}
