@@ -105,7 +105,7 @@ public class ItemStats {
 	}
 
 	public Dictionary<Position, Item> Items() {
-		return this.items;
+		return this.items.Where(kv => kv.Value != null).ToDictionary(kv => kv.Key, kv => kv.Value);
 	}
 
 	public Item GetWeapon() {
