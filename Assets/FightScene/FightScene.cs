@@ -44,7 +44,6 @@ public class FightScene : MonoBehaviour
 		});
 
 		this.FightReport = new FightReport(this);
-		this.FightReport.DeclareVictory();
 		this.TopMenuBar = new TopMenuBar(this.GameStats.Level);
 	}
 

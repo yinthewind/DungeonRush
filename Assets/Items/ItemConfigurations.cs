@@ -30,22 +30,6 @@ enum WeaponType {
 	Spear,
 }
 
-public class WoodenBow : Item {
-}
-
-public class IronSword : Item {
-}
-
-public class ChainMail : Item {}
-
-public class SpeedAmulate : Item {}
-
-public class Sapphire : Item {
-}
-
-public class Ruby : Item {
-} 
-
 public class ItemMeta {
 	public ItemCategory Category;
 

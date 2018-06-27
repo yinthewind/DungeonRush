@@ -14,10 +14,9 @@ public class ItemFactory {
 
 	public Item Create(ItemType itemType) {
 
-		var meta = this.configs.ItemMetas [itemType];
-		Type t = Type.GetType (itemType.ToString());
-		var item = (Item)Activator.CreateInstance (t);
+		var item = new Item();
 
+		var meta = this.configs.ItemMetas [itemType];
 		var sprite = sprites.Single (x => x.name == meta.SpriteName);
 		item.Init (meta, sprite);
 
