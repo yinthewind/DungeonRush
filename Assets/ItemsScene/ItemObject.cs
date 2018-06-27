@@ -27,11 +27,12 @@ public class ItemObject : MonoBehaviour {
 		this.Item.IsDragging = false;
 
 		if(this.Destination != null && this.Destination != this.Slot) {
-			this.Destination.Drop(this);
-		} else {
-			if(this.Slot != null) {
+			var success = this.Destination.Drop(this);
+			if(!success) {
 				this.Slot.Put(this);
 			}
+		} else if(this.Slot != null) {
+			this.Slot.Put(this);
 		}
 	}
 

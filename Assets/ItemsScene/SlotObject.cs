@@ -4,6 +4,7 @@ using System;
 public class SlotObject : MonoBehaviour {
 
 	public Position Position;
+	public Func<Item, bool> Checker;
 
 	protected ItemObject item;
 
@@ -96,17 +97,34 @@ public class SlotObject : MonoBehaviour {
 		// Update GameStats.PlayerItemStats
 		this.gameStats.PlayerItemStats.Put(this.Position, item.Item);
 	}
+
+	public bool Check(ItemObject item) {
+		if(this.Checker == null) {
+			return true;
+		}
+		return this.Checker(item.Item);
+	}
 	
+	// An item is dropped to this slot
 	public bool Drop(ItemObject otherItem) {
-		// Validate set operation
 		if (this.item!= null) {
 			var otherSlot = otherItem.Slot;
+
+			if(!this.Check(otherItem) || !otherSlot.Check(this.item)) {
+				return false;
+			}
+
 			var thisItem = this.Take();
 			otherSlot.Take();
 
 			otherSlot.Put(thisItem);
 			this.Put(otherItem);
 		} else {
+
+			if(!this.Check(otherItem)) {
+				return false;
+			}
+
 			var otherSlot = otherItem.Slot;
 			if(otherSlot != null) {
 				otherSlot.Take();

@@ -7,7 +7,7 @@ public class EquipmentRenderer {
 
 	public List<SlotObject> Slots;
 
-	public EquipmentRenderer(PositionCategory category) {
+	public EquipmentRenderer(PositionCategory category, Func<Item, bool>[] checkers) {
 		var gameObject = GameObject.Find (category.ToString());
 
 		this.Slots = new List<SlotObject> () { 
@@ -21,6 +21,7 @@ public class EquipmentRenderer {
 		for(int i = 0; i < this.Slots.Count; i++) {
 			var slot = this.Slots[i];
 			slot.Position = new Position(category, i);
+			slot.Checker = checkers[i];
 		}
 	}
 }

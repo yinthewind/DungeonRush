@@ -32,13 +32,51 @@ public class ItemsScene : MonoBehaviour {
 
 		this.deckViewer = GameObject.Find ("DeckViewer").GetComponent<DeckViewer> ();
 		this.equipmentRenderers = new Dictionary<PositionCategory, EquipmentRenderer>() { {
-			PositionCategory.MainHand, new EquipmentRenderer(PositionCategory.MainHand)
+			PositionCategory.MainHand, new EquipmentRenderer(PositionCategory.MainHand, 
+				new Func<Item, bool>[5] {
+					(item) => {
+						return item.Category == ItemCategory.Weapon
+							|| item.Category == ItemCategory.Shield;
+					},
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+				}
+			)
 		}, {
-			PositionCategory.OffHand, new EquipmentRenderer(PositionCategory.OffHand)
+			PositionCategory.OffHand, new EquipmentRenderer(PositionCategory.OffHand,
+				new Func<Item, bool>[5] {
+					(item) => {
+						return item.Category == ItemCategory.Weapon
+							|| item.Category == ItemCategory.Shield;
+					},
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+				}
+			)
 		}, {
-			PositionCategory.Body, new EquipmentRenderer(PositionCategory.Body)
+			PositionCategory.Body, new EquipmentRenderer(PositionCategory.Body,
+				new Func<Item, bool>[5] {
+					(item) => item.Category == ItemCategory.Armor,
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+				}
+			)
 		}, {
-			PositionCategory.Amulate, new EquipmentRenderer(PositionCategory.Amulate)
+			PositionCategory.Amulate, new EquipmentRenderer(PositionCategory.Amulate,
+				new Func<Item, bool>[5] {
+					(item) => item.Category == ItemCategory.Amulate,
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+					(item) => item.Category == ItemCategory.Gem,
+				}
+			)
 		} };
 	}
 
