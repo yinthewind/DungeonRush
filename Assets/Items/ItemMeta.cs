@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 public class ItemMeta {
+	public ItemType Type;
 	public ItemCategory Category;
 
 	public int Level;
