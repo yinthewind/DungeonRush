@@ -26,7 +26,7 @@ public class Item {
 		this.sprite = sprite;
 		this.SpeedBonus = meta.SpeedBonus;
 		this.Cards = meta.Cards;
-		this.AttackBonus = meta.AttachBonus;
+		this.AttackBonus = meta.AttackBonus;
 		this.DefenceBonus = meta.DefenceBonus;
 
 		this.Category = meta.Category;

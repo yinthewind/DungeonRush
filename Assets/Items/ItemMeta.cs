@@ -10,7 +10,7 @@ public class ItemMeta {
 	public string SpriteName;
 
 	public int SpeedBonus;
-	public int AttachBonus;
+	public int AttackBonus;
 	public int DefenceBonus;
 
 	public List<CardType> Cards;

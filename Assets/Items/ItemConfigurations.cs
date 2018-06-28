@@ -42,7 +42,7 @@ public class ItemConfigurations {
 				Comment = "Common stuff",
 
 				SpeedBonus = 1,
-				AttachBonus = 4,
+				AttackBonus = 4,
 				Cards = new List<CardType>() {
 					CardType.DoubleShot,
 					CardType.DoubleShot,
@@ -61,7 +61,7 @@ public class ItemConfigurations {
 				Comment = "Casual stuff",
 
 				SpeedBonus = 0,
-				AttachBonus = 7,
+				AttackBonus = 7,
 				Cards = new List<CardType>() {
 					CardType.Stab,
 					CardType.Stab,
@@ -80,7 +80,7 @@ public class ItemConfigurations {
 				Comment = "Casual stuff",
 
 				SpeedBonus = 0,
-				AttachBonus = 3,
+				AttackBonus = 3,
 				Cards = new List<CardType>() {
 					CardType.Stab,
 					CardType.Slash,
@@ -104,7 +104,7 @@ public class ItemConfigurations {
 				SpriteName = "roguelikeitems_31",
 				Comment = "Fiery beauty",
 
-				AttachBonus = 1,
+				AttackBonus = 1,
 				Cards = new List<CardType>() {
 					CardType.PerfectStrike,
 					CardType.PerfectStrike,
