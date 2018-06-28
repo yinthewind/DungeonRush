@@ -4,6 +4,7 @@ public enum ItemType {
 
 	WoodenBow,
 	IronSword,
+	IronKnife,
 
 	Sapphire,
 	Ruby,
@@ -83,6 +84,23 @@ public class ItemConfigurations {
 					CardType.Slash,
 					CardType.Slash,
 					CardType.Slash,
+					CardType.Miss,
+				},
+			}
+		}, {
+			ItemType.IronKnife, new ItemMeta () {
+				Category = ItemCategory.Weapon,
+
+				Name = "Iron Knife",
+				SpriteName = "roguelikeitems_70",
+				Comment = "Casual stuff",
+
+				SpeedBonus = 0,
+				AttachBonus = 3,
+				Cards = new List<CardType>() {
+					CardType.Stab,
+					CardType.Slash,
+					CardType.Miss,
 					CardType.Miss,
 				},
 			}
