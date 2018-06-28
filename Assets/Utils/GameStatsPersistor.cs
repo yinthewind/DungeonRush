@@ -34,7 +34,6 @@ public class GameStatsPersistor : MonoBehaviour
 			.Add(new Position(PositionCategory.Backpack, 11), ItemType.Ruby);
 		this.GameStats.PlayerItemStats
 			.Add(new Position(PositionCategory.Backpack, 18), ItemType.SpeedAmulate);
-
 		this.GameStats.PlayerItemStats
 			.Add(new Position(PositionCategory.Backpack, 12), ItemType.IronKnife);
 
