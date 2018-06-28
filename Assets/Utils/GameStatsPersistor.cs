@@ -35,6 +35,9 @@ public class GameStatsPersistor : MonoBehaviour
 		this.GameStats.PlayerItemStats
 			.Add(new Position(PositionCategory.Backpack, 18), ItemType.SpeedAmulate);
 
+		this.GameStats.PlayerItemStats
+			.Add(new Position(PositionCategory.Backpack, 12), ItemType.IronKnife);
+
 		this.CardFactory = new CardFactory ();
 		// Create a new map.
 		this.GameStats.DungeonMap = new DungeonMapData();
