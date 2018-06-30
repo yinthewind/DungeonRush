@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Framework.Fight.Modifier
 {
+    [CreateAssetMenu(fileName = "NewModifier", menuName = "Fight/Modifier/Modifier")]
     public class Modifier : ScriptableObject
     {
         // modifier生效时长，单位：回合

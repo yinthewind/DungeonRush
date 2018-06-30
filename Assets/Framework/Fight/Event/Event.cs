@@ -6,9 +6,12 @@ namespace Framework.Fight.Event
     {
         public enum Trigger
         {
+            None,
             OnCardPlay,
             OnCardExausted,
             OnAttack,
+            OnPrePhysicalDamage,
+            OnCriticalTriggered,
             OnCreated,
             OnHealReceived,
             OnHealthGained,

@@ -5,8 +5,7 @@ namespace Framework.Fight.Card
 {
     public class ActiveCard : Card
     {
-        public List<Modifier.Modifier> Modifiers;
-        public List<Action.Action> Actions;
+        public List<Action.Action> Actions = new List<Action.Action>();
         public override void Play()
         {
             throw new System.NotImplementedException();

@@ -8,8 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 870d5c33ce054c97b249847a6f9dd32b, type: 3}
-  m_Name: PhysicalDamage
+  m_Script: {fileID: 11500000, guid: fbca0ab38d834bb596059e45b822d5c7, type: 3}
+  m_Name: DamageAmplifyModifier
   m_EditorClassIdentifier: 
-  DamageType: 0
-  Amount: 10
+  Modifier: {fileID: 11400000, guid: e7a664a9651454686bac16051fc0e9c3, type: 2}

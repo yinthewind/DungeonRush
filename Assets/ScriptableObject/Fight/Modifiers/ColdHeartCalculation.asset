@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078d954070164e98afa9be5e7faf7e21, type: 3}
+  m_Name: ColdHeartCalculation
+  m_EditorClassIdentifier: 
+  Duration: 1
+  EffectName: 
+  IsHidden: 0
+  IsBuff: 0
+  IsDebuff: 0
+  DebugHint: Cold heart
+  Trigger: 1
+  Actions:
+  - {fileID: 11400000, guid: 469ee173780f546a29da15ffee4c511a, type: 2}

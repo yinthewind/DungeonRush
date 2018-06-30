@@ -14,7 +14,6 @@ namespace Framework.Fight.Action
 
         public Type DamageType;
         public int Amount;
-        public Unit Target;
 
         public Damage(Type type, int amount)
         {

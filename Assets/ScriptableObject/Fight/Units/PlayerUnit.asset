@@ -15,4 +15,6 @@ MonoBehaviour:
   MaxHp: 100
   Energy: 10
   Speed: 10
-  Modifiers: []
+  Modifiers:
+  - {fileID: 11400000, guid: 0519af8c0eb9443b3a223880e0641890, type: 2}
+  - {fileID: 11400000, guid: c79992e6ec3f84b09b67f04b5dd60ddd, type: 2}
