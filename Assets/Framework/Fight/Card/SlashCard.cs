@@ -7,10 +7,9 @@ namespace Framework.Fight.Card
     {
         public void Init()
         {
-            Modifiers = new List<Modifier.Modifier>();
-            var attack = CreateInstance<PhysicalAttack>();
-            attack.Init();
-            Modifiers.Add(attack);
+//            var attack = CreateInstance<PhysicalAttack>();
+//            attack.Init();
+//            Modifiers.Add(attack);
         }
     }
 }

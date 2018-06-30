@@ -1,6 +1,9 @@
-﻿namespace Framework.Fight.Action
+﻿using UnityEngine;
+
+namespace Framework.Fight.Action
 {
-    public class ProbabilityAction
+    [CreateAssetMenu(fileName = "ProbabilityAction", menuName = "Fight/Action/ProbabilityAction")]
+    public class ProbabilityAction : Action
     {
         public float Chance;
         public Fight.Action.Action OnSuccess;

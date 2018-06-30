@@ -1,20 +1,11 @@
 ﻿using System.Collections.Generic;
 using Framework.Fight.Action;
+using UnityEngine;
 
 namespace Framework.Fight.Modifier
 {
+    [CreateAssetMenu(fileName = "PhysicalAttack", menuName = "Fight/Modifier/PhysicalAttack")]
     public class PhysicalAttack : Modifier
     {
-        public void Init()
-        {
-            Duration = 0;
-            IsHidden = true;
-            Trigger = Event.Event.Trigger.OnCardPlay;
-            Actions = new List<Action.Action>();
-            var damage = CreateInstance<Damage>();
-            damage.DamageType = Damage.Type.Physical;
-            damage.Amount = 10;
-            Actions.Add(damage);
-        }
     }
 }

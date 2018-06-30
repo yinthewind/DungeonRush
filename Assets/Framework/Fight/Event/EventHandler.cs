@@ -9,31 +9,67 @@ namespace Framework.Fight.Event
 {
     public class EventHandler : MonoBehaviour
     {
-        public void PlayCard(Unit source, Unit target, ActiveCard card)
+        public Unit Player;
+        public Unit Monster;
+
+        public void Trigger(Event.Trigger trigger, List<Action.Action> action,
+            List<Modifier.Modifier> modifiers)
         {
-            card.Modifiers
-                .FindAll(m => m.Trigger == Event.Trigger.OnCardPlay)
-                .ForEach(m => HandleActions(source, target, m.Actions));
+            modifiers.FindAll(m => m.Trigger == trigger)
+                .ForEach(m => HandleActions(Player, Monster, m.Actions));
+        }
+        
+        public void PlayCard(ActiveCard card)
+        {
+            Debug.Log("modifier number : " + card.Modifiers.Count);
+            if (card.Actions != null)
+            {
+                HandleActions(Player, Monster, card.Actions);
+            }
+            if (card.Modifiers != null)
+            {
+                Trigger(Event.Trigger.OnCardPlay, card.Actions, card.Modifiers);
+            }
         }
 
         public void OnDamageTaken(Damage damage)
         {
              damage.Target.Modifiers
                 .FindAll(m => m.Trigger == Event.Trigger.OnAttack)
-                .ForEach(m => HandleActions(/*damage.Source*/null, damage.Target, m.Actions));
+                .ForEach(m => HandleActions(Player, Monster, m.Actions));
         }
 
         private void HandleActions(Unit source, Unit target, List<Action.Action> actions)
         {
-            HandleAddModifiers(source, target, actions.ConvertAll(m => (AddModifier) m).FindAll(m => m != null));
-            HandleDamages(source, target, actions.ConvertAll(m => (Damage) m).FindAll(m => m != null));
+            HandleAddModifiers(source, target, actions.OfType<AddModifier>().ToList());
+            HandleProbabilityEvents(source, target, actions.OfType<ProbabilityAction>().ToList());
+            HandleDamages(source, target, actions.OfType<Damage>().ToList());
+        }
+
+        private void HandleProbabilityEvents(Unit source, Unit target, List<ProbabilityAction> actions)
+        {
+            foreach (var probabilityAction in actions)
+            {
+                float r = Random.Range(0, 1);
+                var triggered = r < probabilityAction.Chance;
+                var newActions = new List<Action.Action>
+                {
+                    triggered
+                        ? probabilityAction.OnSuccess
+                        : probabilityAction.OnFailure
+                };
+                HandleActions(source, target, newActions);
+            }
         }
 
         private void HandleAddModifiers(Unit source, Unit target, List<AddModifier> actions)
         {
             foreach (var addModifier in actions)
             {
-                addModifier.Target.Modifiers.Add(addModifier.Modifier);
+                if (!addModifier.Target.Modifiers.Contains(addModifier.Modifier))
+                {
+                    addModifier.Target.Modifiers.Add(addModifier.Modifier);
+                } 
             }
         }
 
@@ -56,20 +92,16 @@ namespace Framework.Fight.Event
 
         private void CalculateDamage(Unit source, Unit target, Damage damage)
         {
-
-            List<DamageAmplification> amplifications = source.Modifiers
-                .ConvertAll(m => (DamageAmplification) m).FindAll(d => d != null);
-
-            List<DamageReduction> reductions = target.Modifiers
-                .ConvertAll(m => (DamageReduction) m).FindAll(d => d != null);
-
-            var adjustedFactor = amplifications.ConvertAll(a => a.AmplifyFactor).Aggregate(0f, (a, b) => a + b);
+            var amplifications = source.Modifiers.OfType<DamageAmplification>().ToList();
+            var reductions = target.Modifiers.OfType<DamageReduction>().ToList();
+            var adjustedFactor = amplifications.ConvertAll(a => a.AmplifyFactor).Aggregate(1f, (a, b) => a + b);
             adjustedFactor -= reductions.ConvertAll(a => a.ReduceFactor).Aggregate(0f, (a, b) => a + b);
             damage.Amount = (int) (damage.Amount * adjustedFactor);
         }
 
         private void ApplyDamage(Unit source, Unit target, Damage damage)
         {
+            Debug.Log("Apply damage : " + damage.Amount);
             OnDamageTaken(damage);
             damage.Target.Hp -= damage.Amount;
             if (damage.Target.Hp <= 0)

@@ -1,5 +1,8 @@
-﻿namespace Framework.Fight.Action
+﻿using UnityEngine;
+
+namespace Framework.Fight.Action
 {
+    [CreateAssetMenu(fileName = "Damage", menuName = "Fight/Action/Damage")]
     public class Damage : Action
     {
         public enum Type

@@ -1,5 +1,8 @@
-﻿namespace Framework.Fight.Action
+﻿using UnityEngine;
+
+namespace Framework.Fight.Action
 {
+    [CreateAssetMenu(fileName = "AddModifier", menuName = "Fight/Action/AddModifier")]
     public class AddModifier : Action
     {
         public Unit Target;

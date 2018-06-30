@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Framework.Fight
 {
+    [CreateAssetMenu(fileName = "Unit", menuName = "Fight/Units/Unit")]
     public class Unit : ScriptableObject
     {
         public int Hp;
