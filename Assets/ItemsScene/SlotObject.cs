@@ -18,6 +18,7 @@ public class SlotObject : MonoBehaviour {
 
 		var collider = this.gameObject.AddComponent<BoxCollider2D> ();
 		collider.isTrigger = true;
+		collider.size = bounds.size / 10;
 
 		this.bounds = this.gameObject.GetComponent<SpriteRenderer> ().bounds;
 		this.size = bounds.size;
