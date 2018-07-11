@@ -44,7 +44,7 @@ public class Hand {
 		for (int i = 0; i < cards.Count; i++) 
 		{
 			var pos = basePos + new Vector3(i * hWidth / 12 + hWidth / 24, 0, 1);
-			cards[i].Render (handObject, pos, cardSize);
+			//cards[i].Render (handObject, pos, cardSize);
 		}
 	}
 
@@ -53,12 +53,14 @@ public class Hand {
 		if(this.States.AllowDraw == true){
 			for (int i = 0; i < num; i++)
 			{
-				var newCard = this.FightScene.DrawPile.Draw();
+				/*
+				var newCard = //this.FightScene.DrawPile.Draw();
 				if (newCard == null) {
 					break;
 				}
 				cards.Add(newCard);
 				newCard.FightScene = this.FightScene;
+				*/
 			}
 			this.Render ();
 		}
@@ -89,7 +91,7 @@ public class Hand {
 		this.States.EndTurn ();
 		foreach(var card in cards)
         {
-			card.PassiveDiscard ();
+			//card.PassiveDiscard ();
         }
     }
 }

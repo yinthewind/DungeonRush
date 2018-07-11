@@ -9,13 +9,13 @@ public class FightScene : MonoBehaviour
 	public GameStatsPersistor GameStatsPersistor;
 	public GameStats GameStats;
 
-	public Player Player;
-	public Monster Monster;
-	public Hand Hand;
-	public FightReport FightReport;
-	public TopMenuBar TopMenuBar;
-	public DiscardPile DiscardPile = new DiscardPile ();
-	public DrawPile DrawPile;
+	public GameObject Player;
+	//public Monster Monster;
+	//public Hand Hand;
+	//public FightReport FightReport;
+	//public TopMenuBar TopMenuBar;
+	//public DiscardPile DiscardPile = new DiscardPile ();
+	//public DrawPile DrawPile;
 
 	Button endTurnButton;
 
@@ -43,14 +43,15 @@ public class FightScene : MonoBehaviour
 			this.endButtonClicked = true;
 		});
 
-		this.FightReport = new FightReport(this);
-		this.TopMenuBar = new TopMenuBar(this.GameStats.Level);
+		//this.FightReport = new FightReport(this);
+		//this.TopMenuBar = new TopMenuBar(this.GameStats.Level);
 	}
 
 	void startFight()
 	{
-		this.DrawPile = new DrawPile(this);
-		this.Player = newPlayer();
+		//this.DrawPile = new DrawPile(this);
+		//this.Player = newPlayer();
+		/*
 		this.Player.Hitpoint.OnChange += (oldVal, newVal) =>
 		{
 			if (newVal <= 0)
@@ -67,6 +68,7 @@ public class FightScene : MonoBehaviour
 			}
 		};
 		this.Hand = newHand();
+		*/
 
 		StartCoroutine(turnCycle());
 	}
@@ -87,8 +89,10 @@ public class FightScene : MonoBehaviour
 
 	private void startTurn()
 	{
+		/*
 		this.Player.StartTurn();
 		this.Hand.StartTurn();
+		*/
 	}
 
 	private void clearTurn()
@@ -97,37 +101,49 @@ public class FightScene : MonoBehaviour
 
 	private void endTurn()
 	{
+		/*
 		this.Player.EndTurn();
 		this.Hand.EndTurn();
 
 		this.Monster.StartTurn ();
 		this.Monster.TakeAction();
 		this.Monster.EndTurn ();
+		*/
 	}
 
 	void onVictory()
 	{
+		/*
 		this.FightReport.DeclareVictory();
 		this.Hand.EndTurn();
 		this.Player.EndFight();
+		*/
 
 		endTurnButton.enabled = false;
 	}
 
 	void onDefeat()
 	{
+		/*
 		this.FightReport.DeclareDefeat();
 		this.Hand.EndTurn();
+		*/
 
 		endTurnButton.enabled = false;
 	}
 
-	Player newPlayer()
+	GameObject newPlayer()
 	{
-		var player = new Player(this);
-		return player;
+		this.Player = 
+			GameObject.FindGameObjectsWithTag ("Placeholder").Single (o => o.name == "Player");
+		this.Player.AddComponent<Character>().Init(250, 200);
+		this.Player.AddComponent<CharacterRenderer>();
+		this.Player.AddComponent<VitaBarRenderer>();
+
+		return this.Player;
 	}
 
+		/*
 	Monster newMonster()
 	{
 		var monster = new Monster(this);
@@ -136,7 +152,9 @@ public class FightScene : MonoBehaviour
 
 	Hand newHand()
 	{
+		/*
 		var hand = new Hand(this);
 		return hand;
 	}
+		*/
 }

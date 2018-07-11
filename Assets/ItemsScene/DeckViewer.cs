@@ -15,7 +15,7 @@ public class DeckViewer : GridContainer {
 		var cardSize = new Vector3 (size.y / 4, size.y / 4, 0);
 		for (int i = 0; i < cards.Count; i++) {
 			var pos = GetPosition (i);
-			cards [i].Render (this.gameObject, pos, cardSize);
+			//cards [i].Render (this.gameObject, pos, cardSize);
 		}
 		cardsOnDisplay = cards;
 	}
@@ -25,7 +25,7 @@ public class DeckViewer : GridContainer {
 			return;
 		}
 		foreach (var card in cardsOnDisplay) {
-			Destroy (card.Object);
+			//Destroy (card.Object);
 		}
 	}
 }

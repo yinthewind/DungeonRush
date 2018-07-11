@@ -8,7 +8,6 @@ public class GameStatsPersistor : MonoBehaviour
 	public GameStats GameStats;
 
 	public ItemFactory ItemFactory;
-	public CardFactory CardFactory;
 
 	public void Awake()
 	{
@@ -37,7 +36,6 @@ public class GameStatsPersistor : MonoBehaviour
 		this.GameStats.PlayerItemStats
 			.Add(new Position(PositionCategory.Backpack, 12), ItemType.IronKnife);
 
-		this.CardFactory = new CardFactory ();
 		// Create a new map.
 		this.GameStats.DungeonMap = new DungeonMapData();
 		Debug.Log("create a new dungeon map");

@@ -49,7 +49,7 @@ public class Monster
     public void TakeAction()
     {
         var damage = (int)Random.Range(5, 15);
-		fightScene.Player.TakeDamage (damage);
+		//fightScene.Player.TakeDamage (damage);
     }
 	public void EndTurn()
 	{
