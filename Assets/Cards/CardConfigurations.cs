@@ -49,6 +49,8 @@ public class CardMeta
 	public int BaseDamage = 0;
 	public int BaseArmor = 0;
 	public int EnergyCost = 0;
+
+	public List<Effect> Effects;
 }
 
 public class CardConfigurations
@@ -84,7 +86,11 @@ public class CardConfigurations
 				Comment = "Deal 8 damage, apply vulnerable for 2 turns",
 				Rarity = CardRarity.Uncommon,
 				BaseDamage = 8,
-				EnergyCost = 2
+				EnergyCost = 2,
+				Effects = new List<Effect>() {
+					new VulnerableEffect() { Duration = 2 },
+					new DamageEffect() { Damage = 4 },
+				}
 			}
 		}, { 
 			CardType.Defend, new CardMeta { 
@@ -232,6 +238,11 @@ public class CardConfigurations
 				SpriteName = "DoubleShot",
 
 				DamageMultifier = 1.8f,
+
+				Effects = new List<Effect>() {
+					new DamageEffect() { Damage = 5 },
+					new DamageEffect() { Damage = 5 },
+				}
 			}
 		}
 	};
