@@ -10,8 +10,8 @@ public class FightScene : MonoBehaviour
 	public GameStats GameStats;
 
 	public GameObject Player;
-	//public Monster Monster;
-	//public Hand Hand;
+	public GameObject Monster;
+	public GameObject Hand;
 	//public FightReport FightReport;
 	//public TopMenuBar TopMenuBar;
 	//public DiscardPile DiscardPile = new DiscardPile ();
@@ -49,8 +49,10 @@ public class FightScene : MonoBehaviour
 
 	void startFight()
 	{
+		this.Player = newPlayer();
+		this.Monster = newMonster();
+		this.Hand = newHand();
 		//this.DrawPile = new DrawPile(this);
-		//this.Player = newPlayer();
 		/*
 		this.Player.Hitpoint.OnChange += (oldVal, newVal) =>
 		{
@@ -67,7 +69,6 @@ public class FightScene : MonoBehaviour
 				onVictory();
 			}
 		};
-		this.Hand = newHand();
 		*/
 
 		StartCoroutine(turnCycle());
@@ -134,27 +135,34 @@ public class FightScene : MonoBehaviour
 
 	GameObject newPlayer()
 	{
-		this.Player = 
+		this.Player=
 			GameObject.FindGameObjectsWithTag ("Placeholder").Single (o => o.name == "Player");
-		this.Player.AddComponent<Character>().Init(250, 200);
+		this.Player.AddComponent<Life>().Init(250, 200);
 		this.Player.AddComponent<CharacterRenderer>();
 		this.Player.AddComponent<VitaBarRenderer>();
+		// Status & Status Bar
 
-		return this.Player;
+		return Player;
 	}
 
-		/*
-	Monster newMonster()
+	GameObject newMonster()
 	{
-		var monster = new Monster(this);
+		var monster = 
+			GameObject.FindGameObjectsWithTag ("Placeholder").Single (o => o.name == "Monster");
+		monster.AddComponent<Life>().Init(100, 100);
+		monster.AddComponent<CharacterRenderer>();
+		monster.AddComponent<VitaBarRenderer>();
+		// Status & Status Bar
+
 		return monster;
 	}
 
-	Hand newHand()
+	GameObject newHand()
 	{
-		/*
-		var hand = new Hand(this);
+		var hand = 
+			GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Hand");
+
+		hand.AddComponent<HandRenderer>();
 		return hand;
 	}
-		*/
 }

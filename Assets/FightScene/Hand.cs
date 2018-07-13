@@ -95,13 +95,3 @@ public class Hand {
         }
     }
 }
-
-public class HandRenderer : MonoBehaviour
-{
-    GameObject placeholder;
-
-    void Awake()
-    {
-        placeholder = GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Hand");
-    }
-}
