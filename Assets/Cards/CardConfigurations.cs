@@ -53,6 +53,23 @@ public class CardMeta
 	public List<Effect> Effects;
 }
 
+public class CardFactory
+{
+	CardConfigurations configs = new CardConfigurations();
+
+	public List<Card> Create(List<CardType> cardTypes) {
+		var result = new List<Card>();
+
+		foreach(var t in cardTypes) {
+			var card = new Card() {
+				Meta = configs.Metas[t]
+			};
+			result.Add(card);
+		}
+		return result;
+	}
+}
+
 public class CardConfigurations
 {
 	public Dictionary<CardType, CardMeta> Metas = new Dictionary<CardType, CardMeta> () { { 

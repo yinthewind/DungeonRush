@@ -16,10 +16,10 @@ public class GameStats {
 
 public static class GameStatsExtensions {
 	public static ItemFactory ItemFactory;
-	//public static CardFactory CardFactory;
+	public static CardFactory CardFactory;
 
 	static GameStatsExtensions() {
-		//CardFactory = new CardFactory ();
+		CardFactory = new CardFactory ();
 	}
 
 	public static List<Card> GetDeck(this GameStats gameStats) {
@@ -29,17 +29,26 @@ public static class GameStatsExtensions {
 
 		foreach (var item in items) {
 			var cardTypes = item.Cards;
-			//var cards;
-			//var cards = CardFactory.Create (cardTypes);
-			/*
+			var cards = CardFactory.Create (cardTypes);
 			if (item.IsDragging) {
 				foreach (var card in cards) {
-					card.IsActive = true;
+					//card.IsActive = true;
 				}
 			}
 			result.AddRange (cards);
-			*/
 		}
+
+		var basicCards = new List<CardType>() {
+			CardType.DoubleShot,
+			CardType.DoubleShot,
+			CardType.DoubleShot,
+			CardType.DoubleShot,
+			CardType.DoubleShot,
+			CardType.DoubleShot,
+			CardType.DoubleShot,
+		};
+
+		result.AddRange(CardFactory.Create(basicCards));
 
 		return result;
 	}

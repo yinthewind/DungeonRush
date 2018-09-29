@@ -5,12 +5,13 @@ using System.Collections.Generic;
 public class DrawPile
 {
 	public List<Card> cards;
-	FightScene fightScene;
+	GameStats gameStats;
 
-	public DrawPile(FightScene fightScene)
+	public DrawPile()
 	{
-		this.fightScene = fightScene;
-		cards = fightScene.GameStats.GetDeck ();
+		this.gameStats = GameObject.FindGameObjectWithTag ("GameStatsPersistor")
+			.GetComponent<GameStatsPersistor> ().GameStats;
+		cards = this.gameStats.GetDeck ();
 		this.Shuffle ();
 	}
 
@@ -26,6 +27,7 @@ public class DrawPile
 
 	public Card Draw()
 	{
+		Debug.Log("cards remaining: " + cards.Count);
 		if (cards.Count == 0) {
 			//this.cards = fightScene.DiscardPile.Get ();
 			this.Shuffle ();
@@ -43,4 +45,13 @@ public class DrawPile
 
 public class DrawPileRenderer : MonoBehaviour
 {
+	DrawPile drawPile;
+
+	public void Awake() {
+		this.drawPile = new DrawPile();
+	}
+
+	public void OnDrawingCard(Card card) {
+		card.Meta = drawPile.Draw().Meta;
+	}
 }

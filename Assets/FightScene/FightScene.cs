@@ -15,7 +15,7 @@ public class FightScene : MonoBehaviour
 	//public FightReport FightReport;
 	//public TopMenuBar TopMenuBar;
 	//public DiscardPile DiscardPile = new DiscardPile ();
-	//public DrawPile DrawPile;
+	public GameObject DrawPile;
 
 	Button endTurnButton;
 
@@ -52,7 +52,7 @@ public class FightScene : MonoBehaviour
 		this.Player = newPlayer();
 		this.Monster = newMonster();
 		this.Hand = newHand();
-		//this.DrawPile = new DrawPile(this);
+		this.DrawPile = newDrawPile();
 		/*
 		this.Player.Hitpoint.OnChange += (oldVal, newVal) =>
 		{
@@ -75,15 +75,16 @@ public class FightScene : MonoBehaviour
 	}
 
 	bool endButtonClicked = false;
+	int turnCounter = 1;
 
 	IEnumerator turnCycle() {
 		while(true) {
-			this.startTurn();
+			BroadcastMessage("OnTurnStart", turnCounter);
 
 			yield return new WaitUntil(() => endButtonClicked);
 			endButtonClicked = false;
 
-			endTurn();
+			this.gameObject.SendMessage("OnTurnEnd", turnCounter++);
 			yield return new WaitForEndOfFrame();
 		}
 	}
@@ -142,6 +143,8 @@ public class FightScene : MonoBehaviour
 		this.Player.AddComponent<VitaBarRenderer>();
 		// Status & Status Bar
 
+		this.Player.transform.SetParent(this.gameObject.transform);
+
 		return Player;
 	}
 
@@ -154,6 +157,8 @@ public class FightScene : MonoBehaviour
 		monster.AddComponent<VitaBarRenderer>();
 		// Status & Status Bar
 
+		monster.transform.SetParent(this.gameObject.transform);
+
 		return monster;
 	}
 
@@ -162,7 +167,20 @@ public class FightScene : MonoBehaviour
 		var hand = 
 			GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Hand");
 
-		hand.AddComponent<HandRenderer>();
+		hand.AddComponent<HandScript>();
+
+		hand.transform.SetParent(this.gameObject.transform);
+		//hand.AddComponent<HandRenderer>();
 		return hand;
+	}
+
+	GameObject newDrawPile()
+	{
+		var drawPile = new GameObject("DrawPile");
+		drawPile.AddComponent<DrawPileRenderer>();
+
+		drawPile.transform.SetParent(this.gameObject.transform);
+
+		return drawPile;
 	}
 }
