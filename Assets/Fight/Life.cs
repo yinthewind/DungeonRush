@@ -18,6 +18,12 @@ public class Life : MonoBehaviour {
 		this.Hitpoint = hp;
 	}
 
+	public void OnApplyDamage(EffectMsg msg) {
+		if(this.gameObject != msg.Emitter) {
+			this.TakeDamage(msg.ActiveEffect.Value);
+		}
+	}
+
 	public void TakeDamage(int val) {
 		this.SendMessage("OnHitpointChange", new HitpointChangeMsg(
 			this.Hitpoint,

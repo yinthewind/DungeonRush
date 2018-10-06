@@ -33,6 +33,16 @@ public class CardRenderer : MonoBehaviour {
 	public void Start() {
 	}
 
+	void OnMouseDown() {
+		if (this.Meta != null) {
+			foreach (var e in this.Meta.Effects) {
+				var msg = e.GenerateMsg(Camera.main.GetComponent<FightScene>().Player);
+				Camera.main.GetComponent<FightScene>().BroadcastToActors(msg.MethodName(), msg);
+			}
+		}
+		GameObject.Destroy(this.gameObject);
+	}
+
 	void OnMouseOver() {
 		displayCardDescription();
 	}

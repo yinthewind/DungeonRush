@@ -105,8 +105,14 @@ public class CardConfigurations
 				BaseDamage = 8,
 				EnergyCost = 2,
 				Effects = new List<Effect>() {
-					new VulnerableEffect() { Duration = 2 },
-					new DamageEffect() { Damage = 4 },
+					new Effect() {
+						Type = EffectType.ApplyVulnerable,
+						Duration = 2,
+					},
+					new Effect() {
+						Type = EffectType.ApplyDamage,
+						Value = 4,
+					},
 				}
 			}
 		}, { 
@@ -257,8 +263,14 @@ public class CardConfigurations
 				DamageMultifier = 1.8f,
 
 				Effects = new List<Effect>() {
-					new DamageEffect() { Damage = 5 },
-					new DamageEffect() { Damage = 5 },
+					new Effect() {
+						Type = EffectType.ApplyDamage,
+						Value = 5,
+					},
+					new Effect() {
+						Type = EffectType.ApplyDamage,
+						Value = 5,
+					},
 				}
 			}
 		}
