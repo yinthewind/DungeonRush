@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
@@ -9,6 +10,7 @@ public class FightScene : MonoBehaviour
 	public GameStatsPersistor GameStatsPersistor;
 	public GameStats GameStats;
 
+	public List<GameObject> actors;
 	public GameObject Player;
 	public GameObject Monster;
 	public GameObject Hand;
@@ -53,6 +55,13 @@ public class FightScene : MonoBehaviour
 		this.Monster = newMonster();
 		this.Hand = newHand();
 		this.DrawPile = newDrawPile();
+
+		this.actors = new List<GameObject> {
+			this.Player,
+			this.Monster,
+			this.Hand,
+			this.DrawPile,
+		};
 		/*
 		this.Player.Hitpoint.OnChange += (oldVal, newVal) =>
 		{
@@ -77,9 +86,15 @@ public class FightScene : MonoBehaviour
 	bool endButtonClicked = false;
 	int turnCounter = 1;
 
+	public void BroadcastToActors(string methodName, object message) {
+		foreach(var o in this.actors) {
+			o.BroadcastMessage(methodName, message, SendMessageOptions.DontRequireReceiver);
+		}
+	}
+
 	IEnumerator turnCycle() {
 		while(true) {
-			BroadcastMessage("OnTurnStart", turnCounter);
+			BroadcastToActors("OnTurnStart", turnCounter);
 
 			yield return new WaitUntil(() => endButtonClicked);
 			endButtonClicked = false;
@@ -143,8 +158,6 @@ public class FightScene : MonoBehaviour
 		this.Player.AddComponent<VitaBarRenderer>();
 		// Status & Status Bar
 
-		this.Player.transform.SetParent(this.gameObject.transform);
-
 		return Player;
 	}
 
@@ -157,8 +170,6 @@ public class FightScene : MonoBehaviour
 		monster.AddComponent<VitaBarRenderer>();
 		// Status & Status Bar
 
-		monster.transform.SetParent(this.gameObject.transform);
-
 		return monster;
 	}
 
@@ -168,8 +179,6 @@ public class FightScene : MonoBehaviour
 			GameObject.FindGameObjectsWithTag("Placeholder").Single(o => o.name == "Hand");
 
 		hand.AddComponent<HandScript>();
-
-		hand.transform.SetParent(this.gameObject.transform);
 		//hand.AddComponent<HandRenderer>();
 		return hand;
 	}
@@ -178,8 +187,6 @@ public class FightScene : MonoBehaviour
 	{
 		var drawPile = new GameObject("DrawPile");
 		drawPile.AddComponent<DrawPileRenderer>();
-
-		drawPile.transform.SetParent(this.gameObject.transform);
 
 		return drawPile;
 	}

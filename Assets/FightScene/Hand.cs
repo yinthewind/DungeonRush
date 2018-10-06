@@ -29,7 +29,7 @@ public class HandScript : MonoBehaviour {
 			for (int i = 0; i < num; i++)
 			{
 				var newCard = new Card();
-				this.FightScene.BroadcastMessage("OnDrawingCard", newCard);
+				this.FightScene.BroadcastToActors("OnDrawingCard", newCard);
 				if (newCard == null) {
 					break;
 				}
