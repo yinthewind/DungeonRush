@@ -66,7 +66,7 @@ public class HandScript : MonoBehaviour {
 		this.States.EndTurn ();
 		foreach(var card in cards)
         {
-			//card.PassiveDiscard ();
+			card.Discard ();
         }
     }
 
@@ -87,7 +87,7 @@ public class HandScript : MonoBehaviour {
 		for (int i = 0; i < cards.Count; i++) 
 		{
 			var pos = basePos + new Vector3(i * hWidth / 12 + hWidth / 24, 0, 1);
-			cards[i].Instantiate (this.gameObject, pos, cardSize);
+			cards[i].Instantiate (this.gameObject, pos, cardSize); 
 		}
 	}
 }

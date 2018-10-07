@@ -27,9 +27,10 @@ public class DrawPile
 
 	public Card Draw()
 	{
-		Debug.Log("cards remaining: " + cards.Count);
+		Debug.Log("Cards left: " + cards.Count);
 		if (cards.Count == 0) {
 			//this.cards = fightScene.DiscardPile.Get ();
+			Camera.main.GetComponent<FightScene>().BroadcastToActors("OnDrawPileEmpty", this.cards);
 			this.Shuffle ();
 		}
 		if (cards.Count == 0) {
