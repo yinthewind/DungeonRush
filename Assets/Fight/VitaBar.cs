@@ -20,9 +20,6 @@ public class VitaBarRenderer : MonoBehaviour {
 	public void OnHitpointChange(HitpointChangeMsg msg) {
 		int oldVal = msg.OldVal;
 		int newVal = msg.NewVal;
-		if (newVal < oldVal) {
-			new PopDropText (this.gameObject, (oldVal - newVal).ToString (), Color.red);
-		}
 		if (newVal < 0) {
 			newVal = 0;
 		}
