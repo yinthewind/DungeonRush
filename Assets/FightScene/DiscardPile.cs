@@ -18,6 +18,19 @@ public class DiscardPile
 	}
 }
 
-public class DicardPileRenderer : MonoBehaviour
+public class DiscardPileRenderer : MonoBehaviour
 {
+	DiscardPile discardPile;
+
+	void Awake() {
+		discardPile = new DiscardPile();
+	}
+
+	public void OnCardDiscarded(Card card) {
+		this.discardPile.Add(card);
+	}
+
+	public void OnDrawPileEmpty(List<Card> drawPileCards) {
+		drawPileCards.AddRange(this.discardPile.Get());
+	}
 }

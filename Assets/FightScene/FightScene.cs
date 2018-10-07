@@ -16,7 +16,7 @@ public class FightScene : MonoBehaviour
 	public GameObject Hand;
 	//public FightReport FightReport;
 	//public TopMenuBar TopMenuBar;
-	//public DiscardPile DiscardPile = new DiscardPile ();
+	public GameObject DiscardPile;
 	public GameObject DrawPile;
 
 	Button endTurnButton;
@@ -55,12 +55,14 @@ public class FightScene : MonoBehaviour
 		this.Monster = newMonster();
 		this.Hand = newHand();
 		this.DrawPile = newDrawPile();
+		this.DiscardPile = newDiscardPile();
 
 		this.actors = new List<GameObject> {
 			this.Player,
 			this.Monster,
 			this.Hand,
 			this.DrawPile,
+			this.DiscardPile,
 		};
 		/*
 		this.Player.Hitpoint.OnChange += (oldVal, newVal) =>
@@ -86,7 +88,7 @@ public class FightScene : MonoBehaviour
 	bool endButtonClicked = false;
 	int turnCounter = 1;
 
-	public void BroadcastToActors(string methodName, object message) {
+	public void BroadcastToActors(string methodName, object message = null) {
 		foreach(var o in this.actors) {
 			o.BroadcastMessage(methodName, message, SendMessageOptions.DontRequireReceiver);
 		}
@@ -99,7 +101,7 @@ public class FightScene : MonoBehaviour
 			yield return new WaitUntil(() => endButtonClicked);
 			endButtonClicked = false;
 
-			this.gameObject.SendMessage("OnTurnEnd", turnCounter++);
+			BroadcastToActors("OnTurnEnd", turnCounter++);
 			yield return new WaitForEndOfFrame();
 		}
 	}
@@ -189,5 +191,13 @@ public class FightScene : MonoBehaviour
 		drawPile.AddComponent<DrawPileRenderer>();
 
 		return drawPile;
+	}
+
+	GameObject newDiscardPile()
+	{
+		var discardPile = new GameObject("DiscardPile");
+		discardPile.AddComponent<DiscardPileRenderer>();
+
+		return discardPile;
 	}
 }
