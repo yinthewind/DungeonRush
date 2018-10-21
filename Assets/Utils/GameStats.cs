@@ -40,7 +40,7 @@ public static class GameStatsExtensions {
 
 		var basicCards = new List<CardType>() {
 			CardType.DoubleShot,
-		CardType.DoubleShot,
+			CardType.DoubleShot,
 			CardType.DoubleShot,
 			CardType.DoubleShot,
 			CardType.DoubleShot,
