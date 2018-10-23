@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public enum EventKey {
 	EquipItem,
+	UnequipItem,
 };
 
 public class EquipItemMsg {

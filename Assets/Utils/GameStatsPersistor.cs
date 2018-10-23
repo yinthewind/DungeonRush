@@ -45,6 +45,12 @@ public class GameStatsPersistor : MonoBehaviour
 			return 0;
 		});
 
+		eventHub.Register(EventKey.UnequipItem, "ItemTaker", (oo) => {
+			var msg = (EquipItemMsg)oo;
+			this.GameStats.PlayerItemStats.Take(msg.Position);
+			return 0;
+		});
+
 		// Create a new map.
 		this.GameStats.DungeonMap = new DungeonMapData();
 		Debug.Log("create a new dungeon map");
