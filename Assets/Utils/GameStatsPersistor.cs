@@ -10,8 +10,7 @@ public class GameStatsPersistor : MonoBehaviour
 
 	public ItemFactory ItemFactory;
 
-	public void Start()
-	{
+	public void Awake() {
 		this.GameStats = new GameStats() {
 			MaxHitpoint = 250,
 			Level = 1,
@@ -20,6 +19,17 @@ public class GameStatsPersistor : MonoBehaviour
 			baseSpeed = 5,
 		};
 
+		// Create a new map.
+		this.GameStats.DungeonMap = new DungeonMapData();
+		Debug.Log("create a new dungeon map");
+
+		DontDestroyOnLoad(transform.gameObject);
+
+		this.GameStats.Hitpoint = this.GameStats.MaxHitpoint;
+	}
+
+	public void Start()
+	{
 		this.GameStats.PlayerItemStats
 			.Add(new Position(PositionCategory.Backpack, 0), ItemType.WoodenBow);
 		this.GameStats.PlayerItemStats
@@ -50,13 +60,5 @@ public class GameStatsPersistor : MonoBehaviour
 			this.GameStats.PlayerItemStats.Take(msg.Position);
 			return 0;
 		});
-
-		// Create a new map.
-		this.GameStats.DungeonMap = new DungeonMapData();
-		Debug.Log("create a new dungeon map");
-
-		DontDestroyOnLoad(transform.gameObject);
-
-		this.GameStats.Hitpoint = this.GameStats.MaxHitpoint;
 	}
 }

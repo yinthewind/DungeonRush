@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class DeckViewer : GridContainer {
 
-	List<Card> cardsOnDisplay;
+	List<GameObject> cardObjects;
 
 	public DeckViewer() {
 		row = 3;
@@ -12,20 +12,25 @@ public class DeckViewer : GridContainer {
 
 	public void RenderCards(List<Card> cards) {
 
+		if(this.cardObjects != null) {
+			this.Clear();
+		}
+		this.cardObjects = new List<GameObject>();
+
 		var cardSize = new Vector3 (size.y / 4, size.y / 4, 0);
 		for (int i = 0; i < cards.Count; i++) {
 			var pos = GetPosition (i);
-			//cards [i].Render (this.gameObject, pos, cardSize);
+			var cardObject = cards[i].Instantiate(this.gameObject, pos, cardSize);
+			this.cardObjects.Add(cardObject);
 		}
-		cardsOnDisplay = cards;
 	}
 
 	public void Clear() {
-		if (cardsOnDisplay == null) {
+		if (this.cardObjects == null) {
 			return;
 		}
-		foreach (var card in cardsOnDisplay) {
-			//Destroy (card.Object);
+		foreach (var cardObject in this.cardObjects) {
+			Destroy (cardObject);
 		}
 	}
 }
