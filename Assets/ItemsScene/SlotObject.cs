@@ -77,8 +77,10 @@ public class SlotObject : MonoBehaviour {
 		item.Slot = null;
 		this.item = null;
 
-		// Update GameStats.PlayerItemStats
-		this.gameStats.PlayerItemStats.Take(this.Position);
+		this.eventHub.Broadcast(EventKey.UnequipItem, new EquipItemMsg() {
+			Item = item.Item,
+			Position = this.Position
+		});
 
 		return item;
 	}
@@ -99,7 +101,6 @@ public class SlotObject : MonoBehaviour {
 		this.item = item;
 		this.Render();
 
-		// Update GameStats.PlayerItemStats
 		this.eventHub.Broadcast(EventKey.EquipItem, new EquipItemMsg() {
 			Item = item.Item,
 			Position = this.Position
