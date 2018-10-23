@@ -10,6 +10,8 @@ public class GameStats {
 	public int baseDefence;
 	public int baseAttack;
 
+	public EventHub EventHub;
+
 	public ItemStats PlayerItemStats;
 	public DungeonMapData DungeonMap;
 }

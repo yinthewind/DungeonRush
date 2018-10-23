@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ public class GameStatsPersistor : MonoBehaviour
 
 	public ItemFactory ItemFactory;
 
-	public void Awake()
+	public void Start()
 	{
 		this.GameStats = new GameStats() {
 			MaxHitpoint = 250,
@@ -35,6 +36,14 @@ public class GameStatsPersistor : MonoBehaviour
 			.Add(new Position(PositionCategory.Backpack, 18), ItemType.SpeedAmulate);
 		this.GameStats.PlayerItemStats
 			.Add(new Position(PositionCategory.Backpack, 12), ItemType.IronKnife);
+
+		var eventHub = GameObject.FindWithTag("EventHub").GetComponent<EventHub>();
+
+		eventHub.Register(EventKey.EquipItem, "ItemSetter", (oo) => {
+			var msg = (EquipItemMsg)oo;
+			this.GameStats.PlayerItemStats.Put(msg.Position, msg.Item);
+			return 0;
+		});
 
 		// Create a new map.
 		this.GameStats.DungeonMap = new DungeonMapData();

@@ -82,6 +82,9 @@ public class ItemsScene : MonoBehaviour {
 
 	void Update() {
 
+		if(this.GameStats == null) {
+			return ;
+		}
 		var deck = this.GameStats.GetDeck();
 		this.deckViewer.Clear();
 		this.deckViewer.RenderCards(deck);

@@ -6,6 +6,8 @@ public class SlotObject : MonoBehaviour {
 	public Position Position;
 	public Func<Item, bool> Checker;
 
+	EventHub eventHub;
+
 	protected ItemObject item;
 
 	protected Bounds bounds;
@@ -26,6 +28,8 @@ public class SlotObject : MonoBehaviour {
 	}
 
 	void Start() {
+		this.eventHub = GameObject.FindWithTag("EventHub").GetComponent<EventHub>();
+		
 		this.gameStats = tryFindGameStats();
 
 		renderContainedItem();
@@ -96,7 +100,10 @@ public class SlotObject : MonoBehaviour {
 		this.Render();
 
 		// Update GameStats.PlayerItemStats
-		this.gameStats.PlayerItemStats.Put(this.Position, item.Item);
+		this.eventHub.Broadcast(EventKey.EquipItem, new EquipItemMsg() {
+			Item = item.Item,
+			Position = this.Position
+		});
 	}
 
 	public bool Check(ItemObject item) {
