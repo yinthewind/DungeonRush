@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Placeholder
   - GameStatsPersistor
+  - EventHub
   layers:
   - Default
   - TransparentFX
